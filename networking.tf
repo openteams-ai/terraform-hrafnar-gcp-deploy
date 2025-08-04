@@ -28,10 +28,10 @@ resource "google_compute_router" "main" {
 
 # Cloud NAT for outbound internet access
 resource "google_compute_router_nat" "main" {
-  count  = var.enable_nat_gateway ? 1 : 0
-  name   = local.nat_gateway_name
-  router = google_compute_router.main[0].name
-  region = var.region
+  count   = var.enable_nat_gateway ? 1 : 0
+  name    = local.nat_gateway_name
+  router  = google_compute_router.main[0].name
+  region  = var.region
   project = var.project_id
 
   nat_ip_allocate_option             = "AUTO_ONLY"

@@ -8,8 +8,8 @@ resource "google_cloud_run_service" "main_app" {
     metadata {
       labels = local.common_labels
       annotations = {
-        "autoscaling.knative.dev/minScale"        = tostring(var.app_min_instances)
-        "autoscaling.knative.dev/maxScale"        = tostring(var.app_max_instances)
+        "autoscaling.knative.dev/minScale"         = tostring(var.app_min_instances)
+        "autoscaling.knative.dev/maxScale"         = tostring(var.app_max_instances)
         "run.googleapis.com/execution-environment" = "gen2"
         # VPC connector annotation (if enabled)
         "run.googleapis.com/vpc-access-connector" = var.enable_vpc_connector ? google_vpc_access_connector.main[0].name : null
@@ -157,7 +157,7 @@ resource "google_cloud_run_domain_mapping" "main_app" {
 # Domain mapping for UI traffic (points to hrafner app if no React frontend)
 resource "google_cloud_run_domain_mapping" "ui_app" {
   count = var.enable_cloudflare_dns && var.base_domain != "" && !var.enable_react_frontend && var.enable_htmx_frontend ? 1 : 0
-  
+
   location = var.region
   name     = local.ui_fqdn
   project  = var.project_id

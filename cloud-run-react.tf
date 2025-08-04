@@ -9,8 +9,8 @@ resource "google_cloud_run_service" "react_frontend" {
     metadata {
       labels = local.common_labels
       annotations = {
-        "autoscaling.knative.dev/minScale"        = tostring(var.react_min_instances)
-        "autoscaling.knative.dev/maxScale"        = tostring(var.react_max_instances)
+        "autoscaling.knative.dev/minScale"         = tostring(var.react_min_instances)
+        "autoscaling.knative.dev/maxScale"         = tostring(var.react_max_instances)
         "run.googleapis.com/execution-environment" = "gen2"
         # CPU allocation
         "run.googleapis.com/cpu-throttling" = "false"
@@ -96,7 +96,7 @@ resource "google_cloud_run_service_iam_member" "react_frontend_public" {
 # Domain mapping for the React frontend UI (if enabled)
 resource "google_cloud_run_domain_mapping" "react_frontend" {
   count = var.enable_react_frontend && var.enable_cloudflare_dns && var.base_domain != "" ? 1 : 0
-  
+
   location = var.region
   name     = local.ui_fqdn
   project  = var.project_id

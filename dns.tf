@@ -21,7 +21,7 @@ resource "cloudflare_record" "api" {
 # DNS A record for UI subdomain pointing to React frontend or hrafner application
 resource "cloudflare_record" "ui" {
   count = var.enable_cloudflare_dns && var.base_domain != "" && (var.enable_react_frontend || var.enable_htmx_frontend) ? 1 : 0
-  
+
   zone_id = var.cloudflare_zone_id
   name    = var.ui_subdomain
   content = var.enable_react_frontend ? google_cloud_run_service.react_frontend[0].status[0].url : google_cloud_run_service.main_app.status[0].url
