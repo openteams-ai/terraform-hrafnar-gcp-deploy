@@ -234,11 +234,6 @@ variable "log_level" {
 }
 
 # Security Configuration
-variable "allowed_ingress_cidrs" {
-  description = "CIDR blocks allowed to access the applications"
-  type        = list(string)
-  default     = ["0.0.0.0/0"]
-}
 
 variable "enable_vpc_connector" {
   description = "Enable VPC Connector for Cloud Run to VPC communication"

@@ -79,8 +79,3 @@ variable "ui_subdomain" {
 }
 
 # Security configuration
-variable "allowed_ingress_cidrs" {
-  description = "CIDR blocks allowed to access the applications"
-  type        = list(string)
-  default     = ["0.0.0.0/0"]
-}

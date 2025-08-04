@@ -58,7 +58,6 @@ module "hrafnar_prod" {
   log_level         = "INFO"
 
   # Security (more restrictive for production)
-  allowed_ingress_cidrs = var.allowed_ingress_cidrs
 
   # Labels
   labels = {

@@ -12,7 +12,7 @@ This guide explains how to run integration tests that deploy actual infrastructu
   - `roles/sql.admin`
   - `roles/compute.networkAdmin`
   - `roles/secretmanager.admin`
-  - `roles/iam.serviceAccountAdmin` 
+  - `roles/iam.serviceAccountAdmin`
   - `roles/resourcemanager.projectIamAdmin`
   - `roles/serviceusage.serviceUsageAdmin`
 
@@ -65,7 +65,7 @@ export TF_VAR_base_domain="yourdomain.com"
 # Test minimal configuration (fastest)
 make test-minimal
 
-# Test development environment 
+# Test development environment
 make test-dev
 
 # Test production environment (includes React frontend if React image provided)
@@ -109,7 +109,7 @@ cd test && TF_LOG=INFO go test -v -run TestMinimalDeployment -timeout 30m
 - Single OpenAI API key
 
 **TestProdEnvironmentDeployment:**
-- Production-scale configuration  
+- Production-scale configuration
 - Larger database instance
 - Backups enabled
 - Multiple AI API keys
@@ -200,6 +200,6 @@ For automated testing in CI/CD:
 
 1. **Run tests in isolation** - Don't run multiple integration tests simultaneously
 2. **Use separate GCP project** for testing to avoid conflicts
-3. **Monitor costs** - Set up billing alerts for your test project  
+3. **Monitor costs** - Set up billing alerts for your test project
 4. **Clean up manually** if tests are interrupted
 5. **Test locally first** before running in CI/CD

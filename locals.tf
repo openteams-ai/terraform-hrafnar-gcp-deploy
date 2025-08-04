@@ -20,7 +20,6 @@ locals {
 
   # Secret Manager secret names
   db_password_secret_name = "${local.resource_prefix}-db-password"
-  ai_api_keys_secret_name = "${local.resource_prefix}-ai-api-keys"
 
   # Service account names
   app_service_account   = "${local.resource_prefix}-app"

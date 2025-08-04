@@ -38,7 +38,7 @@ test: ## Run unit tests (no infrastructure)
 	@echo "Running unit tests..."
 	@cd test && go test -v -timeout 10m -run "TestTerraformValidation|TestExamplesValidation|TestHrafnarModuleFunctionality"
 
-test-integration: ## Run integration tests (deploys real infrastructure) 
+test-integration: ## Run integration tests (deploys real infrastructure)
 	@echo "Running integration tests..."
 	@echo "WARNING: This will deploy real GCP infrastructure and may incur costs!"
 	@cd test && go test -v -timeout 45m -run "Integration|TestMinimalDeployment"
@@ -53,7 +53,7 @@ test-prod: ## Run prod environment integration test
 	@echo "WARNING: This will deploy real GCP infrastructure!"
 	@cd test && go test -v -timeout 30m -run TestProdEnvironmentDeployment
 
-test-minimal: ## Run minimal deployment integration test  
+test-minimal: ## Run minimal deployment integration test
 	@echo "Running minimal deployment integration test..."
 	@echo "WARNING: This will deploy real GCP infrastructure!"
 	@cd test && go test -v -timeout 30m -run TestMinimalDeployment

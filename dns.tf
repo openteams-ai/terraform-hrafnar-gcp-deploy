@@ -1,8 +1,3 @@
-# Data source to get the Cloudflare zone information
-data "cloudflare_zone" "main" {
-  count   = var.enable_cloudflare_dns ? 1 : 0
-  zone_id = var.cloudflare_zone_id
-}
 
 # DNS A record for API subdomain pointing to hrafnar application
 resource "cloudflare_record" "api" {

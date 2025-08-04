@@ -34,7 +34,7 @@ module "hrafnar_deploy" {
   project_id   = "my-gcp-project"
   name_prefix  = "prod-hrafnar"
   app_image    = "gcr.io/my-project/hrafnar:latest"
-  
+
   ai_api_keys = {
     OPENAI_API_KEY = "sk-..."
   }
@@ -84,12 +84,12 @@ module "hrafnar_gcp_deploy" {
   version = "~> 1.0"
 
   project_id   = "my-gcp-project"
-  region       = "us-central1" 
+  region       = "us-central1"
   name_prefix  = "acme-hrafnar"
 
   # Hrafnar application configuration
   app_image = "gcr.io/my-project/hrafnar:latest"
-  
+
   # AI API keys (stored securely in Secret Manager)
   ai_api_keys = {
     OPENAI_API_KEY    = "sk-..."
@@ -111,7 +111,7 @@ module "hrafnar_gcp_deploy" {
 
   # Hrafnar application
   app_image = "gcr.io/my-project/hrafnar:latest"
-  
+
   # Optional React frontend
   enable_react_frontend = true
   react_image          = "gcr.io/my-project/hrafnar-ui:latest"
@@ -357,7 +357,7 @@ export TF_VAR_base_domain="yourdomain.com"
 # Test development environment deployment
 cd test && go test -v -run TestDevEnvironmentDeployment -timeout 30m
 
-# Test production environment deployment  
+# Test production environment deployment
 cd test && go test -v -run TestProdEnvironmentDeployment -timeout 30m
 
 # Test minimal configuration

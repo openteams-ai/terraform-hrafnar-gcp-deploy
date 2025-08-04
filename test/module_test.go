@@ -54,7 +54,7 @@ func TestHrafnarModuleFunctionality(t *testing.T) {
 
 		// Initialize to ensure providers are available
 		terraform.Init(t, terraformOptions)
-		
+
 		// Validate should pass even without variables set
 		terraform.Validate(t, terraformOptions)
 	})
@@ -93,7 +93,7 @@ func TestCloudflareIntegration(t *testing.T) {
 			},
 		}
 
-		// Initialize and validate configuration 
+		// Initialize and validate configuration
 		terraform.Init(t, terraformOptions)
 		terraform.Validate(t, terraformOptions)
 	})

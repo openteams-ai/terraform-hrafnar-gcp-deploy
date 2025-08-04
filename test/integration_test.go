@@ -150,7 +150,7 @@ func getEnvOrDefault(key, defaultValue string) string {
 // TestMinimalDeployment tests the absolute minimal configuration
 func TestMinimalDeployment(t *testing.T) {
 	// This test is NOT run in parallel to avoid resource conflicts
-	
+
 	// Skip if required environment variables are not set
 	projectID := os.Getenv("TF_VAR_project_id")
 	if projectID == "" {

@@ -51,7 +51,6 @@ module "hrafnar_dev" {
   log_level         = "DEBUG"
 
   # Security (more permissive for development)
-  allowed_ingress_cidrs = ["0.0.0.0/0"]
 
   # Labels
   labels = {

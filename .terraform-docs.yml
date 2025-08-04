@@ -26,12 +26,12 @@ content: |-
     version = "~> 1.0"
 
     project_id   = "my-gcp-project"
-    region       = "us-central1" 
+    region       = "us-central1"
     name_prefix  = "acme-hrafnar"
 
     # Hrafnar application configuration
     app_image = "gcr.io/my-project/hrafnar:latest"
-    
+
     # AI API keys (stored securely in Secret Manager)
     ai_api_keys = {
       OPENAI_API_KEY    = "sk-..."
@@ -53,7 +53,7 @@ content: |-
 
     # Hrafnar application
     app_image = "gcr.io/my-project/hrafnar:latest"
-    
+
     # Optional React frontend
     enable_react_frontend = true
     react_image          = "gcr.io/my-project/hrafnar-ui:latest"
