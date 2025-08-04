@@ -1,0 +1,126 @@
+formatter: markdown
+
+version: ""
+
+header-from: main.tf
+footer-from: ""
+
+recursive:
+  enabled: false
+  path: modules
+
+sections:
+  hide: []
+  show: []
+
+content: |-
+  {{ .Header }}
+
+  ## Usage
+
+  ### Basic Usage (hrafner app only)
+
+  ```hcl
+  module "hrafner_gcp_deploy" {
+    source  = "openteams-ai/hrafner-gcp-deploy/gcp"
+    version = "~> 1.0"
+
+    project_id   = "my-gcp-project"
+    region       = "us-central1" 
+    name_prefix  = "acme-hrafner"
+
+    # Hrafner application configuration
+    app_image = "gcr.io/my-project/hrafner:latest"
+    
+    # AI API keys (stored securely in Secret Manager)
+    ai_api_keys = {
+      OPENAI_API_KEY    = "sk-..."
+      ANTHROPIC_API_KEY = "sk-ant-..."
+    }
+  }
+  ```
+
+  ### With Cloudflare DNS and React Frontend
+
+  ```hcl
+  module "hrafner_gcp_deploy" {
+    source  = "openteams-ai/hrafner-gcp-deploy/gcp"
+    version = "~> 1.0"
+
+    project_id   = "my-gcp-project"
+    region       = "us-central1"
+    name_prefix  = "acme-hrafner"
+
+    # Hrafner application
+    app_image = "gcr.io/my-project/hrafner:latest"
+    
+    # Optional React frontend
+    enable_react_frontend = true
+    react_image          = "gcr.io/my-project/hrafner-ui:latest"
+
+    # Cloudflare DNS configuration
+    enable_cloudflare_dns = true
+    cloudflare_api_token  = "your-cloudflare-token"
+    cloudflare_zone_id    = "your-zone-id"
+    base_domain          = "example.com"
+    api_subdomain        = "api"
+    ui_subdomain         = "app"
+
+    # AI configuration
+    ai_api_keys = {
+      OPENAI_API_KEY    = "sk-..."
+      ANTHROPIC_API_KEY = "sk-ant-..."
+    }
+
+    # MCP servers
+    mcp_servers = {
+      filesystem = {
+        url         = "https://mcp-fs.example.com"
+        description = "Filesystem MCP server"
+      }
+    }
+  }
+  ```
+
+  {{ .Requirements }}
+
+  {{ .Providers }}
+
+  {{ .Modules }}
+
+  {{ .Resources }}
+
+  {{ .Inputs }}
+
+  {{ .Outputs }}
+
+output:
+  file: README.md
+  mode: inject
+  template: |-
+    <!-- BEGIN_TF_DOCS -->
+    {{ .Content }}
+    <!-- END_TF_DOCS -->
+
+output-values:
+  enabled: false
+  from: ""
+
+sort:
+  enabled: true
+  by: name
+
+settings:
+  anchor: true
+  color: true
+  default: true
+  description: false
+  escape: true
+  hide-empty: false
+  html: true
+  indent: 2
+  lockfile: true
+  read-comments: true
+  required: true
+  sensitive: true
+  type: true

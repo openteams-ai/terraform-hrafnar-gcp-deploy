@@ -1,0 +1,31 @@
+# Example terraform.tfvars for development environment
+# Copy this file to terraform.tfvars and fill in your values
+
+# Required variables
+project_id = "my-gcp-project-dev"
+app_image  = "gcr.io/my-project/hrafner:dev"
+
+# AI API keys (keep these secure!)
+ai_api_keys = {
+  OPENAI_API_KEY    = "sk-..."
+  ANTHROPIC_API_KEY = "sk-ant-..."
+}
+
+# Optional: MCP servers for development
+mcp_servers = {
+  filesystem = {
+    url         = "http://localhost:3001"
+    description = "Local filesystem MCP server"
+  }
+  git = {
+    url         = "http://localhost:3002"
+    api_key     = "dev-key-123"
+    description = "Local git MCP server"
+  }
+}
+
+# Optional: Cloudflare DNS (uncomment to enable)
+# enable_cloudflare_dns = true
+# cloudflare_api_token  = "your-cloudflare-token"
+# cloudflare_zone_id    = "your-zone-id"
+# base_domain          = "dev.example.com"
