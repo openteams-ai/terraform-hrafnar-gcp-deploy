@@ -1,13 +1,13 @@
-# Production environment example for hrafner GCP deployment
-module "hrafner_prod" {
+# Production environment example for hrafnar GCP deployment
+module "hrafnar_prod" {
   source = "../../"
 
   # Core configuration
   project_id  = var.project_id
   region      = "us-central1"
-  name_prefix = "prod-hrafner"
+  name_prefix = "prod-hrafnar"
 
-  # Hrafner application (production settings)
+  # Hrafnar application (production settings)
   app_image         = var.app_image
   app_min_instances = 2
   app_max_instances = 20

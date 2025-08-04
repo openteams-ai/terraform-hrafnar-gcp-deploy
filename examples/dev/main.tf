@@ -1,13 +1,13 @@
-# Development environment example for hrafner GCP deployment
-module "hrafner_dev" {
+# Development environment example for hrafnar GCP deployment
+module "hrafnar_dev" {
   source = "../../"
 
   # Core configuration
   project_id  = var.project_id
   region      = "us-central1"
-  name_prefix = "dev-hrafner"
+  name_prefix = "dev-hrafnar"
 
-  # Hrafner application
+  # Hrafnar application
   app_image         = var.app_image
   app_min_instances = 0
   app_max_instances = 3

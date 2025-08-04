@@ -4,7 +4,7 @@ data "cloudflare_zone" "main" {
   zone_id = var.cloudflare_zone_id
 }
 
-# DNS A record for API subdomain pointing to hrafner application
+# DNS A record for API subdomain pointing to hrafnar application
 resource "cloudflare_record" "api" {
   count   = var.enable_cloudflare_dns && var.base_domain != "" ? 1 : 0
   zone_id = var.cloudflare_zone_id
@@ -13,12 +13,12 @@ resource "cloudflare_record" "api" {
   type    = "CNAME"
   proxied = true
 
-  comment = "Managed by Terraform - API endpoint for ${local.resource_prefix} hrafner application"
+  comment = "Managed by Terraform - API endpoint for ${local.resource_prefix} hrafnar application"
 
   depends_on = [google_cloud_run_domain_mapping.main_app]
 }
 
-# DNS A record for UI subdomain pointing to React frontend or hrafner application
+# DNS A record for UI subdomain pointing to React frontend or hrafnar application
 resource "cloudflare_record" "ui" {
   count = var.enable_cloudflare_dns && var.base_domain != "" && (var.enable_react_frontend || var.enable_htmx_frontend) ? 1 : 0
 
@@ -28,7 +28,7 @@ resource "cloudflare_record" "ui" {
   type    = "CNAME"
   proxied = true
 
-  comment = var.enable_react_frontend ? "Managed by Terraform - UI endpoint for ${local.resource_prefix} React frontend" : "Managed by Terraform - UI endpoint for ${local.resource_prefix} hrafner HTMX frontend"
+  comment = var.enable_react_frontend ? "Managed by Terraform - UI endpoint for ${local.resource_prefix} React frontend" : "Managed by Terraform - UI endpoint for ${local.resource_prefix} hrafnar HTMX frontend"
 
   depends_on = [
     google_cloud_run_domain_mapping.react_frontend,

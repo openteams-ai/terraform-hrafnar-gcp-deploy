@@ -4,9 +4,9 @@ variable "project_id" {
 }
 
 variable "app_image" {
-  description = "Container image for the hrafner application"
+  description = "Container image for the hrafnar application"
   type        = string
-  default     = "gcr.io/my-project/hrafner:dev"
+  default     = "gcr.io/my-project/hrafnar:dev"
 }
 
 variable "ai_api_keys" {

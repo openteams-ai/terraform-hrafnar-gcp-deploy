@@ -13,8 +13,6 @@ locals {
   api_fqdn = var.enable_cloudflare_dns && var.base_domain != "" ? "${var.api_subdomain}.${var.base_domain}" : ""
   ui_fqdn  = var.enable_cloudflare_dns && var.base_domain != "" ? "${var.ui_subdomain}.${var.base_domain}" : ""
 
-  # Determine which service should handle UI traffic
-  ui_service_name = var.enable_react_frontend ? google_cloud_run_service.react_frontend[0].name : google_cloud_run_service.main_app.name
 
   # Database configuration
   database_name = "${local.resource_prefix}-db"
@@ -39,7 +37,7 @@ locals {
   main_app_service_name = "${local.resource_prefix}-app"
   react_service_name    = "${local.resource_prefix}-react"
 
-  # Environment variables for the hrafner application
+  # Environment variables for the hrafnar application
   app_environment_vars = merge(
     var.app_env_vars,
     {

@@ -52,9 +52,9 @@ func TestDevEnvironmentDeployment(t *testing.T) {
 	terraform.InitAndApply(t, terraformOptions)
 
 	// Validate outputs
-	hrafnerAppURL := terraform.Output(t, terraformOptions, "hrafner_app_url")
-	assert.NotEmpty(t, hrafnerAppURL, "Hrafner app URL should not be empty")
-	assert.Contains(t, hrafnerAppURL, "run.app", "URL should be a Cloud Run URL")
+	hrafnarAppURL := terraform.Output(t, terraformOptions, "hrafnar_app_url")
+	assert.NotEmpty(t, hrafnarAppURL, "Hrafnar app URL should not be empty")
+	assert.Contains(t, hrafnarAppURL, "run.app", "URL should be a Cloud Run URL")
 
 	vpcName := terraform.Output(t, terraformOptions, "vpc_name")
 	assert.NotEmpty(t, vpcName, "VPC name should not be empty")
@@ -116,9 +116,9 @@ func TestProdEnvironmentDeployment(t *testing.T) {
 	terraform.InitAndApply(t, terraformOptions)
 
 	// Validate outputs
-	hrafnerAppURL := terraform.Output(t, terraformOptions, "hrafner_app_url")
-	require.NotEmpty(t, hrafnerAppURL, "Hrafner app URL should not be empty")
-	assert.Contains(t, hrafnerAppURL, "run.app", "URL should be a Cloud Run URL")
+	hrafnarAppURL := terraform.Output(t, terraformOptions, "hrafnar_app_url")
+	require.NotEmpty(t, hrafnarAppURL, "Hrafnar app URL should not be empty")
+	assert.Contains(t, hrafnarAppURL, "run.app", "URL should be a Cloud Run URL")
 
 	vpcName := terraform.Output(t, terraformOptions, "vpc_name")
 	assert.NotEmpty(t, vpcName, "VPC name should not be empty")
@@ -192,9 +192,9 @@ func TestMinimalDeployment(t *testing.T) {
 	terraform.InitAndApply(t, terraformOptions)
 
 	// Validate outputs
-	hrafnerAppURL := terraform.Output(t, terraformOptions, "hrafner_app_url")
-	require.NotEmpty(t, hrafnerAppURL, "Hrafner app URL should not be empty")
-	assert.Contains(t, hrafnerAppURL, "run.app", "URL should be a Cloud Run URL")
+	hrafnarAppURL := terraform.Output(t, terraformOptions, "hrafnar_app_url")
+	require.NotEmpty(t, hrafnarAppURL, "Hrafnar app URL should not be empty")
+	assert.Contains(t, hrafnarAppURL, "run.app", "URL should be a Cloud Run URL")
 
 	// Ensure optional features are not deployed
 	reactURL := terraform.Output(t, terraformOptions, "react_frontend_url")

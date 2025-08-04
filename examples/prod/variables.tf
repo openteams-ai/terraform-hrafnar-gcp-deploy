@@ -4,7 +4,7 @@ variable "project_id" {
 }
 
 variable "app_image" {
-  description = "Container image for the hrafner application"
+  description = "Container image for the hrafnar application"
   type        = string
 }
 

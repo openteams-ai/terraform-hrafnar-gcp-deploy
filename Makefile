@@ -36,7 +36,7 @@ lint: fmt validate ## Run all linting checks (fmt + validate)
 
 test: ## Run unit tests (no infrastructure)
 	@echo "Running unit tests..."
-	@cd test && go test -v -timeout 10m -run "TestTerraformValidation|TestExamplesValidation|TestHrafnerModuleFunctionality"
+	@cd test && go test -v -timeout 10m -run "TestTerraformValidation|TestExamplesValidation|TestHrafnarModuleFunctionality"
 
 test-integration: ## Run integration tests (deploys real infrastructure) 
 	@echo "Running integration tests..."

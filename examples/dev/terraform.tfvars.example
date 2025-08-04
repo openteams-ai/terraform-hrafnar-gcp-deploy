@@ -3,7 +3,7 @@
 
 # Required variables
 project_id = "my-gcp-project-dev"
-app_image  = "gcr.io/my-project/hrafner:dev"
+app_image  = "gcr.io/my-project/hrafnar:dev"
 
 # AI API keys (keep these secure!)
 ai_api_keys = {

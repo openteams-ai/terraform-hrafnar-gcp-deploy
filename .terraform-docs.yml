@@ -18,19 +18,19 @@ content: |-
 
   ## Usage
 
-  ### Basic Usage (hrafner app only)
+  ### Basic Usage (hrafnar app only)
 
   ```hcl
-  module "hrafner_gcp_deploy" {
-    source  = "openteams-ai/hrafner-gcp-deploy/gcp"
+  module "hrafnar_gcp_deploy" {
+    source  = "openteams-ai/hrafnar-gcp-deploy/gcp"
     version = "~> 1.0"
 
     project_id   = "my-gcp-project"
     region       = "us-central1" 
-    name_prefix  = "acme-hrafner"
+    name_prefix  = "acme-hrafnar"
 
-    # Hrafner application configuration
-    app_image = "gcr.io/my-project/hrafner:latest"
+    # Hrafnar application configuration
+    app_image = "gcr.io/my-project/hrafnar:latest"
     
     # AI API keys (stored securely in Secret Manager)
     ai_api_keys = {
@@ -43,20 +43,20 @@ content: |-
   ### With Cloudflare DNS and React Frontend
 
   ```hcl
-  module "hrafner_gcp_deploy" {
-    source  = "openteams-ai/hrafner-gcp-deploy/gcp"
+  module "hrafnar_gcp_deploy" {
+    source  = "openteams-ai/hrafnar-gcp-deploy/gcp"
     version = "~> 1.0"
 
     project_id   = "my-gcp-project"
     region       = "us-central1"
-    name_prefix  = "acme-hrafner"
+    name_prefix  = "acme-hrafnar"
 
-    # Hrafner application
-    app_image = "gcr.io/my-project/hrafner:latest"
+    # Hrafnar application
+    app_image = "gcr.io/my-project/hrafnar:latest"
     
     # Optional React frontend
     enable_react_frontend = true
-    react_image          = "gcr.io/my-project/hrafner-ui:latest"
+    react_image          = "gcr.io/my-project/hrafnar-ui:latest"
 
     # Cloudflare DNS configuration
     enable_cloudflare_dns = true

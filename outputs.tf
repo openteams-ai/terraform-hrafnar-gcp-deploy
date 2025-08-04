@@ -1,11 +1,11 @@
-# Hrafner Application Outputs
-output "hrafner_app_url" {
-  description = "URL of the hrafner application"
+# Hrafnar Application Outputs
+output "hrafnar_app_url" {
+  description = "URL of the hrafnar application"
   value       = google_cloud_run_service.main_app.status[0].url
 }
 
-output "hrafner_app_service_name" {
-  description = "Name of the hrafner Cloud Run service"
+output "hrafnar_app_service_name" {
+  description = "Name of the hrafnar Cloud Run service"
   value       = google_cloud_run_service.main_app.name
 }
 
@@ -74,8 +74,8 @@ output "vpc_connector_id" {
 }
 
 # Service Account Outputs
-output "hrafner_app_service_account_email" {
-  description = "Email of the hrafner application service account"
+output "hrafnar_app_service_account_email" {
+  description = "Email of the hrafnar application service account"
   value       = google_service_account.app.email
 }
 

@@ -1,7 +1,7 @@
-# Service account for the hrafner application
+# Service account for the hrafnar application
 resource "google_service_account" "app" {
   account_id   = local.app_service_account
-  display_name = "Cloud Run service account for ${local.resource_prefix} hrafner application"
+  display_name = "Cloud Run service account for ${local.resource_prefix} hrafnar application"
   project      = var.project_id
 }
 
@@ -13,7 +13,7 @@ resource "google_service_account" "react" {
   project      = var.project_id
 }
 
-# IAM binding for hrafner app to access Secret Manager secrets
+# IAM binding for hrafnar app to access Secret Manager secrets
 resource "google_secret_manager_secret_iam_member" "app_db_password" {
   secret_id = google_secret_manager_secret.db_password.secret_id
   role      = "roles/secretmanager.secretAccessor"
@@ -51,14 +51,14 @@ resource "google_secret_manager_secret_iam_member" "app_mcp_api_keys" {
   project   = var.project_id
 }
 
-# IAM binding for hrafner app to access Cloud SQL
+# IAM binding for hrafnar app to access Cloud SQL
 resource "google_project_iam_member" "app_cloudsql_client" {
   project = var.project_id
   role    = "roles/cloudsql.client"
   member  = "serviceAccount:${google_service_account.app.email}"
 }
 
-# IAM binding for hrafner app to access Cloud SQL instances
+# IAM binding for hrafnar app to access Cloud SQL instances
 resource "google_project_iam_member" "app_cloudsql_instanceuser" {
   project = var.project_id
   role    = "roles/cloudsql.instanceUser"

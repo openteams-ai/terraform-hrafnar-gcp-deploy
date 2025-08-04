@@ -41,8 +41,8 @@ func TestExamplesValidation(t *testing.T) {
 	}
 }
 
-// Test hrafner module specific functionality
-func TestHrafnerModuleFunctionality(t *testing.T) {
+// Test hrafnar module specific functionality
+func TestHrafnarModuleFunctionality(t *testing.T) {
 	t.Parallel()
 
 	// Test that required environment variables are documented
@@ -66,7 +66,7 @@ func TestHrafnerModuleFunctionality(t *testing.T) {
 			Vars: map[string]interface{}{
 				"project_id":   "test-project",
 				"name_prefix":  "valid-name",
-				"app_image":    "gcr.io/test/hrafner:latest",
+				"app_image":    "gcr.io/test/hrafnar:latest",
 			},
 		}
 
@@ -84,8 +84,8 @@ func TestCloudflareIntegration(t *testing.T) {
 			TerraformDir: "../",
 			Vars: map[string]interface{}{
 				"project_id":             "test-project",
-				"name_prefix":            "test-hrafner",
-				"app_image":              "gcr.io/test/hrafner:latest",
+				"name_prefix":            "test-hrafnar",
+				"app_image":              "gcr.io/test/hrafnar:latest",
 				"enable_cloudflare_dns":  true,
 				"cloudflare_api_token":   "test_token_1234567890abcdefghijklmnopqrs",
 				"cloudflare_zone_id":     "test-zone-id",
@@ -108,8 +108,8 @@ func TestGCPResourceConfiguration(t *testing.T) {
 			TerraformDir: "../",
 			Vars: map[string]interface{}{
 				"project_id":  "test-project",
-				"name_prefix": "test-hrafner",
-				"app_image":   "gcr.io/test/hrafner:latest",
+				"name_prefix": "test-hrafnar",
+				"app_image":   "gcr.io/test/hrafnar:latest",
 				"ai_api_keys": map[string]string{
 					"OPENAI_API_KEY":    "sk-test",
 					"ANTHROPIC_API_KEY": "sk-ant-test",
@@ -128,10 +128,10 @@ func TestGCPResourceConfiguration(t *testing.T) {
 			TerraformDir: "../",
 			Vars: map[string]interface{}{
 				"project_id":             "test-project",
-				"name_prefix":            "test-hrafner",
-				"app_image":              "gcr.io/test/hrafner:latest",
+				"name_prefix":            "test-hrafnar",
+				"app_image":              "gcr.io/test/hrafnar:latest",
 				"enable_react_frontend":  true,
-				"react_image":            "gcr.io/test/hrafner-ui:latest",
+				"react_image":            "gcr.io/test/hrafnar-ui:latest",
 			},
 		}
 
@@ -152,7 +152,7 @@ func TestRealisticConfiguration(t *testing.T) {
 			Vars: map[string]interface{}{
 				"project_id":  "test-project-12345",
 				"name_prefix": "minimal-test",
-				"app_image":   "gcr.io/test-project/hrafner:v1.0.0",
+				"app_image":   "gcr.io/test-project/hrafnar:v1.0.0",
 				"ai_api_keys": map[string]string{
 					"OPENAI_API_KEY": "sk-test123",
 				},
@@ -170,9 +170,9 @@ func TestRealisticConfiguration(t *testing.T) {
 			Vars: map[string]interface{}{
 				"project_id":             "test-project-12345",
 				"name_prefix":            "full-test",
-				"app_image":              "gcr.io/test-project/hrafner:v1.0.0",
+				"app_image":              "gcr.io/test-project/hrafnar:v1.0.0",
 				"enable_react_frontend":  true,
-				"react_image":            "gcr.io/test-project/hrafner-ui:v1.0.0",
+				"react_image":            "gcr.io/test-project/hrafnar-ui:v1.0.0",
 				"enable_cloudflare_dns":  true,
 				"cloudflare_api_token":   "test_token_1234567890abcdefghijklmnopqrs",
 				"cloudflare_zone_id":     "test-zone",

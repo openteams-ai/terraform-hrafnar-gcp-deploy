@@ -1,10 +1,10 @@
-# Terraform GCP Hrafner Deployment Module
+# Terraform GCP Hrafnar Deployment Module
 
-A Terraform module for deploying the Hrafner AI application on Google Cloud Platform with Cloud Run, Cloud SQL PostgreSQL, and optional Cloudflare DNS integration.
+A Terraform module for deploying the Hrafnar AI application on Google Cloud Platform with Cloud Run, Cloud SQL PostgreSQL, and optional Cloudflare DNS integration.
 
 ## Features
 
-- 🚀 **Cloud Run Deployment**: Scalable serverless deployment for the Hrafner application
+- 🚀 **Cloud Run Deployment**: Scalable serverless deployment for the Hrafnar application
 - 🔐 **Secure Secret Management**: AI API keys and database credentials stored in Google Secret Manager
 - 🗄️ **Managed PostgreSQL**: Cloud SQL PostgreSQL with automated backups and private networking
 - 🌐 **Optional React Frontend**: Deploy a separate React-based UI alongside the main HTMX application
@@ -16,7 +16,7 @@ A Terraform module for deploying the Hrafner AI application on Google Cloud Plat
 ## Architecture
 
 The module deploys:
-- **Hrafner Application**: Main Python/HTMX application on Cloud Run
+- **Hrafnar Application**: Main Python/HTMX application on Cloud Run
 - **React Frontend** (optional): Separate React UI on Cloud Run
 - **PostgreSQL Database**: Private Cloud SQL instance with automated backups
 - **VPC Network**: Private subnet with Cloud NAT for secure networking
@@ -25,15 +25,15 @@ The module deploys:
 
 ## Quick Start
 
-### Basic Deployment (Hrafner only)
+### Basic Deployment (Hrafnar only)
 
 ```hcl
-module "hrafner_deploy" {
-  source = "openteams-ai/hrafner-gcp-deploy/gcp"
+module "hrafnar_deploy" {
+  source = "openteams-ai/hrafnar-gcp-deploy/gcp"
 
   project_id   = "my-gcp-project"
-  name_prefix  = "prod-hrafner"
-  app_image    = "gcr.io/my-project/hrafner:latest"
+  name_prefix  = "prod-hrafnar"
+  app_image    = "gcr.io/my-project/hrafnar:latest"
   
   ai_api_keys = {
     OPENAI_API_KEY = "sk-..."
@@ -52,7 +52,7 @@ module "hrafner_deploy" {
 │   ├── dev/               # Development environment
 │   └── prod/              # Production environment
 ├── test/                  # Terratest suite
-├── cloud-run.tf           # Hrafner application deployment
+├── cloud-run.tf           # Hrafnar application deployment
 ├── cloud-run-react.tf     # Optional React frontend
 ├── database.tf            # Cloud SQL PostgreSQL
 ├── dns.tf                 # Cloudflare DNS records
@@ -162,7 +162,7 @@ The module includes comprehensive tests using Terratest:
 
 ### Test Coverage
 
-1. **Hrafner Module Functionality**: Tests variable validation and core functionality
+1. **Hrafnar Module Functionality**: Tests variable validation and core functionality
 2. **Cloudflare Integration**: Validates DNS configuration when enabled
 3. **GCP Resources**: Tests Cloud Run, Cloud SQL, and networking components
 4. **Configuration Scenarios**: Tests minimal and full-featured deployments
@@ -175,7 +175,7 @@ The module includes comprehensive tests using Terratest:
 # Run validation tests (no cloud resources)
 cd test && go test -v -run TestTerraformValidation
 cd test && go test -v -run TestExamplesValidation
-cd test && go test -v -run TestHrafnerModuleFunctionality
+cd test && go test -v -run TestHrafnarModuleFunctionality
 ```
 
 #### Integration Tests (Real Infrastructure)
@@ -185,7 +185,7 @@ Integration tests deploy actual infrastructure to test end-to-end functionality.
 **Required Environment Variables:**
 ```bash
 export TF_VAR_project_id="your-gcp-project-id"
-export TF_VAR_app_image="gcr.io/your-project/hrafner:latest"
+export TF_VAR_app_image="gcr.io/your-project/hrafnar:latest"
 export TF_VAR_openai_api_key="sk-your-openai-key"
 
 # Optional (for Cloudflare DNS testing):

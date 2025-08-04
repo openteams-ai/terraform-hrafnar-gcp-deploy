@@ -1,4 +1,4 @@
-# Cloud Run service for the hrafner application
+# Cloud Run service for the hrafnar application
 resource "google_cloud_run_service" "main_app" {
   name     = local.main_app_service_name
   location = var.region
@@ -126,7 +126,7 @@ resource "google_cloud_run_service" "main_app" {
   ]
 }
 
-# IAM policy to allow public access to the hrafner application
+# IAM policy to allow public access to the hrafnar application
 resource "google_cloud_run_service_iam_member" "main_app_public" {
   location = google_cloud_run_service.main_app.location
   project  = google_cloud_run_service.main_app.project
@@ -135,7 +135,7 @@ resource "google_cloud_run_service_iam_member" "main_app_public" {
   member   = "allUsers"
 }
 
-# Domain mapping for the hrafner application (if Cloudflare DNS is enabled)
+# Domain mapping for the hrafnar application (if Cloudflare DNS is enabled)
 resource "google_cloud_run_domain_mapping" "main_app" {
   count    = var.enable_cloudflare_dns && var.base_domain != "" ? 1 : 0
   location = var.region
@@ -154,7 +154,7 @@ resource "google_cloud_run_domain_mapping" "main_app" {
   depends_on = [google_cloud_run_service.main_app]
 }
 
-# Domain mapping for UI traffic (points to hrafner app if no React frontend)
+# Domain mapping for UI traffic (points to hrafnar app if no React frontend)
 resource "google_cloud_run_domain_mapping" "ui_app" {
   count = var.enable_cloudflare_dns && var.base_domain != "" && !var.enable_react_frontend && var.enable_htmx_frontend ? 1 : 0
 

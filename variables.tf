@@ -77,7 +77,7 @@ variable "database_log_retention_days" {
 
 # Application Configuration
 variable "app_image" {
-  description = "Container image for the hrafner application"
+  description = "Container image for the hrafnar application"
   type        = string
 }
 
@@ -88,37 +88,37 @@ variable "app_port" {
 }
 
 variable "app_cpu" {
-  description = "CPU allocation for the hrafner application"
+  description = "CPU allocation for the hrafnar application"
   type        = string
   default     = "1000m"
 }
 
 variable "app_memory" {
-  description = "Memory allocation for the hrafner application"
+  description = "Memory allocation for the hrafnar application"
   type        = string
   default     = "512Mi"
 }
 
 variable "app_min_instances" {
-  description = "Minimum number of instances for the hrafner application"
+  description = "Minimum number of instances for the hrafnar application"
   type        = number
   default     = 0
 }
 
 variable "app_max_instances" {
-  description = "Maximum number of instances for the hrafner application"
+  description = "Maximum number of instances for the hrafnar application"
   type        = number
   default     = 10
 }
 
 variable "app_env_vars" {
-  description = "Environment variables for the hrafner application"
+  description = "Environment variables for the hrafnar application"
   type        = map(string)
   default     = {}
 }
 
 variable "enable_htmx_frontend" {
-  description = "Enable built-in HTMX frontend in the hrafner application"
+  description = "Enable built-in HTMX frontend in the hrafnar application"
   type        = bool
   default     = true
 }

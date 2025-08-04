@@ -34,7 +34,7 @@ gcloud auth application-default login
 
 The tests require a valid container image. You can use:
 - Google's hello world image: `gcr.io/cloudrun/hello` (default)
-- Your own Hrafner application image
+- Your own Hrafnar application image
 
 ## Required Environment Variables
 
@@ -45,7 +45,7 @@ Set the following environment variables before running integration tests:
 export TF_VAR_project_id="your-gcp-project-id"
 
 # Optional - defaults to hello world image
-export TF_VAR_app_image="gcr.io/your-project/hrafner:latest"
+export TF_VAR_app_image="gcr.io/your-project/hrafnar:latest"
 
 # Optional - for AI functionality testing
 export TF_VAR_openai_api_key="sk-your-openai-key"

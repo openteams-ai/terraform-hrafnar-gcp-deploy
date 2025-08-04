@@ -3,7 +3,7 @@
 
 # Required variables
 project_id = "my-gcp-project-prod"
-app_image  = "gcr.io/my-project/hrafner:v1.0.0"
+app_image  = "gcr.io/my-project/hrafnar:v1.0.0"
 
 # AI API keys (keep these secure!)
 ai_api_keys = {
@@ -27,7 +27,7 @@ mcp_servers = {
 
 # React frontend configuration
 enable_react_frontend = true
-react_image          = "gcr.io/my-project/hrafner-ui:v1.0.0"
+react_image          = "gcr.io/my-project/hrafnar-ui:v1.0.0"
 enable_htmx_frontend = false
 
 # Cloudflare DNS configuration
