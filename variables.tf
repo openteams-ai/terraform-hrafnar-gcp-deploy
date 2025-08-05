@@ -93,6 +93,12 @@ variable "app_image_tag" {
   default     = "latest"
 }
 
+variable "app_image_sha" {
+  description = "Container image SHA (takes precedence over tag if provided)"
+  type        = string
+  default     = ""
+}
+
 variable "app_port" {
   description = "Port the application listens on"
   type        = number

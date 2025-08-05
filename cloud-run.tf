@@ -24,7 +24,7 @@ resource "google_cloud_run_service" "main_app" {
       timeout_seconds      = 300
 
       containers {
-        image = "${var.app_image}:${var.app_image_tag}"
+        image = var.app_image_sha != "" ? "${var.app_image}@${var.app_image_sha}" : "${var.app_image}:${var.app_image_tag}"
 
         command = var.app_command
 
