@@ -196,6 +196,7 @@ No modules.
 | [google_sql_database_instance.main](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/sql_database_instance) | resource |
 | [google_sql_user.main](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/sql_user) | resource |
 | [google_vpc_access_connector.main](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/vpc_access_connector) | resource |
+| [random_id.network_suffix](https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/id) | resource |
 | [random_password.db_password](https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/password) | resource |
 
 ## Inputs
@@ -203,9 +204,11 @@ No modules.
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
 | <a name="input_ai_api_keys"></a> [ai\_api\_keys](#input\_ai\_api\_keys) | Map of AI API keys where key is the environment variable name (e.g., OPENAI\_API\_KEY, ANTHROPIC\_API\_KEY) and value is the actual API key (stored in Secret Manager) | `map(string)` | `{}` | no |
+| <a name="input_app_command"></a> [app\_command](#input\_app\_command) | Command to run the container | `list(string)` | <pre>[<br/>  "serve"<br/>]</pre> | no |
 | <a name="input_app_cpu"></a> [app\_cpu](#input\_app\_cpu) | CPU allocation for the hrafnar application | `string` | `"1000m"` | no |
 | <a name="input_app_env_vars"></a> [app\_env\_vars](#input\_app\_env\_vars) | Environment variables for the hrafnar application | `map(string)` | `{}` | no |
-| <a name="input_app_image"></a> [app\_image](#input\_app\_image) | Container image for the hrafnar application | `string` | n/a | yes |
+| <a name="input_app_image"></a> [app\_image](#input\_app\_image) | Container image for the hrafnar application (without tag) | `string` | n/a | yes |
+| <a name="input_app_image_tag"></a> [app\_image\_tag](#input\_app\_image\_tag) | Container image tag | `string` | `"latest"` | no |
 | <a name="input_app_max_instances"></a> [app\_max\_instances](#input\_app\_max\_instances) | Maximum number of instances for the hrafnar application | `number` | `10` | no |
 | <a name="input_app_memory"></a> [app\_memory](#input\_app\_memory) | Memory allocation for the hrafnar application | `string` | `"512Mi"` | no |
 | <a name="input_app_min_instances"></a> [app\_min\_instances](#input\_app\_min\_instances) | Minimum number of instances for the hrafnar application | `number` | `0` | no |
@@ -228,7 +231,7 @@ No modules.
 | <a name="input_log_level"></a> [log\_level](#input\_log\_level) | Log level for applications | `string` | `"INFO"` | no |
 | <a name="input_mcp_servers"></a> [mcp\_servers](#input\_mcp\_servers) | MCP server configurations | <pre>map(object({<br/>    url         = string<br/>    api_key     = optional(string)<br/>    description = string<br/>  }))</pre> | `{}` | no |
 | <a name="input_name_prefix"></a> [name\_prefix](#input\_name\_prefix) | Prefix for resource naming | `string` | n/a | yes |
-| <a name="input_private_subnet_cidr"></a> [private\_subnet\_cidr](#input\_private\_subnet\_cidr) | CIDR block for the private subnet | `string` | `"10.0.1.0/24"` | no |
+| <a name="input_private_subnet_cidr"></a> [private\_subnet\_cidr](#input\_private\_subnet\_cidr) | CIDR block for the private subnet (must be /28 for VPC connector compatibility) | `string` | `"10.0.1.0/28"` | no |
 | <a name="input_project_id"></a> [project\_id](#input\_project\_id) | The GCP project ID where resources will be created | `string` | n/a | yes |
 | <a name="input_region"></a> [region](#input\_region) | The GCP region for resources | `string` | `"us-central1"` | no |
 | <a name="input_vpc_cidr"></a> [vpc\_cidr](#input\_vpc\_cidr) | CIDR block for the VPC | `string` | `"10.0.0.0/16"` | no |

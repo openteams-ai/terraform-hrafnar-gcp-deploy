@@ -64,12 +64,12 @@ Update your module configuration:
 ```hcl
 module "hrafnar_deploy" {
   source = "../.."
-  
+
   project_id    = "your-project-id"
   name_prefix   = "my-app"
   app_image     = "us-central1-docker.pkg.dev/your-project-id/quay-remote/reiemp/hrafnar"
   app_image_tag = "latest"
-  
+
   # ... other configuration
 }
 ```

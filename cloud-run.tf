@@ -26,6 +26,8 @@ resource "google_cloud_run_service" "main_app" {
       containers {
         image = "${var.app_image}:${var.app_image_tag}"
 
+        command = var.app_command
+
         ports {
           container_port = var.app_port
         }

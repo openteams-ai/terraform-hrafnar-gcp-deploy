@@ -99,6 +99,12 @@ variable "app_port" {
   default     = 8080
 }
 
+variable "app_command" {
+  description = "Command to run the container"
+  type        = list(string)
+  default     = ["serve"]
+}
+
 variable "app_cpu" {
   description = "CPU allocation for the hrafnar application"
   type        = string

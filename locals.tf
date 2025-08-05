@@ -35,7 +35,7 @@ locals {
   router_name         = "${local.resource_prefix}-router-${random_id.network_suffix.hex}"
   # VPC connector name must be <= 25 chars and match ^[a-z][-a-z0-9]{0,23}[a-z0-9]$
   # Add random suffix to avoid naming collisions
-  vpc_connector_name  = length("${local.resource_prefix}-conn-${random_id.network_suffix.hex}") <= 25 ? "${local.resource_prefix}-conn-${random_id.network_suffix.hex}" : "${substr(local.resource_prefix, 0, 11)}-conn-${random_id.network_suffix.hex}"
+  vpc_connector_name = length("${local.resource_prefix}-conn-${random_id.network_suffix.hex}") <= 25 ? "${local.resource_prefix}-conn-${random_id.network_suffix.hex}" : "${substr(local.resource_prefix, 0, 11)}-conn-${random_id.network_suffix.hex}"
 
   # Cloud Run service names
   main_app_service_name = "${local.resource_prefix}-app"

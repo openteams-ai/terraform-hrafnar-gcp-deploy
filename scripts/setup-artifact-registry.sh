@@ -37,7 +37,7 @@ else
         --description="Remote repository for quay.io images" \
         --remote-docker-repo=https://quay.io \
         --project="$PROJECT_ID"
-    
+
     echo "Repository created successfully!"
 fi
 
