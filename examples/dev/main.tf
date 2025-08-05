@@ -60,7 +60,6 @@ module "hrafnar_deploy" {
     HRAFNAR_SERVER_HOSTNAME                 = "0.0.0.0"
     HRAFNAR_SERVER_PORT                     = "8080"
     HRAFNAR_STORAGE_PERSISTENT_DATABASE_DSN = "sqlite:////var/hrafnar/state.db"
-    HRAFNAR_ASSISTANTS                      = "[\"hrafnar.assistants.AgenticAssistant\"]"
     HRAFNAR_AUTHENTICATION_METHOD = jsonencode({
       cls      = "hrafnar.serve.DummyBasicAuth"
       password = random_password.hrafnar_auth_password.result
@@ -68,7 +67,7 @@ module "hrafnar_deploy" {
   }
 
   # Cloudflare DNS integration
-  enable_cloudflare_dns = true
+  enable_cloudflare_dns = false
   cloudflare_zone_id    = var.cloudflare_zone_id
   base_domain           = var.base_domain
   app_subdomain         = var.app_subdomain

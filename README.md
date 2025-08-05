@@ -204,10 +204,11 @@ No modules.
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
 | <a name="input_ai_api_keys"></a> [ai\_api\_keys](#input\_ai\_api\_keys) | Map of AI API keys where key is the environment variable name (e.g., OPENAI\_API\_KEY, ANTHROPIC\_API\_KEY) and value is the actual API key (stored in Secret Manager) | `map(string)` | `{}` | no |
-| <a name="input_app_command"></a> [app\_command](#input\_app\_command) | Command to run the container | `list(string)` | <pre>[<br/>  "serve"<br/>]</pre> | no |
+| <a name="input_app_command"></a> [app\_command](#input\_app\_command) | Command to run the container | `list(string)` | <pre>[<br/>  "hrafnar",<br/>  "serve"<br/>]</pre> | no |
 | <a name="input_app_cpu"></a> [app\_cpu](#input\_app\_cpu) | CPU allocation for the hrafnar application | `string` | `"1000m"` | no |
 | <a name="input_app_env_vars"></a> [app\_env\_vars](#input\_app\_env\_vars) | Environment variables for the hrafnar application | `map(string)` | `{}` | no |
 | <a name="input_app_image"></a> [app\_image](#input\_app\_image) | Container image for the hrafnar application (without tag) | `string` | n/a | yes |
+| <a name="input_app_image_sha"></a> [app\_image\_sha](#input\_app\_image\_sha) | Container image SHA (takes precedence over tag if provided) | `string` | `""` | no |
 | <a name="input_app_image_tag"></a> [app\_image\_tag](#input\_app\_image\_tag) | Container image tag | `string` | `"latest"` | no |
 | <a name="input_app_max_instances"></a> [app\_max\_instances](#input\_app\_max\_instances) | Maximum number of instances for the hrafnar application | `number` | `10` | no |
 | <a name="input_app_memory"></a> [app\_memory](#input\_app\_memory) | Memory allocation for the hrafnar application | `string` | `"512Mi"` | no |
