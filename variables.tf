@@ -102,7 +102,7 @@ variable "app_port" {
 variable "app_command" {
   description = "Command to run the container"
   type        = list(string)
-  default     = ["serve"]
+  default     = ["hrafnar", "serve"]
 }
 
 variable "app_cpu" {
