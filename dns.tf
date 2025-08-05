@@ -6,7 +6,7 @@ resource "cloudflare_record" "app" {
   name    = var.app_subdomain
   content = "ghs.googlehosted.com"
   type    = "CNAME"
-  proxied = false  # Must be DNS-only initially for domain mapping to work
+  proxied = false # Must be DNS-only initially for domain mapping to work
 
   comment = "Managed by Terraform - Application endpoint for ${local.resource_prefix} hrafnar application"
 
