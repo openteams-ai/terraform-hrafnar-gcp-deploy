@@ -15,7 +15,7 @@ resource "google_secret_manager_secret" "hrafnar_auth_password" {
 
   labels = {
     environment = var.environment
-    project     = "demo-openteams-ai"
+    project     = "test-${var.name_prefix}-openteams-ai"
     managed_by  = "terraform"
   }
 }
@@ -80,7 +80,7 @@ module "hrafnar_deploy" {
   # Environment and labeling
   labels = {
     environment = var.environment
-    project     = "demo-openteams-ai"
+    project     = "test-${var.name_prefix}-openteams-ai"
     managed_by  = "terraform"
   }
 }

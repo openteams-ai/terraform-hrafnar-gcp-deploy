@@ -27,9 +27,9 @@ variable "vpc_cidr" {
 }
 
 variable "private_subnet_cidr" {
-  description = "CIDR block for the private subnet"
+  description = "CIDR block for the private subnet (must be /28 for VPC connector compatibility)"
   type        = string
-  default     = "10.0.1.0/24"
+  default     = "10.0.1.0/28"
 }
 
 variable "enable_nat_gateway" {
