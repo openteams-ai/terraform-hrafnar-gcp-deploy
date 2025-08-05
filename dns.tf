@@ -4,7 +4,7 @@ resource "cloudflare_record" "app" {
   count   = var.enable_cloudflare_dns && var.base_domain != "" ? 1 : 0
   zone_id = var.cloudflare_zone_id
   name    = var.app_subdomain
-  content = google_cloud_run_service.main_app.status[0].url
+  content = replace(google_cloud_run_service.main_app.status[0].url, "https://", "")
   type    = "CNAME"
   proxied = true
 
