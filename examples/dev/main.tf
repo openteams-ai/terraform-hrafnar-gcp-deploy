@@ -31,7 +31,10 @@ module "hrafnar_deploy" {
   # Required variables
   project_id  = var.project_id
   name_prefix = var.name_prefix
-  app_image   = "quay.io/reiemp/hrafnar:latest"
+  # For quay.io images, use Artifact Registry remote repository
+  # See docs/ARTIFACT_REGISTRY_SETUP.md for one-time setup instructions
+  app_image     = "${var.region}-docker.pkg.dev/${var.project_id}/quay-remote/reiemp/hrafnar"
+  app_image_tag = "latest"
 
   # Production configuration
   region     = var.region

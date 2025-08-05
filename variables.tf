@@ -83,8 +83,14 @@ variable "database_log_retention_days" {
 
 # Application Configuration
 variable "app_image" {
-  description = "Container image for the hrafnar application"
+  description = "Container image for the hrafnar application (without tag)"
   type        = string
+}
+
+variable "app_image_tag" {
+  description = "Container image tag"
+  type        = string
+  default     = "latest"
 }
 
 variable "app_port" {
