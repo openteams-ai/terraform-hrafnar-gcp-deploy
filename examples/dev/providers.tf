@@ -9,5 +9,5 @@ provider "google-beta" {
 }
 
 provider "cloudflare" {
-  api_token = var.cloudflare_api_token != "" ? var.cloudflare_api_token : "placeholder-token-1234567890abcdefghijklmnop"
+  api_token = var.cloudflare_api_token
 }

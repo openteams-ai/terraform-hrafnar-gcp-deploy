@@ -7,7 +7,6 @@ A Terraform module for deploying the Hrafnar AI application on Google Cloud Plat
 - 🚀 **Cloud Run Deployment**: Scalable serverless deployment for the Hrafnar application
 - 🔐 **Secure Secret Management**: AI API keys and database credentials stored in Google Secret Manager
 - 🗄️ **Managed PostgreSQL**: Cloud SQL PostgreSQL with automated backups and private networking
-- 🌐 **Optional React Frontend**: Deploy a separate React-based UI alongside the main HTMX application
 - 📡 **Cloudflare Integration**: Optional DNS management with automatic TLS certificates
 - 🔧 **MCP Server Support**: Integration with Model Context Protocol servers
 - 🛡️ **VPC Security**: Private networking with Cloud NAT for outbound connectivity
@@ -17,7 +16,6 @@ A Terraform module for deploying the Hrafnar AI application on Google Cloud Plat
 
 The module deploys:
 - **Hrafnar Application**: Main Python/HTMX application on Cloud Run
-- **React Frontend** (optional): Separate React UI on Cloud Run
 - **PostgreSQL Database**: Private Cloud SQL instance with automated backups
 - **VPC Network**: Private subnet with Cloud NAT for secure networking
 - **Secret Manager**: Secure storage for API keys and database credentials
@@ -25,7 +23,7 @@ The module deploys:
 
 ## Quick Start
 
-### Basic Deployment (Hrafnar only)
+### Basic Deployment
 
 ```hcl
 module "hrafnar_deploy" {
@@ -53,14 +51,12 @@ module "hrafnar_deploy" {
 │   └── prod/              # Production environment
 ├── test/                  # Terratest suite
 ├── cloud-run.tf           # Hrafnar application deployment
-├── cloud-run-react.tf     # Optional React frontend
 ├── database.tf            # Cloud SQL PostgreSQL
 ├── dns.tf                 # Cloudflare DNS records
 ├── iam.tf                 # Service accounts and permissions
 ├── locals.tf              # Local values and computed resources
 ├── networking.tf          # VPC, subnets, and Cloud NAT
 ├── outputs.tf             # Module outputs
-├── providers.tf           # Provider configurations
 ├── secrets.tf             # Secret Manager configuration
 ├── variables.tf           # Input variables
 ├── versions.tf            # Provider version constraints
@@ -166,15 +162,10 @@ No modules.
 
 | Name | Type |
 |------|------|
-| [cloudflare_record.api](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/record) | resource |
-| [cloudflare_record.ui](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/record) | resource |
+| [cloudflare_record.app](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/record) | resource |
 | [google_cloud_run_domain_mapping.main_app](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/cloud_run_domain_mapping) | resource |
-| [google_cloud_run_domain_mapping.react_frontend](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/cloud_run_domain_mapping) | resource |
-| [google_cloud_run_domain_mapping.ui_app](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/cloud_run_domain_mapping) | resource |
 | [google_cloud_run_service.main_app](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/cloud_run_service) | resource |
-| [google_cloud_run_service.react_frontend](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/cloud_run_service) | resource |
 | [google_cloud_run_service_iam_member.main_app_public](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/cloud_run_service_iam_member) | resource |
-| [google_cloud_run_service_iam_member.react_frontend_public](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/cloud_run_service_iam_member) | resource |
 | [google_compute_firewall.allow_health_checks](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/compute_firewall) | resource |
 | [google_compute_firewall.allow_internal](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/compute_firewall) | resource |
 | [google_compute_global_address.private_ip_address](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/compute_global_address) | resource |
@@ -186,8 +177,6 @@ No modules.
 | [google_project_iam_member.app_cloudsql_instanceuser](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/project_iam_member) | resource |
 | [google_project_iam_member.app_logging_writer](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/project_iam_member) | resource |
 | [google_project_iam_member.app_monitoring_writer](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/project_iam_member) | resource |
-| [google_project_iam_member.react_logging_writer](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/project_iam_member) | resource |
-| [google_project_iam_member.react_monitoring_writer](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/project_iam_member) | resource |
 | [google_project_service.required_apis](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/project_service) | resource |
 | [google_secret_manager_secret.ai_api_keys](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/secret_manager_secret) | resource |
 | [google_secret_manager_secret.db_connection](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/secret_manager_secret) | resource |
@@ -202,7 +191,6 @@ No modules.
 | [google_secret_manager_secret_version.db_password](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/secret_manager_secret_version) | resource |
 | [google_secret_manager_secret_version.mcp_api_keys](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/secret_manager_secret_version) | resource |
 | [google_service_account.app](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/service_account) | resource |
-| [google_service_account.react](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/service_account) | resource |
 | [google_service_networking_connection.private_vpc_connection](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/service_networking_connection) | resource |
 | [google_sql_database.main](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/sql_database) | resource |
 | [google_sql_database_instance.main](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/sql_database_instance) | resource |
@@ -215,7 +203,6 @@ No modules.
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
 | <a name="input_ai_api_keys"></a> [ai\_api\_keys](#input\_ai\_api\_keys) | Map of AI API keys where key is the environment variable name (e.g., OPENAI\_API\_KEY, ANTHROPIC\_API\_KEY) and value is the actual API key (stored in Secret Manager) | `map(string)` | `{}` | no |
-| <a name="input_api_subdomain"></a> [api\_subdomain](#input\_api\_subdomain) | Subdomain for API access (e.g., 'api' for api.example.com) | `string` | `"api"` | no |
 | <a name="input_app_cpu"></a> [app\_cpu](#input\_app\_cpu) | CPU allocation for the hrafnar application | `string` | `"1000m"` | no |
 | <a name="input_app_env_vars"></a> [app\_env\_vars](#input\_app\_env\_vars) | Environment variables for the hrafnar application | `map(string)` | `{}` | no |
 | <a name="input_app_image"></a> [app\_image](#input\_app\_image) | Container image for the hrafnar application | `string` | n/a | yes |
@@ -223,8 +210,8 @@ No modules.
 | <a name="input_app_memory"></a> [app\_memory](#input\_app\_memory) | Memory allocation for the hrafnar application | `string` | `"512Mi"` | no |
 | <a name="input_app_min_instances"></a> [app\_min\_instances](#input\_app\_min\_instances) | Minimum number of instances for the hrafnar application | `number` | `0` | no |
 | <a name="input_app_port"></a> [app\_port](#input\_app\_port) | Port the application listens on | `number` | `8080` | no |
-| <a name="input_base_domain"></a> [base\_domain](#input\_base\_domain) | Base domain name managed by Cloudflare (e.g., 'example.com'). Subdomains will be created under this domain for API and UI access | `string` | `""` | no |
-| <a name="input_cloudflare_api_token"></a> [cloudflare\_api\_token](#input\_cloudflare\_api\_token) | Cloudflare API token for DNS management (required if enable\_cloudflare\_dns is true) | `string` | `""` | no |
+| <a name="input_app_subdomain"></a> [app\_subdomain](#input\_app\_subdomain) | Subdomain for application access (e.g., 'app' for app.example.com) | `string` | `"app"` | no |
+| <a name="input_base_domain"></a> [base\_domain](#input\_base\_domain) | Base domain name managed by Cloudflare (e.g., 'example.com'). A subdomain will be created under this domain for application access | `string` | `""` | no |
 | <a name="input_cloudflare_zone_id"></a> [cloudflare\_zone\_id](#input\_cloudflare\_zone\_id) | Cloudflare zone ID for DNS records (required if enable\_cloudflare\_dns is true) | `string` | `""` | no |
 | <a name="input_database_backup_enabled"></a> [database\_backup\_enabled](#input\_database\_backup\_enabled) | Enable automated database backups | `bool` | `true` | no |
 | <a name="input_database_backup_retention_days"></a> [database\_backup\_retention\_days](#input\_database\_backup\_retention\_days) | Number of days to retain database backups | `number` | `7` | no |
@@ -233,10 +220,9 @@ No modules.
 | <a name="input_database_log_retention_days"></a> [database\_log\_retention\_days](#input\_database\_log\_retention\_days) | Number of days to retain database transaction logs | `number` | `7` | no |
 | <a name="input_database_tier"></a> [database\_tier](#input\_database\_tier) | Database instance tier | `string` | `"db-f1-micro"` | no |
 | <a name="input_enable_cloudflare_dns"></a> [enable\_cloudflare\_dns](#input\_enable\_cloudflare\_dns) | Enable Cloudflare DNS management | `bool` | `false` | no |
-| <a name="input_enable_htmx_frontend"></a> [enable\_htmx\_frontend](#input\_enable\_htmx\_frontend) | Enable built-in HTMX frontend in the hrafnar application | `bool` | `true` | no |
+| <a name="input_enable_database"></a> [enable\_database](#input\_enable\_database) | Enable Cloud SQL database deployment | `bool` | `true` | no |
 | <a name="input_enable_monitoring"></a> [enable\_monitoring](#input\_enable\_monitoring) | Enable Google Cloud Monitoring and Logging | `bool` | `true` | no |
 | <a name="input_enable_nat_gateway"></a> [enable\_nat\_gateway](#input\_enable\_nat\_gateway) | Enable Cloud NAT for outbound internet access | `bool` | `true` | no |
-| <a name="input_enable_react_frontend"></a> [enable\_react\_frontend](#input\_enable\_react\_frontend) | Enable optional React frontend deployment | `bool` | `false` | no |
 | <a name="input_enable_vpc_connector"></a> [enable\_vpc\_connector](#input\_enable\_vpc\_connector) | Enable VPC Connector for Cloud Run to VPC communication | `bool` | `true` | no |
 | <a name="input_labels"></a> [labels](#input\_labels) | Labels to apply to all resources | `map(string)` | `{}` | no |
 | <a name="input_log_level"></a> [log\_level](#input\_log\_level) | Log level for applications | `string` | `"INFO"` | no |
@@ -244,13 +230,7 @@ No modules.
 | <a name="input_name_prefix"></a> [name\_prefix](#input\_name\_prefix) | Prefix for resource naming | `string` | n/a | yes |
 | <a name="input_private_subnet_cidr"></a> [private\_subnet\_cidr](#input\_private\_subnet\_cidr) | CIDR block for the private subnet | `string` | `"10.0.1.0/24"` | no |
 | <a name="input_project_id"></a> [project\_id](#input\_project\_id) | The GCP project ID where resources will be created | `string` | n/a | yes |
-| <a name="input_react_cpu"></a> [react\_cpu](#input\_react\_cpu) | CPU allocation for the React frontend | `string` | `"500m"` | no |
-| <a name="input_react_image"></a> [react\_image](#input\_react\_image) | Container image for the React frontend (if enabled) | `string` | `""` | no |
-| <a name="input_react_max_instances"></a> [react\_max\_instances](#input\_react\_max\_instances) | Maximum number of instances for the React frontend | `number` | `5` | no |
-| <a name="input_react_memory"></a> [react\_memory](#input\_react\_memory) | Memory allocation for the React frontend | `string` | `"256Mi"` | no |
-| <a name="input_react_min_instances"></a> [react\_min\_instances](#input\_react\_min\_instances) | Minimum number of instances for the React frontend | `number` | `0` | no |
 | <a name="input_region"></a> [region](#input\_region) | The GCP region for resources | `string` | `"us-central1"` | no |
-| <a name="input_ui_subdomain"></a> [ui\_subdomain](#input\_ui\_subdomain) | Subdomain for UI access (e.g., 'app' for app.example.com). Points to React frontend if enabled, otherwise to HTMX frontend | `string` | `"app"` | no |
 | <a name="input_vpc_cidr"></a> [vpc\_cidr](#input\_vpc\_cidr) | CIDR block for the VPC | `string` | `"10.0.0.0/16"` | no |
 
 ## Outputs
@@ -258,7 +238,7 @@ No modules.
 | Name | Description |
 |------|-------------|
 | <a name="output_ai_api_key_secret_names"></a> [ai\_api\_key\_secret\_names](#output\_ai\_api\_key\_secret\_names) | Names of the Secret Manager secrets for AI API keys |
-| <a name="output_api_domain"></a> [api\_domain](#output\_api\_domain) | Full domain name for API access |
+| <a name="output_app_domain"></a> [app\_domain](#output\_app\_domain) | Full domain name for application access |
 | <a name="output_common_labels"></a> [common\_labels](#output\_common\_labels) | Common labels applied to all resources |
 | <a name="output_database_connection_name"></a> [database\_connection\_name](#output\_database\_connection\_name) | Connection name for the Cloud SQL database instance |
 | <a name="output_database_connection_secret_name"></a> [database\_connection\_secret\_name](#output\_database\_connection\_secret\_name) | Name of the Secret Manager secret for database connection string |
@@ -270,11 +250,7 @@ No modules.
 | <a name="output_hrafnar_app_url"></a> [hrafnar\_app\_url](#output\_hrafnar\_app\_url) | URL of the hrafnar application |
 | <a name="output_private_subnet_id"></a> [private\_subnet\_id](#output\_private\_subnet\_id) | ID of the private subnet |
 | <a name="output_private_subnet_name"></a> [private\_subnet\_name](#output\_private\_subnet\_name) | Name of the private subnet |
-| <a name="output_react_frontend_service_account_email"></a> [react\_frontend\_service\_account\_email](#output\_react\_frontend\_service\_account\_email) | Email of the React frontend service account (if enabled) |
-| <a name="output_react_frontend_service_name"></a> [react\_frontend\_service\_name](#output\_react\_frontend\_service\_name) | Name of the React frontend Cloud Run service (if enabled) |
-| <a name="output_react_frontend_url"></a> [react\_frontend\_url](#output\_react\_frontend\_url) | URL of the React frontend (if enabled) |
 | <a name="output_resource_prefix"></a> [resource\_prefix](#output\_resource\_prefix) | Prefix used for naming resources |
-| <a name="output_ui_domain"></a> [ui\_domain](#output\_ui\_domain) | Full domain name for UI access |
 | <a name="output_vpc_connector_id"></a> [vpc\_connector\_id](#output\_vpc\_connector\_id) | ID of the VPC connector (if enabled) |
 | <a name="output_vpc_id"></a> [vpc\_id](#output\_vpc\_id) | ID of the VPC network |
 | <a name="output_vpc_name"></a> [vpc\_name](#output\_vpc\_name) | Name of the VPC network |

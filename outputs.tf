@@ -9,42 +9,27 @@ output "hrafnar_app_service_name" {
   value       = google_cloud_run_service.main_app.name
 }
 
-# React Frontend Outputs (if enabled)
-output "react_frontend_url" {
-  description = "URL of the React frontend (if enabled)"
-  value       = var.enable_react_frontend ? google_cloud_run_service.react_frontend[0].status[0].url : null
-}
-
-output "react_frontend_service_name" {
-  description = "Name of the React frontend Cloud Run service (if enabled)"
-  value       = var.enable_react_frontend ? google_cloud_run_service.react_frontend[0].name : null
-}
 
 # DNS Outputs (if Cloudflare DNS is enabled)
-output "api_domain" {
-  description = "Full domain name for API access"
-  value       = var.enable_cloudflare_dns && var.base_domain != "" ? local.api_fqdn : null
+output "app_domain" {
+  description = "Full domain name for application access"
+  value       = var.enable_cloudflare_dns && var.base_domain != "" ? local.app_fqdn : null
 }
 
-output "ui_domain" {
-  description = "Full domain name for UI access"
-  value       = var.enable_cloudflare_dns && var.base_domain != "" && (var.enable_react_frontend || var.enable_htmx_frontend) ? local.ui_fqdn : null
-}
-
-# Database Outputs
+# Database Outputs (if database is enabled)
 output "database_instance_name" {
   description = "Name of the Cloud SQL database instance"
-  value       = google_sql_database_instance.main.name
+  value       = var.enable_database ? google_sql_database_instance.main[0].name : null
 }
 
 output "database_connection_name" {
   description = "Connection name for the Cloud SQL database instance"
-  value       = google_sql_database_instance.main.connection_name
+  value       = var.enable_database ? google_sql_database_instance.main[0].connection_name : null
 }
 
 output "database_private_ip" {
   description = "Private IP address of the Cloud SQL database instance"
-  value       = google_sql_database_instance.main.private_ip_address
+  value       = var.enable_database ? google_sql_database_instance.main[0].private_ip_address : null
 }
 
 # Network Outputs
@@ -79,10 +64,6 @@ output "hrafnar_app_service_account_email" {
   value       = google_service_account.app.email
 }
 
-output "react_frontend_service_account_email" {
-  description = "Email of the React frontend service account (if enabled)"
-  value       = var.enable_react_frontend ? google_service_account.react[0].email : null
-}
 
 # Secret Manager Outputs
 output "ai_api_key_secret_names" {
@@ -92,12 +73,12 @@ output "ai_api_key_secret_names" {
 
 output "database_password_secret_name" {
   description = "Name of the Secret Manager secret for database password"
-  value       = google_secret_manager_secret.db_password.secret_id
+  value       = var.enable_database ? google_secret_manager_secret.db_password[0].secret_id : null
 }
 
 output "database_connection_secret_name" {
   description = "Name of the Secret Manager secret for database connection string"
-  value       = google_secret_manager_secret.db_connection.secret_id
+  value       = var.enable_database ? google_secret_manager_secret.db_connection[0].secret_id : null
 }
 
 # Resource Naming Outputs

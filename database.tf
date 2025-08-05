@@ -1,11 +1,13 @@
 # Random password for database user
 resource "random_password" "db_password" {
+  count   = var.enable_database ? 1 : 0
   length  = 32
   special = true
 }
 
 # Cloud SQL PostgreSQL instance
 resource "google_sql_database_instance" "main" {
+  count            = var.enable_database ? 1 : 0
   name             = local.database_name
   database_version = "POSTGRES_15"
   region           = var.region
@@ -85,11 +87,12 @@ resource "google_sql_database_instance" "main" {
     }
   }
 
-  depends_on = [google_service_networking_connection.private_vpc_connection]
+  depends_on = [google_service_networking_connection.private_vpc_connection[0]]
 }
 
 # Private service connection for Cloud SQL
 resource "google_compute_global_address" "private_ip_address" {
+  count         = var.enable_database ? 1 : 0
   name          = "${local.resource_prefix}-private-ip"
   purpose       = "VPC_PEERING"
   address_type  = "INTERNAL"
@@ -99,28 +102,32 @@ resource "google_compute_global_address" "private_ip_address" {
 }
 
 resource "google_service_networking_connection" "private_vpc_connection" {
+  count                   = var.enable_database ? 1 : 0
   network                 = google_compute_network.main.id
   service                 = "servicenetworking.googleapis.com"
-  reserved_peering_ranges = [google_compute_global_address.private_ip_address.name]
+  reserved_peering_ranges = [google_compute_global_address.private_ip_address[0].name]
 }
 
 # Database
 resource "google_sql_database" "main" {
+  count    = var.enable_database ? 1 : 0
   name     = local.database_name
-  instance = google_sql_database_instance.main.name
+  instance = google_sql_database_instance.main[0].name
   project  = var.project_id
 }
 
 # Database user
 resource "google_sql_user" "main" {
+  count    = var.enable_database ? 1 : 0
   name     = local.database_user
-  instance = google_sql_database_instance.main.name
-  password = random_password.db_password.result
+  instance = google_sql_database_instance.main[0].name
+  password = random_password.db_password[0].result
   project  = var.project_id
 }
 
 # Store database password in Secret Manager
 resource "google_secret_manager_secret" "db_password" {
+  count     = var.enable_database ? 1 : 0
   secret_id = local.db_password_secret_name
   project   = var.project_id
 
@@ -132,6 +139,7 @@ resource "google_secret_manager_secret" "db_password" {
 }
 
 resource "google_secret_manager_secret_version" "db_password" {
-  secret      = google_secret_manager_secret.db_password.id
-  secret_data = random_password.db_password.result
+  count       = var.enable_database ? 1 : 0
+  secret      = google_secret_manager_secret.db_password[0].id
+  secret_data = random_password.db_password[0].result
 }

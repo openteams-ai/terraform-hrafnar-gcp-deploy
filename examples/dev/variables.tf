@@ -16,6 +16,18 @@ variable "ai_api_keys" {
   sensitive   = true
 }
 
+variable "region" {
+  description = "GCP region for production deployment"
+  type        = string
+  default     = "us-central1"
+}
+
+variable "environment" {
+  description = "Deployment environment (e.g., 'prod')"
+  type        = string
+  default     = "test"
+}
+
 variable "mcp_servers" {
   description = "MCP server configurations for development"
   type = map(object({
@@ -45,14 +57,27 @@ variable "cloudflare_api_token" {
   sensitive   = true
 }
 
+
 variable "cloudflare_zone_id" {
   description = "Cloudflare zone ID (required if enable_cloudflare_dns is true)"
   type        = string
   default     = ""
 }
 
+variable "name_prefix" {
+  description = "Prefix for resource names"
+  type        = string
+  default     = "hrafnar-dev"
+}
+
 variable "base_domain" {
   description = "Base domain name (e.g., 'example.com')"
   type        = string
   default     = ""
+}
+
+variable "app_subdomain" {
+  description = "Subdomain for application access (e.g., 'app' for app.example.com)"
+  type        = string
+  default     = "app"
 }

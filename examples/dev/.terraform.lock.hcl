@@ -62,7 +62,7 @@ provider "registry.opentofu.org/hashicorp/google-beta" {
 
 provider "registry.opentofu.org/hashicorp/random" {
   version     = "3.7.2"
-  constraints = "~> 3.1"
+  constraints = "~> 3.0, ~> 3.1"
   hashes = [
     "h1:yHMBbZOIHlXUuBQ8Mhioe0hwmhermuboq2eNNoCJaf8=",
     "zh:2ffeb1058bd7b21a9e15a5301abb863053a2d42dffa3f6cf654a1667e10f4727",

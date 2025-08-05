@@ -5,24 +5,19 @@ resource "google_service_account" "app" {
   project      = var.project_id
 }
 
-# Service account for the React frontend (if enabled)
-resource "google_service_account" "react" {
-  count        = var.enable_react_frontend ? 1 : 0
-  account_id   = local.react_service_account
-  display_name = "Cloud Run service account for ${local.resource_prefix} React frontend"
-  project      = var.project_id
-}
 
-# IAM binding for hrafnar app to access Secret Manager secrets
+# IAM binding for hrafnar app to access Secret Manager secrets (database)
 resource "google_secret_manager_secret_iam_member" "app_db_password" {
-  secret_id = google_secret_manager_secret.db_password.secret_id
+  count     = var.enable_database ? 1 : 0
+  secret_id = google_secret_manager_secret.db_password[0].secret_id
   role      = "roles/secretmanager.secretAccessor"
   member    = "serviceAccount:${google_service_account.app.email}"
   project   = var.project_id
 }
 
 resource "google_secret_manager_secret_iam_member" "app_db_connection" {
-  secret_id = google_secret_manager_secret.db_connection.secret_id
+  count     = var.enable_database ? 1 : 0
+  secret_id = google_secret_manager_secret.db_connection[0].secret_id
   role      = "roles/secretmanager.secretAccessor"
   member    = "serviceAccount:${google_service_account.app.email}"
   project   = var.project_id
@@ -53,6 +48,7 @@ resource "google_secret_manager_secret_iam_member" "app_mcp_api_keys" {
 
 # IAM binding for hrafnar app to access Cloud SQL
 resource "google_project_iam_member" "app_cloudsql_client" {
+  count   = var.enable_database ? 1 : 0
   project = var.project_id
   role    = "roles/cloudsql.client"
   member  = "serviceAccount:${google_service_account.app.email}"
@@ -60,6 +56,7 @@ resource "google_project_iam_member" "app_cloudsql_client" {
 
 # IAM binding for hrafnar app to access Cloud SQL instances
 resource "google_project_iam_member" "app_cloudsql_instanceuser" {
+  count   = var.enable_database ? 1 : 0
   project = var.project_id
   role    = "roles/cloudsql.instanceUser"
   member  = "serviceAccount:${google_service_account.app.email}"
@@ -80,20 +77,6 @@ resource "google_project_iam_member" "app_logging_writer" {
   member  = "serviceAccount:${google_service_account.app.email}"
 }
 
-# IAM binding for React frontend monitoring (if enabled)
-resource "google_project_iam_member" "react_monitoring_writer" {
-  count   = var.enable_react_frontend && var.enable_monitoring ? 1 : 0
-  project = var.project_id
-  role    = "roles/monitoring.metricWriter"
-  member  = "serviceAccount:${google_service_account.react[0].email}"
-}
-
-resource "google_project_iam_member" "react_logging_writer" {
-  count   = var.enable_react_frontend && var.enable_monitoring ? 1 : 0
-  project = var.project_id
-  role    = "roles/logging.logWriter"
-  member  = "serviceAccount:${google_service_account.react[0].email}"
-}
 
 # Enable required APIs
 resource "google_project_service" "required_apis" {

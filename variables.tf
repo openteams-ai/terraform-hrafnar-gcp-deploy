@@ -39,6 +39,12 @@ variable "enable_nat_gateway" {
 }
 
 # Database Configuration
+variable "enable_database" {
+  description = "Enable Cloud SQL database deployment"
+  type        = bool
+  default     = true
+}
+
 variable "database_tier" {
   description = "Database instance tier"
   type        = string
@@ -117,11 +123,6 @@ variable "app_env_vars" {
   default     = {}
 }
 
-variable "enable_htmx_frontend" {
-  description = "Enable built-in HTMX frontend in the hrafnar application"
-  type        = bool
-  default     = true
-}
 
 # AI Backend Configuration
 variable "ai_api_keys" {
@@ -141,42 +142,6 @@ variable "mcp_servers" {
   default = {}
 }
 
-# React Frontend Configuration (Optional)
-variable "enable_react_frontend" {
-  description = "Enable optional React frontend deployment"
-  type        = bool
-  default     = false
-}
-
-variable "react_image" {
-  description = "Container image for the React frontend (if enabled)"
-  type        = string
-  default     = ""
-}
-
-variable "react_cpu" {
-  description = "CPU allocation for the React frontend"
-  type        = string
-  default     = "500m"
-}
-
-variable "react_memory" {
-  description = "Memory allocation for the React frontend"
-  type        = string
-  default     = "256Mi"
-}
-
-variable "react_min_instances" {
-  description = "Minimum number of instances for the React frontend"
-  type        = number
-  default     = 0
-}
-
-variable "react_max_instances" {
-  description = "Maximum number of instances for the React frontend"
-  type        = number
-  default     = 5
-}
 
 # DNS and TLS Configuration (Optional)
 variable "enable_cloudflare_dns" {
@@ -185,12 +150,6 @@ variable "enable_cloudflare_dns" {
   default     = false
 }
 
-variable "cloudflare_api_token" {
-  description = "Cloudflare API token for DNS management (required if enable_cloudflare_dns is true)"
-  type        = string
-  default     = ""
-  sensitive   = true
-}
 
 variable "cloudflare_zone_id" {
   description = "Cloudflare zone ID for DNS records (required if enable_cloudflare_dns is true)"
@@ -199,19 +158,13 @@ variable "cloudflare_zone_id" {
 }
 
 variable "base_domain" {
-  description = "Base domain name managed by Cloudflare (e.g., 'example.com'). Subdomains will be created under this domain for API and UI access"
+  description = "Base domain name managed by Cloudflare (e.g., 'example.com'). A subdomain will be created under this domain for application access"
   type        = string
   default     = ""
 }
 
-variable "api_subdomain" {
-  description = "Subdomain for API access (e.g., 'api' for api.example.com)"
-  type        = string
-  default     = "api"
-}
-
-variable "ui_subdomain" {
-  description = "Subdomain for UI access (e.g., 'app' for app.example.com). Points to React frontend if enabled, otherwise to HTMX frontend"
+variable "app_subdomain" {
+  description = "Subdomain for application access (e.g., 'app' for app.example.com)"
   type        = string
   default     = "app"
 }

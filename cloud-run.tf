@@ -60,13 +60,16 @@ resource "google_cloud_run_service" "main_app" {
           }
         }
 
-        # Database connection string from Secret Manager
-        env {
-          name = "DATABASE_URL"
-          value_from {
-            secret_key_ref {
-              name = local.db_connection_secret
-              key  = "latest"
+        # Database connection string from Secret Manager (if database is enabled)
+        dynamic "env" {
+          for_each = var.enable_database ? [1] : []
+          content {
+            name = "DATABASE_URL"
+            value_from {
+              secret_key_ref {
+                name = local.db_connection_secret
+                key  = "latest"
+              }
             }
           }
         }
@@ -121,7 +124,6 @@ resource "google_cloud_run_service" "main_app" {
 
   depends_on = [
     google_project_service.required_apis,
-    google_secret_manager_secret_version.db_connection,
     google_secret_manager_secret_version.ai_api_keys
   ]
 }
@@ -136,30 +138,11 @@ resource "google_cloud_run_service_iam_member" "main_app_public" {
 }
 
 # Domain mapping for the hrafnar application (if Cloudflare DNS is enabled)
+# Domain mapping for the application
 resource "google_cloud_run_domain_mapping" "main_app" {
   count    = var.enable_cloudflare_dns && var.base_domain != "" ? 1 : 0
   location = var.region
-  name     = local.api_fqdn
-  project  = var.project_id
-
-  metadata {
-    namespace = var.project_id
-    labels    = local.common_labels
-  }
-
-  spec {
-    route_name = google_cloud_run_service.main_app.name
-  }
-
-  depends_on = [google_cloud_run_service.main_app]
-}
-
-# Domain mapping for UI traffic (points to hrafnar app if no React frontend)
-resource "google_cloud_run_domain_mapping" "ui_app" {
-  count = var.enable_cloudflare_dns && var.base_domain != "" && !var.enable_react_frontend && var.enable_htmx_frontend ? 1 : 0
-
-  location = var.region
-  name     = local.ui_fqdn
+  name     = local.app_fqdn
   project  = var.project_id
 
   metadata {

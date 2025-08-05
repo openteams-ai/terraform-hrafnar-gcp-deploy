@@ -87,7 +87,6 @@ func TestCloudflareIntegration(t *testing.T) {
 				"name_prefix":            "test-hrafnar",
 				"app_image":              "gcr.io/test/hrafnar:latest",
 				"enable_cloudflare_dns":  true,
-				"cloudflare_api_token":   "test_token_1234567890abcdefghijklmnopqrs",
 				"cloudflare_zone_id":     "test-zone-id",
 				"base_domain":           "example.com",
 			},
@@ -174,7 +173,6 @@ func TestRealisticConfiguration(t *testing.T) {
 				"enable_react_frontend":  true,
 				"react_image":            "gcr.io/test-project/hrafnar-ui:v1.0.0",
 				"enable_cloudflare_dns":  true,
-				"cloudflare_api_token":   "test_token_1234567890abcdefghijklmnopqrs",
 				"cloudflare_zone_id":     "test-zone",
 				"base_domain":           "test.example.com",
 				"ai_api_keys": map[string]string{

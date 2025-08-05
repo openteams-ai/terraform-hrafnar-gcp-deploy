@@ -10,8 +10,7 @@ locals {
   })
 
   # DNS configuration
-  api_fqdn = var.enable_cloudflare_dns && var.base_domain != "" ? "${var.api_subdomain}.${var.base_domain}" : ""
-  ui_fqdn  = var.enable_cloudflare_dns && var.base_domain != "" ? "${var.ui_subdomain}.${var.base_domain}" : ""
+  app_fqdn = var.enable_cloudflare_dns && var.base_domain != "" ? "${var.app_subdomain}.${var.base_domain}" : ""
 
 
   # Database configuration
@@ -22,19 +21,18 @@ locals {
   db_password_secret_name = "${local.resource_prefix}-db-password"
 
   # Service account names
-  app_service_account   = "${local.resource_prefix}-app"
-  react_service_account = "${local.resource_prefix}-react"
+  app_service_account = "${local.resource_prefix}-app"
 
   # Network names
   vpc_name            = "${local.resource_prefix}-vpc"
   private_subnet_name = "${local.resource_prefix}-private-subnet"
   nat_gateway_name    = "${local.resource_prefix}-nat-gateway"
   router_name         = "${local.resource_prefix}-router"
-  vpc_connector_name  = "${local.resource_prefix}-vpc-connector"
+  # VPC connector name must be <= 25 chars and match ^[a-z][-a-z0-9]{0,23}[a-z0-9]$
+  vpc_connector_name  = length("${local.resource_prefix}-connector") <= 25 ? "${local.resource_prefix}-connector" : "${substr(local.resource_prefix, 0, 15)}-connector"
 
   # Cloud Run service names
   main_app_service_name = "${local.resource_prefix}-app"
-  react_service_name    = "${local.resource_prefix}-react"
 
   # Environment variables for the hrafnar application
   app_environment_vars = merge(

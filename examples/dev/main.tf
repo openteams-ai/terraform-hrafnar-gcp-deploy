@@ -1,61 +1,86 @@
 # Development environment example for hrafnar GCP deployment
-module "hrafnar_dev" {
+
+resource "random_password" "hrafnar_auth_password" {
+  length  = 32
+  special = true
+}
+
+# Store authentication password in Secret Manager
+resource "google_secret_manager_secret" "hrafnar_auth_password" {
+  secret_id = "${var.name_prefix}-hrafnar-auth-password"
+
+  replication {
+    auto {}
+  }
+
+  labels = {
+    environment = var.environment
+    project     = "demo-openteams-ai"
+    managed_by  = "terraform"
+  }
+}
+
+resource "google_secret_manager_secret_version" "hrafnar_auth_password" {
+  secret      = google_secret_manager_secret.hrafnar_auth_password.id
+  secret_data = random_password.hrafnar_auth_password.result
+}
+
+module "hrafnar_deploy" {
   source = "../../"
 
-  # Core configuration
+  # Required variables
   project_id  = var.project_id
-  region      = "us-central1"
-  name_prefix = "dev-hrafnar"
+  name_prefix = var.name_prefix
+  app_image   = "quay.io/reiemp/hrafnar:latest"
 
-  # Hrafnar application
-  app_image         = var.app_image
-  app_min_instances = 0
-  app_max_instances = 3
-  app_cpu           = "500m"
-  app_memory        = "256Mi"
+  # Production configuration
+  region     = var.region
+  app_port   = 8080
+  app_cpu    = "1000m"
+  app_memory = "1Gi"
 
-  # Development database settings (smaller tier)
-  database_tier                  = "db-f1-micro"
-  database_disk_size             = 10
-  database_disk_autoresize_limit = 50
-  database_backup_enabled        = false
-  database_backup_retention_days = 3
-  database_log_retention_days    = 3
+  # Scaling configuration for production
+  app_min_instances = 1
+  app_max_instances = 1
 
-  # AI configuration
+  # Database configuration for production
+  database_tier                  = "db-custom-2-4096" # 2 vCPUs, 4GB RAM
+  database_disk_size             = 100
+  database_backup_enabled        = true
+  database_backup_retention_days = 30
+
+  # AI API keys
   ai_api_keys = var.ai_api_keys
 
-  # MCP servers (development endpoints)
-  mcp_servers = var.mcp_servers
+  # Application environment variables
+  app_env_vars = {
+    HRAFNAR_SERVER_HOSTNAME                 = "0.0.0.0"
+    HRAFNAR_SERVER_PORT                     = "8080"
+    HRAFNAR_STORAGE_PERSISTENT_DATABASE_DSN = "sqlite:////var/hrafnar/state.db"
+    HRAFNAR_ASSISTANTS                      = "[\"hrafnar.assistants.AgenticAssistant\"]"
+    HRAFNAR_AUTHENTICATION_METHOD = jsonencode({
+      cls      = "hrafnar.serve.DummyBasicAuth"
+      password = random_password.hrafnar_auth_password.result
+    })
+  }
 
-  # Network settings
-  vpc_cidr             = "10.1.0.0/16"
-  private_subnet_cidr  = "10.1.1.0/24"
-  enable_nat_gateway   = true
-  enable_vpc_connector = true
-
-  # Optional React frontend (disabled for dev to keep costs low)
-  enable_react_frontend = false
-  enable_htmx_frontend  = true
-
-  # DNS (optional for development)
-  enable_cloudflare_dns = var.enable_cloudflare_dns
-  cloudflare_api_token  = var.cloudflare_api_token
+  # Cloudflare DNS integration
+  enable_cloudflare_dns = true
   cloudflare_zone_id    = var.cloudflare_zone_id
   base_domain           = var.base_domain
-  api_subdomain         = "dev-api"
-  ui_subdomain          = "dev-app"
+  app_subdomain         = var.app_subdomain
 
-  # Monitoring
-  enable_monitoring = true
-  log_level         = "DEBUG"
+  # Infrastructure settings
+  enable_database      = false
+  enable_nat_gateway   = true
+  enable_vpc_connector = true
+  enable_monitoring    = true
+  log_level            = "INFO"
 
-  # Security (more permissive for development)
-
-  # Labels
+  # Environment and labeling
   labels = {
-    environment = "development"
-    team        = "engineering"
-    cost_center = "development"
+    environment = var.environment
+    project     = "demo-openteams-ai"
+    managed_by  = "terraform"
   }
 }
