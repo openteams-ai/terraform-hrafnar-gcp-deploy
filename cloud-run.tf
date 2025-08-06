@@ -37,7 +37,7 @@ resource "google_cloud_run_service" "main_app" {
           for_each = var.app_config_files
           content {
             name       = "config-${volume_mounts.key}"
-            mount_path = volume_mounts.value.mount_path
+            mount_path = dirname(volume_mounts.value.mount_path)
           }
         }
 
