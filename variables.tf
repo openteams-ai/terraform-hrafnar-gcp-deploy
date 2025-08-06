@@ -81,6 +81,22 @@ variable "database_log_retention_days" {
   default     = 7
 }
 
+variable "database_require_ssl" {
+  description = "Require SSL for database connections"
+  type        = bool
+  default     = true
+}
+
+variable "database_ssl_mode" {
+  description = "SSL mode for database connections"
+  type        = string
+  default     = "ENCRYPTED_ONLY"
+  validation {
+    condition     = contains(["ALLOW_UNENCRYPTED_AND_ENCRYPTED", "ENCRYPTED_ONLY", "TRUSTED_CLIENT_CERTIFICATE_REQUIRED"], var.database_ssl_mode)
+    error_message = "SSL mode must be one of: ALLOW_UNENCRYPTED_AND_ENCRYPTED, ENCRYPTED_ONLY, TRUSTED_CLIENT_CERTIFICATE_REQUIRED."
+  }
+}
+
 # Application Configuration
 variable "app_image" {
   description = "Container image for the hrafnar application (without tag)"
