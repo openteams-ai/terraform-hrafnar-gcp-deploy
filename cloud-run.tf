@@ -7,7 +7,7 @@ resource "google_cloud_run_service" "main_app" {
   template {
     metadata {
       labels = local.common_labels
-      annotations = {
+      annotations = merge({
         "autoscaling.knative.dev/minScale"         = tostring(var.app_min_instances)
         "autoscaling.knative.dev/maxScale"         = tostring(var.app_max_instances)
         "run.googleapis.com/execution-environment" = "gen2"
@@ -16,7 +16,10 @@ resource "google_cloud_run_service" "main_app" {
         "run.googleapis.com/vpc-access-egress"    = var.enable_vpc_connector ? "private-ranges-only" : null
         # CPU allocation
         "run.googleapis.com/cpu-throttling" = "false"
-      }
+        }, {
+        # Config hash annotations to force new revisions when config changes
+        for name, config in var.app_config_files : "config.hash.${name}" => sha256(config.content)
+      })
     }
 
     spec {
