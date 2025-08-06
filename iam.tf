@@ -81,15 +81,15 @@ resource "google_project_iam_member" "app_logging_writer" {
 # Enable required APIs
 resource "google_project_service" "required_apis" {
   for_each = toset([
-    "run.googleapis.com",                     # Cloud Run
-    "secretmanager.googleapis.com",           # Secret Manager
-    "compute.googleapis.com",                 # Compute Engine (for VPC)
-    "servicenetworking.googleapis.com",       # Service Networking (for Cloud SQL private IP)
-    "sqladmin.googleapis.com",                # Cloud SQL Admin API
-    "sql-component.googleapis.com",           # Cloud SQL Component API
-    "vpcaccess.googleapis.com",               # VPC Access (for VPC connector)
-    "iam.googleapis.com",                     # Identity and Access Management
-    "cloudresourcemanager.googleapis.com"    # Cloud Resource Manager
+    "run.googleapis.com",                 # Cloud Run
+    "secretmanager.googleapis.com",       # Secret Manager
+    "compute.googleapis.com",             # Compute Engine (for VPC)
+    "servicenetworking.googleapis.com",   # Service Networking (for Cloud SQL private IP)
+    "sqladmin.googleapis.com",            # Cloud SQL Admin API
+    "sql-component.googleapis.com",       # Cloud SQL Component API
+    "vpcaccess.googleapis.com",           # VPC Access (for VPC connector)
+    "iam.googleapis.com",                 # Identity and Access Management
+    "cloudresourcemanager.googleapis.com" # Cloud Resource Manager
   ])
 
   project = var.project_id

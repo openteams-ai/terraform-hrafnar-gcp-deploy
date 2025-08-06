@@ -67,7 +67,7 @@ resource "google_secret_manager_secret" "db_connection" {
 resource "google_secret_manager_secret_version" "db_connection" {
   count       = var.enable_database ? 1 : 0
   secret      = google_secret_manager_secret.db_connection[0].id
-  secret_data = "postgresql://${local.database_user}:${random_password.db_password[0].result}@${google_sql_database_instance.main[0].connection_name}/${local.database_name}"
+  secret_data = "postgresql+psycopg://${local.database_user}:${random_password.db_password[0].result}@${google_sql_database_instance.main[0].private_ip_address}:5432/${local.database_name}"
 }
 
 # Secret Manager secrets for config files

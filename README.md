@@ -179,14 +179,17 @@ No modules.
 | [google_project_iam_member.app_monitoring_writer](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/project_iam_member) | resource |
 | [google_project_service.required_apis](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/project_service) | resource |
 | [google_secret_manager_secret.ai_api_keys](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/secret_manager_secret) | resource |
+| [google_secret_manager_secret.config_files](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/secret_manager_secret) | resource |
 | [google_secret_manager_secret.db_connection](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/secret_manager_secret) | resource |
 | [google_secret_manager_secret.db_password](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/secret_manager_secret) | resource |
 | [google_secret_manager_secret.mcp_api_keys](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/secret_manager_secret) | resource |
 | [google_secret_manager_secret_iam_member.app_ai_api_keys](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/secret_manager_secret_iam_member) | resource |
+| [google_secret_manager_secret_iam_member.app_config_files](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/secret_manager_secret_iam_member) | resource |
 | [google_secret_manager_secret_iam_member.app_db_connection](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/secret_manager_secret_iam_member) | resource |
 | [google_secret_manager_secret_iam_member.app_db_password](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/secret_manager_secret_iam_member) | resource |
 | [google_secret_manager_secret_iam_member.app_mcp_api_keys](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/secret_manager_secret_iam_member) | resource |
 | [google_secret_manager_secret_version.ai_api_keys](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/secret_manager_secret_version) | resource |
+| [google_secret_manager_secret_version.config_files](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/secret_manager_secret_version) | resource |
 | [google_secret_manager_secret_version.db_connection](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/secret_manager_secret_version) | resource |
 | [google_secret_manager_secret_version.db_password](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/secret_manager_secret_version) | resource |
 | [google_secret_manager_secret_version.mcp_api_keys](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/secret_manager_secret_version) | resource |
@@ -205,6 +208,7 @@ No modules.
 |------|-------------|------|---------|:--------:|
 | <a name="input_ai_api_keys"></a> [ai\_api\_keys](#input\_ai\_api\_keys) | Map of AI API keys where key is the environment variable name (e.g., OPENAI\_API\_KEY, ANTHROPIC\_API\_KEY) and value is the actual API key (stored in Secret Manager) | `map(string)` | `{}` | no |
 | <a name="input_app_command"></a> [app\_command](#input\_app\_command) | Command to run the container | `list(string)` | <pre>[<br/>  "hrafnar",<br/>  "serve"<br/>]</pre> | no |
+| <a name="input_app_config_files"></a> [app\_config\_files](#input\_app\_config\_files) | Configuration files to mount as volumes from Secret Manager. Key is the config name, value contains file content and mount path. | <pre>map(object({<br/>    content    = string # File content to store in Secret Manager<br/>    mount_path = string # Path where file will be mounted in container (e.g., "/etc/config/app.yaml")<br/>  }))</pre> | `{}` | no |
 | <a name="input_app_cpu"></a> [app\_cpu](#input\_app\_cpu) | CPU allocation for the hrafnar application | `string` | `"1000m"` | no |
 | <a name="input_app_env_vars"></a> [app\_env\_vars](#input\_app\_env\_vars) | Environment variables for the hrafnar application | `map(string)` | `{}` | no |
 | <a name="input_app_image"></a> [app\_image](#input\_app\_image) | Container image for the hrafnar application (without tag) | `string` | n/a | yes |
