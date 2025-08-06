@@ -81,12 +81,6 @@ variable "database_log_retention_days" {
   default     = 7
 }
 
-variable "database_require_ssl" {
-  description = "Require SSL for database connections"
-  type        = bool
-  default     = false
-}
-
 variable "database_ssl_mode" {
   description = "SSL mode for database connections"
   type        = string
@@ -139,9 +133,9 @@ variable "valkey_auth_enabled" {
 variable "valkey_transit_encryption_mode" {
   description = "TLS mode for Redis instance"
   type        = string
-  default     = "SERVER_AUTH"
+  default     = "SERVER_AUTHENTICATION"
   validation {
-    condition     = contains(["DISABLED", "SERVER_AUTH"], var.valkey_transit_encryption_mode)
+    condition     = contains(["DISABLED", "SERVER_AUTHENTICATION"], var.valkey_transit_encryption_mode)
     error_message = "Transit encryption mode must be either DISABLED or SERVER_AUTH."
   }
 }

@@ -233,7 +233,6 @@ No modules.
 | <a name="input_database_disk_autoresize_limit"></a> [database\_disk\_autoresize\_limit](#input\_database\_disk\_autoresize\_limit) | Maximum disk size in GB for database autoresize | `number` | `100` | no |
 | <a name="input_database_disk_size"></a> [database\_disk\_size](#input\_database\_disk\_size) | Database disk size in GB | `number` | `20` | no |
 | <a name="input_database_log_retention_days"></a> [database\_log\_retention\_days](#input\_database\_log\_retention\_days) | Number of days to retain database transaction logs | `number` | `7` | no |
-| <a name="input_database_require_ssl"></a> [database\_require\_ssl](#input\_database\_require\_ssl) | Require SSL for database connections | `bool` | `false` | no |
 | <a name="input_database_ssl_mode"></a> [database\_ssl\_mode](#input\_database\_ssl\_mode) | SSL mode for database connections | `string` | `"ENCRYPTED_ONLY"` | no |
 | <a name="input_database_tier"></a> [database\_tier](#input\_database\_tier) | Database instance tier | `string` | `"db-f1-micro"` | no |
 | <a name="input_enable_cloudflare_dns"></a> [enable\_cloudflare\_dns](#input\_enable\_cloudflare\_dns) | Enable Cloudflare DNS management | `bool` | `false` | no |
@@ -255,7 +254,7 @@ No modules.
 | <a name="input_valkey_redis_configs"></a> [valkey\_redis\_configs](#input\_valkey\_redis\_configs) | Redis configuration parameters | `map(string)` | <pre>{<br/>  "maxmemory-policy": "allkeys-lru"<br/>}</pre> | no |
 | <a name="input_valkey_redis_version"></a> [valkey\_redis\_version](#input\_valkey\_redis\_version) | Redis version for the instance | `string` | `"REDIS_7_0"` | no |
 | <a name="input_valkey_tier"></a> [valkey\_tier](#input\_valkey\_tier) | Service tier of the Redis instance (BASIC or STANDARD\_HA) | `string` | `"BASIC"` | no |
-| <a name="input_valkey_transit_encryption_mode"></a> [valkey\_transit\_encryption\_mode](#input\_valkey\_transit\_encryption\_mode) | TLS mode for Redis instance | `string` | `"SERVER_AUTH"` | no |
+| <a name="input_valkey_transit_encryption_mode"></a> [valkey\_transit\_encryption\_mode](#input\_valkey\_transit\_encryption\_mode) | TLS mode for Redis instance | `string` | `"SERVER_AUTHENTICATION"` | no |
 | <a name="input_vpc_cidr"></a> [vpc\_cidr](#input\_vpc\_cidr) | CIDR block for the VPC | `string` | `"10.0.0.0/16"` | no |
 
 ## Outputs
