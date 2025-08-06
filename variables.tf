@@ -141,6 +141,15 @@ variable "app_env_vars" {
   default     = {}
 }
 
+variable "app_config_files" {
+  description = "Configuration files to mount as volumes from Secret Manager. Key is the config name, value contains file content and mount path."
+  type = map(object({
+    content    = string # File content to store in Secret Manager
+    mount_path = string # Path where file will be mounted in container (e.g., "/etc/config/app.yaml")
+  }))
+  default = {}
+}
+
 
 # AI Backend Configuration
 variable "ai_api_keys" {

@@ -81,18 +81,34 @@ resource "google_project_iam_member" "app_logging_writer" {
 # Enable required APIs
 resource "google_project_service" "required_apis" {
   for_each = toset([
-    "run.googleapis.com",
-    "sql-component.googleapis.com",
-    "sqladmin.googleapis.com",
-    "secretmanager.googleapis.com",
-    "vpcaccess.googleapis.com",
-    "servicenetworking.googleapis.com",
-    "compute.googleapis.com",
-    "cloudresourcemanager.googleapis.com"
+    "run.googleapis.com",                     # Cloud Run
+    "secretmanager.googleapis.com",           # Secret Manager
+    "compute.googleapis.com",                 # Compute Engine (for VPC)
+    "servicenetworking.googleapis.com",       # Service Networking (for Cloud SQL private IP)
+    "sqladmin.googleapis.com",                # Cloud SQL Admin API
+    "sql-component.googleapis.com",           # Cloud SQL Component API
+    "vpcaccess.googleapis.com",               # VPC Access (for VPC connector)
+    "iam.googleapis.com",                     # Identity and Access Management
+    "cloudresourcemanager.googleapis.com"    # Cloud Resource Manager
   ])
 
   project = var.project_id
   service = each.key
 
-  disable_on_destroy = false
+  disable_dependent_services = false
+  disable_on_destroy         = false
+
+  timeouts {
+    create = "10m"
+    update = "10m"
+  }
+}
+
+# Grant read access to config file secrets
+resource "google_secret_manager_secret_iam_member" "app_config_files" {
+  for_each  = var.app_config_files
+  project   = var.project_id
+  secret_id = google_secret_manager_secret.config_files[each.key].id
+  role      = "roles/secretmanager.secretAccessor"
+  member    = "serviceAccount:${google_service_account.app.email}"
 }

@@ -32,6 +32,15 @@ resource "google_cloud_run_service" "main_app" {
           container_port = var.app_port
         }
 
+        # Volume mounts for config files
+        dynamic "volume_mounts" {
+          for_each = var.app_config_files
+          content {
+            name       = "config-${volume_mounts.key}"
+            mount_path = volume_mounts.value.mount_path
+          }
+        }
+
         resources {
           limits = {
             cpu    = var.app_cpu
@@ -116,6 +125,22 @@ resource "google_cloud_run_service" "main_app" {
           failure_threshold     = 10
         }
       }
+
+      # Volumes for config files
+      dynamic "volumes" {
+        for_each = var.app_config_files
+        content {
+          name = "config-${volumes.key}"
+          secret {
+            secret_name  = google_secret_manager_secret.config_files[volumes.key].secret_id
+            default_mode = 0444 # Read-only for owner, group, others
+            items {
+              key  = "latest"
+              path = basename(volumes.value.mount_path)
+            }
+          }
+        }
+      }
     }
   }
 
@@ -126,7 +151,10 @@ resource "google_cloud_run_service" "main_app" {
 
   depends_on = [
     google_project_service.required_apis,
-    google_secret_manager_secret_version.ai_api_keys
+    google_secret_manager_secret_version.ai_api_keys,
+    google_secret_manager_secret_version.db_connection,
+    google_secret_manager_secret_version.mcp_api_keys,
+    google_secret_manager_secret_version.config_files
   ]
 }
 

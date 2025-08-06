@@ -69,3 +69,25 @@ resource "google_secret_manager_secret_version" "db_connection" {
   secret      = google_secret_manager_secret.db_connection[0].id
   secret_data = "postgresql://${local.database_user}:${random_password.db_password[0].result}@${google_sql_database_instance.main[0].connection_name}/${local.database_name}"
 }
+
+# Secret Manager secrets for config files
+resource "google_secret_manager_secret" "config_files" {
+  for_each  = var.app_config_files
+  secret_id = "${local.resource_prefix}-config-${each.key}"
+  project   = var.project_id
+
+  replication {
+    auto {}
+  }
+
+  labels = local.common_labels
+
+  depends_on = [google_project_service.required_apis]
+}
+
+# Secret versions for config files
+resource "google_secret_manager_secret_version" "config_files" {
+  for_each    = var.app_config_files
+  secret      = google_secret_manager_secret.config_files[each.key].id
+  secret_data = each.value.content
+}

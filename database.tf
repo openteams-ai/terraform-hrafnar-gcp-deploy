@@ -87,7 +87,10 @@ resource "google_sql_database_instance" "main" {
     }
   }
 
-  depends_on = [google_service_networking_connection.private_vpc_connection[0]]
+  depends_on = [
+    google_service_networking_connection.private_vpc_connection[0],
+    google_project_service.required_apis
+  ]
 }
 
 # Private service connection for Cloud SQL
@@ -106,6 +109,8 @@ resource "google_service_networking_connection" "private_vpc_connection" {
   network                 = google_compute_network.main.id
   service                 = "servicenetworking.googleapis.com"
   reserved_peering_ranges = [google_compute_global_address.private_ip_address[0].name]
+
+  depends_on = [google_project_service.required_apis]
 }
 
 # Database
@@ -136,6 +141,8 @@ resource "google_secret_manager_secret" "db_password" {
   replication {
     auto {}
   }
+
+  depends_on = [google_project_service.required_apis]
 }
 
 resource "google_secret_manager_secret_version" "db_password" {
