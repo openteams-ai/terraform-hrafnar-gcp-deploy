@@ -60,4 +60,17 @@ locals {
 
   # Secret Manager reference for database password
   db_connection_secret = "${local.resource_prefix}-db-connection"
+
+  # Valkey/Redis configuration
+  valkey_instance_name     = "${local.resource_prefix}-valkey"
+  valkey_reserved_ip_range = "10.1.0.0/29" # Small range for Redis instance
+  valkey_connection_secret = "${local.resource_prefix}-valkey-connection"
+  valkey_auth_secret       = "${local.resource_prefix}-valkey-auth"
+
+  # Valkey connection string format
+  valkey_connection_string = var.enable_valkey ? (
+    var.valkey_auth_enabled ?
+    "valkey://default:${google_redis_instance.valkey[0].auth_string}@${google_redis_instance.valkey[0].host}:${google_redis_instance.valkey[0].port}" :
+    "valkey://${google_redis_instance.valkey[0].host}:${google_redis_instance.valkey[0].port}"
+  ) : ""
 }

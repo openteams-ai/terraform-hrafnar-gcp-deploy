@@ -97,6 +97,89 @@ variable "database_ssl_mode" {
   }
 }
 
+# Valkey/Redis Configuration
+variable "enable_valkey" {
+  description = "Enable Google Cloud Memorystore for Redis (Valkey-compatible) deployment"
+  type        = bool
+  default     = false
+}
+
+variable "valkey_memory_size_gb" {
+  description = "Redis instance memory size in GB"
+  type        = number
+  default     = 1
+}
+
+variable "valkey_tier" {
+  description = "Service tier of the Redis instance (BASIC or STANDARD_HA)"
+  type        = string
+  default     = "BASIC"
+  validation {
+    condition     = contains(["BASIC", "STANDARD_HA"], var.valkey_tier)
+    error_message = "Valkey tier must be either BASIC or STANDARD_HA."
+  }
+}
+
+variable "valkey_redis_version" {
+  description = "Redis version for the instance"
+  type        = string
+  default     = "REDIS_7_0"
+  validation {
+    condition     = contains(["REDIS_6_X", "REDIS_7_0"], var.valkey_redis_version)
+    error_message = "Redis version must be either REDIS_6_X or REDIS_7_0."
+  }
+}
+
+variable "valkey_auth_enabled" {
+  description = "Whether AUTH is enabled for the Redis instance"
+  type        = bool
+  default     = true
+}
+
+variable "valkey_transit_encryption_mode" {
+  description = "TLS mode for Redis instance"
+  type        = string
+  default     = "SERVER_AUTH"
+  validation {
+    condition     = contains(["DISABLED", "SERVER_AUTH"], var.valkey_transit_encryption_mode)
+    error_message = "Transit encryption mode must be either DISABLED or SERVER_AUTH."
+  }
+}
+
+variable "valkey_redis_configs" {
+  description = "Redis configuration parameters"
+  type        = map(string)
+  default = {
+    maxmemory-policy = "allkeys-lru"
+  }
+}
+
+variable "valkey_maintenance_policy" {
+  description = "Maintenance policy for Redis instance"
+  type = object({
+    weekly_maintenance_window = object({
+      day = string # MONDAY, TUESDAY, etc.
+      start_time = object({
+        hours   = number # 0-23
+        minutes = number # 0-59
+        seconds = number # 0-59
+        nanos   = number # 0-999999999
+      })
+    })
+  })
+  default = {
+    weekly_maintenance_window = {
+      day = "SUNDAY"
+      start_time = {
+        hours   = 3
+        minutes = 0
+        seconds = 0
+        nanos   = 0
+      }
+    }
+  }
+}
+
 # Application Configuration
 variable "app_image" {
   description = "Container image for the hrafnar application (without tag)"

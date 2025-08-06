@@ -102,6 +102,48 @@ resource "google_cloud_run_service" "main_app" {
           }
         }
 
+        # Valkey connection URL from Secret Manager (if enabled)
+        dynamic "env" {
+          for_each = var.enable_valkey ? [1] : []
+          content {
+            name = "VALKEY_URL"
+            value_from {
+              secret_key_ref {
+                name = local.valkey_connection_secret
+                key  = "latest"
+              }
+            }
+          }
+        }
+
+        # Redis URL for backwards compatibility (if enabled)
+        dynamic "env" {
+          for_each = var.enable_valkey ? [1] : []
+          content {
+            name = "REDIS_URL"
+            value_from {
+              secret_key_ref {
+                name = local.valkey_connection_secret
+                key  = "latest"
+              }
+            }
+          }
+        }
+
+        # Valkey/Redis auth string from Secret Manager (if auth is enabled)
+        dynamic "env" {
+          for_each = var.enable_valkey && var.valkey_auth_enabled ? [1] : []
+          content {
+            name = "VALKEY_AUTH"
+            value_from {
+              secret_key_ref {
+                name = local.valkey_auth_secret
+                key  = "latest"
+              }
+            }
+          }
+        }
+
         # Health check
         liveness_probe {
           http_get {
@@ -154,7 +196,9 @@ resource "google_cloud_run_service" "main_app" {
     google_secret_manager_secret_version.ai_api_keys,
     google_secret_manager_secret_version.db_connection,
     google_secret_manager_secret_version.mcp_api_keys,
-    google_secret_manager_secret_version.config_files
+    google_secret_manager_secret_version.config_files,
+    google_secret_manager_secret_version.valkey_connection,
+    google_secret_manager_secret_version.valkey_auth
   ]
 }
 

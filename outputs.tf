@@ -91,3 +91,39 @@ output "common_labels" {
   description = "Common labels applied to all resources"
   value       = local.common_labels
 }
+
+# Valkey/Redis Outputs (if enabled)
+output "valkey_instance_name" {
+  description = "Name of the Valkey/Redis instance"
+  value       = var.enable_valkey ? google_redis_instance.valkey[0].name : null
+}
+
+output "valkey_host" {
+  description = "Host IP of the Valkey/Redis instance"
+  value       = var.enable_valkey ? google_redis_instance.valkey[0].host : null
+}
+
+output "valkey_port" {
+  description = "Port of the Valkey/Redis instance"
+  value       = var.enable_valkey ? google_redis_instance.valkey[0].port : null
+}
+
+output "valkey_connection_secret_name" {
+  description = "Name of the Secret Manager secret containing the Valkey connection URL"
+  value       = var.enable_valkey ? google_secret_manager_secret.valkey_connection[0].secret_id : null
+}
+
+output "valkey_auth_secret_name" {
+  description = "Name of the Secret Manager secret containing the Valkey auth string"
+  value       = var.enable_valkey && var.valkey_auth_enabled ? google_secret_manager_secret.valkey_auth[0].secret_id : null
+}
+
+output "valkey_tier" {
+  description = "Service tier of the Valkey/Redis instance"
+  value       = var.enable_valkey ? google_redis_instance.valkey[0].tier : null
+}
+
+output "valkey_memory_size_gb" {
+  description = "Memory size of the Valkey/Redis instance in GB"
+  value       = var.enable_valkey ? google_redis_instance.valkey[0].memory_size_gb : null
+}

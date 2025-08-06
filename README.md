@@ -178,21 +178,28 @@ No modules.
 | [google_project_iam_member.app_logging_writer](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/project_iam_member) | resource |
 | [google_project_iam_member.app_monitoring_writer](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/project_iam_member) | resource |
 | [google_project_service.required_apis](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/project_service) | resource |
+| [google_redis_instance.valkey](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/redis_instance) | resource |
 | [google_secret_manager_secret.ai_api_keys](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/secret_manager_secret) | resource |
 | [google_secret_manager_secret.config_files](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/secret_manager_secret) | resource |
 | [google_secret_manager_secret.db_connection](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/secret_manager_secret) | resource |
 | [google_secret_manager_secret.db_password](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/secret_manager_secret) | resource |
 | [google_secret_manager_secret.mcp_api_keys](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/secret_manager_secret) | resource |
+| [google_secret_manager_secret.valkey_auth](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/secret_manager_secret) | resource |
+| [google_secret_manager_secret.valkey_connection](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/secret_manager_secret) | resource |
 | [google_secret_manager_secret_iam_member.app_ai_api_keys](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/secret_manager_secret_iam_member) | resource |
 | [google_secret_manager_secret_iam_member.app_config_files](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/secret_manager_secret_iam_member) | resource |
 | [google_secret_manager_secret_iam_member.app_db_connection](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/secret_manager_secret_iam_member) | resource |
 | [google_secret_manager_secret_iam_member.app_db_password](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/secret_manager_secret_iam_member) | resource |
 | [google_secret_manager_secret_iam_member.app_mcp_api_keys](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/secret_manager_secret_iam_member) | resource |
+| [google_secret_manager_secret_iam_member.app_valkey_auth](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/secret_manager_secret_iam_member) | resource |
+| [google_secret_manager_secret_iam_member.app_valkey_connection](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/secret_manager_secret_iam_member) | resource |
 | [google_secret_manager_secret_version.ai_api_keys](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/secret_manager_secret_version) | resource |
 | [google_secret_manager_secret_version.config_files](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/secret_manager_secret_version) | resource |
 | [google_secret_manager_secret_version.db_connection](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/secret_manager_secret_version) | resource |
 | [google_secret_manager_secret_version.db_password](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/secret_manager_secret_version) | resource |
 | [google_secret_manager_secret_version.mcp_api_keys](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/secret_manager_secret_version) | resource |
+| [google_secret_manager_secret_version.valkey_auth](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/secret_manager_secret_version) | resource |
+| [google_secret_manager_secret_version.valkey_connection](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/secret_manager_secret_version) | resource |
 | [google_service_account.app](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/service_account) | resource |
 | [google_service_networking_connection.private_vpc_connection](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/service_networking_connection) | resource |
 | [google_sql_database.main](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/sql_database) | resource |
@@ -233,6 +240,7 @@ No modules.
 | <a name="input_enable_database"></a> [enable\_database](#input\_enable\_database) | Enable Cloud SQL database deployment | `bool` | `true` | no |
 | <a name="input_enable_monitoring"></a> [enable\_monitoring](#input\_enable\_monitoring) | Enable Google Cloud Monitoring and Logging | `bool` | `true` | no |
 | <a name="input_enable_nat_gateway"></a> [enable\_nat\_gateway](#input\_enable\_nat\_gateway) | Enable Cloud NAT for outbound internet access | `bool` | `true` | no |
+| <a name="input_enable_valkey"></a> [enable\_valkey](#input\_enable\_valkey) | Enable Google Cloud Memorystore for Redis (Valkey-compatible) deployment | `bool` | `false` | no |
 | <a name="input_enable_vpc_connector"></a> [enable\_vpc\_connector](#input\_enable\_vpc\_connector) | Enable VPC Connector for Cloud Run to VPC communication | `bool` | `true` | no |
 | <a name="input_labels"></a> [labels](#input\_labels) | Labels to apply to all resources | `map(string)` | `{}` | no |
 | <a name="input_log_level"></a> [log\_level](#input\_log\_level) | Log level for applications | `string` | `"INFO"` | no |
@@ -241,6 +249,13 @@ No modules.
 | <a name="input_private_subnet_cidr"></a> [private\_subnet\_cidr](#input\_private\_subnet\_cidr) | CIDR block for the private subnet (must be /28 for VPC connector compatibility) | `string` | `"10.0.1.0/28"` | no |
 | <a name="input_project_id"></a> [project\_id](#input\_project\_id) | The GCP project ID where resources will be created | `string` | n/a | yes |
 | <a name="input_region"></a> [region](#input\_region) | The GCP region for resources | `string` | `"us-central1"` | no |
+| <a name="input_valkey_auth_enabled"></a> [valkey\_auth\_enabled](#input\_valkey\_auth\_enabled) | Whether AUTH is enabled for the Redis instance | `bool` | `true` | no |
+| <a name="input_valkey_maintenance_policy"></a> [valkey\_maintenance\_policy](#input\_valkey\_maintenance\_policy) | Maintenance policy for Redis instance | <pre>object({<br/>    weekly_maintenance_window = object({<br/>      day = string # MONDAY, TUESDAY, etc.<br/>      start_time = object({<br/>        hours   = number # 0-23<br/>        minutes = number # 0-59<br/>        seconds = number # 0-59<br/>        nanos   = number # 0-999999999<br/>      })<br/>    })<br/>  })</pre> | <pre>{<br/>  "weekly_maintenance_window": {<br/>    "day": "SUNDAY",<br/>    "start_time": {<br/>      "hours": 3,<br/>      "minutes": 0,<br/>      "nanos": 0,<br/>      "seconds": 0<br/>    }<br/>  }<br/>}</pre> | no |
+| <a name="input_valkey_memory_size_gb"></a> [valkey\_memory\_size\_gb](#input\_valkey\_memory\_size\_gb) | Redis instance memory size in GB | `number` | `1` | no |
+| <a name="input_valkey_redis_configs"></a> [valkey\_redis\_configs](#input\_valkey\_redis\_configs) | Redis configuration parameters | `map(string)` | <pre>{<br/>  "maxmemory-policy": "allkeys-lru"<br/>}</pre> | no |
+| <a name="input_valkey_redis_version"></a> [valkey\_redis\_version](#input\_valkey\_redis\_version) | Redis version for the instance | `string` | `"REDIS_7_0"` | no |
+| <a name="input_valkey_tier"></a> [valkey\_tier](#input\_valkey\_tier) | Service tier of the Redis instance (BASIC or STANDARD\_HA) | `string` | `"BASIC"` | no |
+| <a name="input_valkey_transit_encryption_mode"></a> [valkey\_transit\_encryption\_mode](#input\_valkey\_transit\_encryption\_mode) | TLS mode for Redis instance | `string` | `"SERVER_AUTH"` | no |
 | <a name="input_vpc_cidr"></a> [vpc\_cidr](#input\_vpc\_cidr) | CIDR block for the VPC | `string` | `"10.0.0.0/16"` | no |
 
 ## Outputs
@@ -261,6 +276,13 @@ No modules.
 | <a name="output_private_subnet_id"></a> [private\_subnet\_id](#output\_private\_subnet\_id) | ID of the private subnet |
 | <a name="output_private_subnet_name"></a> [private\_subnet\_name](#output\_private\_subnet\_name) | Name of the private subnet |
 | <a name="output_resource_prefix"></a> [resource\_prefix](#output\_resource\_prefix) | Prefix used for naming resources |
+| <a name="output_valkey_auth_secret_name"></a> [valkey\_auth\_secret\_name](#output\_valkey\_auth\_secret\_name) | Name of the Secret Manager secret containing the Valkey auth string |
+| <a name="output_valkey_connection_secret_name"></a> [valkey\_connection\_secret\_name](#output\_valkey\_connection\_secret\_name) | Name of the Secret Manager secret containing the Valkey connection URL |
+| <a name="output_valkey_host"></a> [valkey\_host](#output\_valkey\_host) | Host IP of the Valkey/Redis instance |
+| <a name="output_valkey_instance_name"></a> [valkey\_instance\_name](#output\_valkey\_instance\_name) | Name of the Valkey/Redis instance |
+| <a name="output_valkey_memory_size_gb"></a> [valkey\_memory\_size\_gb](#output\_valkey\_memory\_size\_gb) | Memory size of the Valkey/Redis instance in GB |
+| <a name="output_valkey_port"></a> [valkey\_port](#output\_valkey\_port) | Port of the Valkey/Redis instance |
+| <a name="output_valkey_tier"></a> [valkey\_tier](#output\_valkey\_tier) | Service tier of the Valkey/Redis instance |
 | <a name="output_vpc_connector_id"></a> [vpc\_connector\_id](#output\_vpc\_connector\_id) | ID of the VPC connector (if enabled) |
 | <a name="output_vpc_id"></a> [vpc\_id](#output\_vpc\_id) | ID of the VPC network |
 | <a name="output_vpc_name"></a> [vpc\_name](#output\_vpc\_name) | Name of the VPC network |
