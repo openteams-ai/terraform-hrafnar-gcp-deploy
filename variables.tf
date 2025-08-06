@@ -84,7 +84,7 @@ variable "database_log_retention_days" {
 variable "database_require_ssl" {
   description = "Require SSL for database connections"
   type        = bool
-  default     = true
+  default     = false
 }
 
 variable "database_ssl_mode" {

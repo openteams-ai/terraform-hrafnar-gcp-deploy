@@ -226,7 +226,7 @@ No modules.
 | <a name="input_database_disk_autoresize_limit"></a> [database\_disk\_autoresize\_limit](#input\_database\_disk\_autoresize\_limit) | Maximum disk size in GB for database autoresize | `number` | `100` | no |
 | <a name="input_database_disk_size"></a> [database\_disk\_size](#input\_database\_disk\_size) | Database disk size in GB | `number` | `20` | no |
 | <a name="input_database_log_retention_days"></a> [database\_log\_retention\_days](#input\_database\_log\_retention\_days) | Number of days to retain database transaction logs | `number` | `7` | no |
-| <a name="input_database_require_ssl"></a> [database\_require\_ssl](#input\_database\_require\_ssl) | Require SSL for database connections | `bool` | `true` | no |
+| <a name="input_database_require_ssl"></a> [database\_require\_ssl](#input\_database\_require\_ssl) | Require SSL for database connections | `bool` | `false` | no |
 | <a name="input_database_ssl_mode"></a> [database\_ssl\_mode](#input\_database\_ssl\_mode) | SSL mode for database connections | `string` | `"ENCRYPTED_ONLY"` | no |
 | <a name="input_database_tier"></a> [database\_tier](#input\_database\_tier) | Database instance tier | `string` | `"db-f1-micro"` | no |
 | <a name="input_enable_cloudflare_dns"></a> [enable\_cloudflare\_dns](#input\_enable\_cloudflare\_dns) | Enable Cloudflare DNS management | `bool` | `false` | no |
