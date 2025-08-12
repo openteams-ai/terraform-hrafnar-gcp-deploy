@@ -49,7 +49,12 @@ locals {
       REGION     = var.region
     },
     # Add MCP server URLs if configured
-    { for name, config in var.mcp_servers : "MCP_${upper(name)}_URL" => config.url }
+    { for name, config in var.mcp_servers : "MCP_${upper(name)}_URL" => config.url },
+    # Add storage bucket name if enabled
+    var.enable_storage ? {
+      STORAGE_BUCKET_NAME = google_storage_bucket.hrafner_storage[0].name
+      GCS_BUCKET_NAME     = google_storage_bucket.hrafner_storage[0].name # Alternative env var name
+    } : {}
   )
 
   # Secret Manager references for AI API keys

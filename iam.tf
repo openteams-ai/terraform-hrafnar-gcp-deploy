@@ -131,3 +131,21 @@ resource "google_secret_manager_secret_iam_member" "app_valkey_auth" {
   role      = "roles/secretmanager.secretAccessor"
   member    = "serviceAccount:${google_service_account.app.email}"
 }
+
+# Grant read access to storage HMAC access ID secret
+resource "google_secret_manager_secret_iam_member" "app_storage_hmac_access_id" {
+  count     = var.enable_storage && var.storage_create_hmac_key ? 1 : 0
+  project   = var.project_id
+  secret_id = google_secret_manager_secret.storage_hmac_access_id[0].id
+  role      = "roles/secretmanager.secretAccessor"
+  member    = "serviceAccount:${google_service_account.app.email}"
+}
+
+# Grant read access to storage HMAC secret key
+resource "google_secret_manager_secret_iam_member" "app_storage_hmac_secret" {
+  count     = var.enable_storage && var.storage_create_hmac_key ? 1 : 0
+  project   = var.project_id
+  secret_id = google_secret_manager_secret.storage_hmac_secret[0].id
+  role      = "roles/secretmanager.secretAccessor"
+  member    = "serviceAccount:${google_service_account.app.email}"
+}

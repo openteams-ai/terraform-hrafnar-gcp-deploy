@@ -184,6 +184,8 @@ No modules.
 | [google_secret_manager_secret.db_connection](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/secret_manager_secret) | resource |
 | [google_secret_manager_secret.db_password](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/secret_manager_secret) | resource |
 | [google_secret_manager_secret.mcp_api_keys](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/secret_manager_secret) | resource |
+| [google_secret_manager_secret.storage_hmac_access_id](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/secret_manager_secret) | resource |
+| [google_secret_manager_secret.storage_hmac_secret](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/secret_manager_secret) | resource |
 | [google_secret_manager_secret.valkey_auth](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/secret_manager_secret) | resource |
 | [google_secret_manager_secret.valkey_connection](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/secret_manager_secret) | resource |
 | [google_secret_manager_secret_iam_member.app_ai_api_keys](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/secret_manager_secret_iam_member) | resource |
@@ -191,6 +193,8 @@ No modules.
 | [google_secret_manager_secret_iam_member.app_db_connection](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/secret_manager_secret_iam_member) | resource |
 | [google_secret_manager_secret_iam_member.app_db_password](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/secret_manager_secret_iam_member) | resource |
 | [google_secret_manager_secret_iam_member.app_mcp_api_keys](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/secret_manager_secret_iam_member) | resource |
+| [google_secret_manager_secret_iam_member.app_storage_hmac_access_id](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/secret_manager_secret_iam_member) | resource |
+| [google_secret_manager_secret_iam_member.app_storage_hmac_secret](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/secret_manager_secret_iam_member) | resource |
 | [google_secret_manager_secret_iam_member.app_valkey_auth](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/secret_manager_secret_iam_member) | resource |
 | [google_secret_manager_secret_iam_member.app_valkey_connection](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/secret_manager_secret_iam_member) | resource |
 | [google_secret_manager_secret_version.ai_api_keys](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/secret_manager_secret_version) | resource |
@@ -198,6 +202,8 @@ No modules.
 | [google_secret_manager_secret_version.db_connection](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/secret_manager_secret_version) | resource |
 | [google_secret_manager_secret_version.db_password](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/secret_manager_secret_version) | resource |
 | [google_secret_manager_secret_version.mcp_api_keys](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/secret_manager_secret_version) | resource |
+| [google_secret_manager_secret_version.storage_hmac_access_id](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/secret_manager_secret_version) | resource |
+| [google_secret_manager_secret_version.storage_hmac_secret](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/secret_manager_secret_version) | resource |
 | [google_secret_manager_secret_version.valkey_auth](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/secret_manager_secret_version) | resource |
 | [google_secret_manager_secret_version.valkey_connection](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/secret_manager_secret_version) | resource |
 | [google_service_account.app](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/service_account) | resource |
@@ -205,6 +211,11 @@ No modules.
 | [google_sql_database.main](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/sql_database) | resource |
 | [google_sql_database_instance.main](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/sql_database_instance) | resource |
 | [google_sql_user.main](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/sql_user) | resource |
+| [google_storage_bucket.hrafner_storage](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/storage_bucket) | resource |
+| [google_storage_bucket_iam_member.dev_storage_access](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/storage_bucket_iam_member) | resource |
+| [google_storage_bucket_iam_member.hrafner_app_storage_access](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/storage_bucket_iam_member) | resource |
+| [google_storage_bucket_object.storage_folders](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/storage_bucket_object) | resource |
+| [google_storage_hmac_key.hrafner_storage_hmac](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/storage_hmac_key) | resource |
 | [google_vpc_access_connector.main](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/vpc_access_connector) | resource |
 | [random_id.network_suffix](https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/id) | resource |
 | [random_password.db_password](https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/password) | resource |
@@ -239,6 +250,7 @@ No modules.
 | <a name="input_enable_database"></a> [enable\_database](#input\_enable\_database) | Enable Cloud SQL database deployment | `bool` | `true` | no |
 | <a name="input_enable_monitoring"></a> [enable\_monitoring](#input\_enable\_monitoring) | Enable Google Cloud Monitoring and Logging | `bool` | `true` | no |
 | <a name="input_enable_nat_gateway"></a> [enable\_nat\_gateway](#input\_enable\_nat\_gateway) | Enable Cloud NAT for outbound internet access | `bool` | `true` | no |
+| <a name="input_enable_storage"></a> [enable\_storage](#input\_enable\_storage) | Enable Cloud Storage bucket for the application | `bool` | `false` | no |
 | <a name="input_enable_valkey"></a> [enable\_valkey](#input\_enable\_valkey) | Enable Google Cloud Memorystore for Redis (Valkey-compatible) deployment | `bool` | `false` | no |
 | <a name="input_enable_vpc_connector"></a> [enable\_vpc\_connector](#input\_enable\_vpc\_connector) | Enable VPC Connector for Cloud Run to VPC communication | `bool` | `true` | no |
 | <a name="input_labels"></a> [labels](#input\_labels) | Labels to apply to all resources | `map(string)` | `{}` | no |
@@ -248,6 +260,17 @@ No modules.
 | <a name="input_private_subnet_cidr"></a> [private\_subnet\_cidr](#input\_private\_subnet\_cidr) | CIDR block for the private subnet (must be /28 for VPC connector compatibility) | `string` | `"10.0.1.0/28"` | no |
 | <a name="input_project_id"></a> [project\_id](#input\_project\_id) | The GCP project ID where resources will be created | `string` | n/a | yes |
 | <a name="input_region"></a> [region](#input\_region) | The GCP region for resources | `string` | `"us-central1"` | no |
+| <a name="input_storage_app_role"></a> [storage\_app\_role](#input\_storage\_app\_role) | IAM role for the application to access the storage bucket | `string` | `"roles/storage.objectAdmin"` | no |
+| <a name="input_storage_cors_config"></a> [storage\_cors\_config](#input\_storage\_cors\_config) | CORS configuration for the storage bucket | <pre>list(object({<br/>    origin          = list(string)<br/>    method          = list(string)<br/>    response_header = list(string)<br/>    max_age_seconds = number<br/>  }))</pre> | <pre>[<br/>  {<br/>    "max_age_seconds": 3600,<br/>    "method": [<br/>      "GET",<br/>      "HEAD",<br/>      "PUT",<br/>      "POST",<br/>      "DELETE"<br/>    ],<br/>    "origin": [<br/>      "*"<br/>    ],<br/>    "response_header": [<br/>      "*"<br/>    ]<br/>  }<br/>]</pre> | no |
+| <a name="input_storage_create_hmac_key"></a> [storage\_create\_hmac\_key](#input\_storage\_create\_hmac\_key) | Create HMAC key for S3-compatible access to the storage bucket | `bool` | `false` | no |
+| <a name="input_storage_dev_access_members"></a> [storage\_dev\_access\_members](#input\_storage\_dev\_access\_members) | List of IAM members to grant development access to the storage bucket (e.g., 'user:dev@example.com') | `list(string)` | `[]` | no |
+| <a name="input_storage_dev_role"></a> [storage\_dev\_role](#input\_storage\_dev\_role) | IAM role for development access to the storage bucket | `string` | `"roles/storage.objectAdmin"` | no |
+| <a name="input_storage_enable_dev_access"></a> [storage\_enable\_dev\_access](#input\_storage\_enable\_dev\_access) | Enable external access to the storage bucket for development | `bool` | `false` | no |
+| <a name="input_storage_folders"></a> [storage\_folders](#input\_storage\_folders) | List of folders to create in the storage bucket | `list(string)` | <pre>[<br/>  "files",<br/>  "thumbnails"<br/>]</pre> | no |
+| <a name="input_storage_force_destroy"></a> [storage\_force\_destroy](#input\_storage\_force\_destroy) | Force destroy the storage bucket even if it contains objects | `bool` | `false` | no |
+| <a name="input_storage_lifecycle_rules"></a> [storage\_lifecycle\_rules](#input\_storage\_lifecycle\_rules) | Lifecycle rules for the storage bucket | <pre>list(object({<br/>    condition = object({<br/>      age                   = optional(number)<br/>      num_newer_versions    = optional(number)<br/>      matches_prefix        = optional(list(string))<br/>      matches_storage_class = optional(list(string))<br/>    })<br/>    action = object({<br/>      type          = string<br/>      storage_class = optional(string)<br/>    })<br/>  }))</pre> | <pre>[<br/>  {<br/>    "action": {<br/>      "type": "Delete"<br/>    },<br/>    "condition": {<br/>      "age": 30,<br/>      "matches_prefix": [<br/>        "thumbnails/"<br/>      ]<br/>    }<br/>  },<br/>  {<br/>    "action": {<br/>      "type": "Delete"<br/>    },<br/>    "condition": {<br/>      "num_newer_versions": 5<br/>    }<br/>  }<br/>]</pre> | no |
+| <a name="input_storage_public_access_prevention"></a> [storage\_public\_access\_prevention](#input\_storage\_public\_access\_prevention) | Public access prevention setting for the storage bucket | `string` | `"enforced"` | no |
+| <a name="input_storage_versioning_enabled"></a> [storage\_versioning\_enabled](#input\_storage\_versioning\_enabled) | Enable versioning for the storage bucket | `bool` | `true` | no |
 | <a name="input_valkey_auth_enabled"></a> [valkey\_auth\_enabled](#input\_valkey\_auth\_enabled) | Whether AUTH is enabled for the Redis instance | `bool` | `true` | no |
 | <a name="input_valkey_maintenance_policy"></a> [valkey\_maintenance\_policy](#input\_valkey\_maintenance\_policy) | Maintenance policy for Redis instance | <pre>object({<br/>    weekly_maintenance_window = object({<br/>      day = string # MONDAY, TUESDAY, etc.<br/>      start_time = object({<br/>        hours   = number # 0-23<br/>        minutes = number # 0-59<br/>        seconds = number # 0-59<br/>        nanos   = number # 0-999999999<br/>      })<br/>    })<br/>  })</pre> | <pre>{<br/>  "weekly_maintenance_window": {<br/>    "day": "SUNDAY",<br/>    "start_time": {<br/>      "hours": 3,<br/>      "minutes": 0,<br/>      "nanos": 0,<br/>      "seconds": 0<br/>    }<br/>  }<br/>}</pre> | no |
 | <a name="input_valkey_memory_size_gb"></a> [valkey\_memory\_size\_gb](#input\_valkey\_memory\_size\_gb) | Redis instance memory size in GB | `number` | `1` | no |
@@ -275,6 +298,11 @@ No modules.
 | <a name="output_private_subnet_id"></a> [private\_subnet\_id](#output\_private\_subnet\_id) | ID of the private subnet |
 | <a name="output_private_subnet_name"></a> [private\_subnet\_name](#output\_private\_subnet\_name) | Name of the private subnet |
 | <a name="output_resource_prefix"></a> [resource\_prefix](#output\_resource\_prefix) | Prefix used for naming resources |
+| <a name="output_storage_bucket_name"></a> [storage\_bucket\_name](#output\_storage\_bucket\_name) | Name of the Cloud Storage bucket |
+| <a name="output_storage_bucket_self_link"></a> [storage\_bucket\_self\_link](#output\_storage\_bucket\_self\_link) | Self link of the Cloud Storage bucket |
+| <a name="output_storage_bucket_url"></a> [storage\_bucket\_url](#output\_storage\_bucket\_url) | URL of the Cloud Storage bucket |
+| <a name="output_storage_hmac_access_id_secret_name"></a> [storage\_hmac\_access\_id\_secret\_name](#output\_storage\_hmac\_access\_id\_secret\_name) | Name of the Secret Manager secret containing the storage HMAC access ID |
+| <a name="output_storage_hmac_secret_secret_name"></a> [storage\_hmac\_secret\_secret\_name](#output\_storage\_hmac\_secret\_secret\_name) | Name of the Secret Manager secret containing the storage HMAC secret key |
 | <a name="output_valkey_auth_secret_name"></a> [valkey\_auth\_secret\_name](#output\_valkey\_auth\_secret\_name) | Name of the Secret Manager secret containing the Valkey auth string |
 | <a name="output_valkey_connection_secret_name"></a> [valkey\_connection\_secret\_name](#output\_valkey\_connection\_secret\_name) | Name of the Secret Manager secret containing the Valkey connection URL |
 | <a name="output_valkey_host"></a> [valkey\_host](#output\_valkey\_host) | Host IP of the Valkey/Redis instance |

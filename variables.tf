@@ -263,6 +263,124 @@ variable "mcp_servers" {
 }
 
 
+# Storage Configuration
+variable "enable_storage" {
+  description = "Enable Cloud Storage bucket for the application"
+  type        = bool
+  default     = false
+}
+
+variable "storage_force_destroy" {
+  description = "Force destroy the storage bucket even if it contains objects"
+  type        = bool
+  default     = false
+}
+
+variable "storage_versioning_enabled" {
+  description = "Enable versioning for the storage bucket"
+  type        = bool
+  default     = true
+}
+
+variable "storage_folders" {
+  description = "List of folders to create in the storage bucket"
+  type        = list(string)
+  default     = ["files", "thumbnails"]
+}
+
+variable "storage_public_access_prevention" {
+  description = "Public access prevention setting for the storage bucket"
+  type        = string
+  default     = "enforced"
+  validation {
+    condition     = contains(["inherited", "enforced"], var.storage_public_access_prevention)
+    error_message = "Public access prevention must be either 'inherited' or 'enforced'."
+  }
+}
+
+variable "storage_app_role" {
+  description = "IAM role for the application to access the storage bucket"
+  type        = string
+  default     = "roles/storage.objectAdmin"
+}
+
+variable "storage_enable_dev_access" {
+  description = "Enable external access to the storage bucket for development"
+  type        = bool
+  default     = false
+}
+
+variable "storage_dev_role" {
+  description = "IAM role for development access to the storage bucket"
+  type        = string
+  default     = "roles/storage.objectAdmin"
+}
+
+variable "storage_dev_access_members" {
+  description = "List of IAM members to grant development access to the storage bucket (e.g., 'user:dev@example.com')"
+  type        = list(string)
+  default     = []
+}
+
+variable "storage_create_hmac_key" {
+  description = "Create HMAC key for S3-compatible access to the storage bucket"
+  type        = bool
+  default     = false
+}
+
+variable "storage_lifecycle_rules" {
+  description = "Lifecycle rules for the storage bucket"
+  type = list(object({
+    condition = object({
+      age                   = optional(number)
+      num_newer_versions    = optional(number)
+      matches_prefix        = optional(list(string))
+      matches_storage_class = optional(list(string))
+    })
+    action = object({
+      type          = string
+      storage_class = optional(string)
+    })
+  }))
+  default = [
+    {
+      condition = {
+        age            = 30
+        matches_prefix = ["thumbnails/"]
+      }
+      action = {
+        type = "Delete"
+      }
+    },
+    {
+      condition = {
+        num_newer_versions = 5
+      }
+      action = {
+        type = "Delete"
+      }
+    }
+  ]
+}
+
+variable "storage_cors_config" {
+  description = "CORS configuration for the storage bucket"
+  type = list(object({
+    origin          = list(string)
+    method          = list(string)
+    response_header = list(string)
+    max_age_seconds = number
+  }))
+  default = [
+    {
+      origin          = ["*"]
+      method          = ["GET", "HEAD", "PUT", "POST", "DELETE"]
+      response_header = ["*"]
+      max_age_seconds = 3600
+    }
+  ]
+}
+
 # DNS and TLS Configuration (Optional)
 variable "enable_cloudflare_dns" {
   description = "Enable Cloudflare DNS management"

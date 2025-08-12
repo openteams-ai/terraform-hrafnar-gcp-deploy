@@ -127,3 +127,29 @@ output "valkey_memory_size_gb" {
   description = "Memory size of the Valkey/Redis instance in GB"
   value       = var.enable_valkey ? google_redis_instance.valkey[0].memory_size_gb : null
 }
+
+# Storage Outputs (if enabled)
+output "storage_bucket_name" {
+  description = "Name of the Cloud Storage bucket"
+  value       = var.enable_storage ? google_storage_bucket.hrafner_storage[0].name : null
+}
+
+output "storage_bucket_url" {
+  description = "URL of the Cloud Storage bucket"
+  value       = var.enable_storage ? google_storage_bucket.hrafner_storage[0].url : null
+}
+
+output "storage_bucket_self_link" {
+  description = "Self link of the Cloud Storage bucket"
+  value       = var.enable_storage ? google_storage_bucket.hrafner_storage[0].self_link : null
+}
+
+output "storage_hmac_access_id_secret_name" {
+  description = "Name of the Secret Manager secret containing the storage HMAC access ID"
+  value       = var.enable_storage && var.storage_create_hmac_key ? google_secret_manager_secret.storage_hmac_access_id[0].secret_id : null
+}
+
+output "storage_hmac_secret_secret_name" {
+  description = "Name of the Secret Manager secret containing the storage HMAC secret key"
+  value       = var.enable_storage && var.storage_create_hmac_key ? google_secret_manager_secret.storage_hmac_secret[0].secret_id : null
+}

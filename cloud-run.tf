@@ -147,6 +147,34 @@ resource "google_cloud_run_service" "main_app" {
           }
         }
 
+        # Storage HMAC access ID from Secret Manager (if storage and HMAC are enabled)
+        dynamic "env" {
+          for_each = var.enable_storage && var.storage_create_hmac_key ? [1] : []
+          content {
+            name = "STORAGE_HMAC_ACCESS_ID"
+            value_from {
+              secret_key_ref {
+                name = google_secret_manager_secret.storage_hmac_access_id[0].secret_id
+                key  = "latest"
+              }
+            }
+          }
+        }
+
+        # Storage HMAC secret key from Secret Manager (if storage and HMAC are enabled)
+        dynamic "env" {
+          for_each = var.enable_storage && var.storage_create_hmac_key ? [1] : []
+          content {
+            name = "STORAGE_HMAC_SECRET"
+            value_from {
+              secret_key_ref {
+                name = google_secret_manager_secret.storage_hmac_secret[0].secret_id
+                key  = "latest"
+              }
+            }
+          }
+        }
+
         # Health check
         liveness_probe {
           http_get {
