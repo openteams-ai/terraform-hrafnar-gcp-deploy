@@ -90,7 +90,8 @@ resource "google_project_service" "required_apis" {
     "vpcaccess.googleapis.com",            # VPC Access (for VPC connector)
     "iam.googleapis.com",                  # Identity and Access Management
     "cloudresourcemanager.googleapis.com", # Cloud Resource Manager
-    "redis.googleapis.com"                 # Cloud Memorystore for Redis (Valkey-compatible)
+    "redis.googleapis.com",                # Cloud Memorystore for Redis (Valkey-compatible)
+    "storage.googleapis.com"               # Cloud Storage
   ])
 
   project = var.project_id
