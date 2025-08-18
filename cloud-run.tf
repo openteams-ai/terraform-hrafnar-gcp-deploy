@@ -11,11 +11,14 @@ resource "google_cloud_run_service" "main_app" {
         "autoscaling.knative.dev/minScale"         = tostring(var.app_min_instances)
         "autoscaling.knative.dev/maxScale"         = tostring(var.app_max_instances)
         "run.googleapis.com/execution-environment" = "gen2"
-        # VPC connector annotation (if enabled)
-        "run.googleapis.com/vpc-access-connector" = var.enable_vpc_connector ? google_vpc_access_connector.main[0].name : null
-        "run.googleapis.com/vpc-access-egress"    = var.enable_vpc_connector ? "private-ranges-only" : null
         # CPU allocation
-        "run.googleapis.com/cpu-throttling" = "false"
+        "run.googleapis.com/cpu-throttling" = "false",
+        # Direct VPC Egress
+        "run.googleapis.com/network-interfaces" = jsonencode([{
+          "network"    = google_compute_network.main.id
+          "subnetwork" = google_compute_subnetwork.private.id
+          "tags"       = ["cloud-run"]
+        }])
         }, {
         # Config hash annotations to force new revisions when config changes
         for name, config in var.app_config_files : "config.hash.${name}" => sha256(config.content)

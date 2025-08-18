@@ -426,12 +426,6 @@ variable "log_level" {
 
 # Security Configuration
 
-variable "enable_vpc_connector" {
-  description = "Enable VPC Connector for Cloud Run to VPC communication"
-  type        = bool
-  default     = true
-}
-
 # Resource Tags
 variable "labels" {
   description = "Labels to apply to all resources"

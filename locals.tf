@@ -33,9 +33,6 @@ locals {
   private_subnet_name = "${local.resource_prefix}-subnet-${random_id.network_suffix.hex}"
   nat_gateway_name    = "${local.resource_prefix}-nat-${random_id.network_suffix.hex}"
   router_name         = "${local.resource_prefix}-router-${random_id.network_suffix.hex}"
-  # VPC connector name must be <= 25 chars and match ^[a-z][-a-z0-9]{0,23}[a-z0-9]$
-  # Add random suffix to avoid naming collisions
-  vpc_connector_name = length("${local.resource_prefix}-conn-${random_id.network_suffix.hex}") <= 25 ? "${local.resource_prefix}-conn-${random_id.network_suffix.hex}" : "${substr(local.resource_prefix, 0, 11)}-conn-${random_id.network_suffix.hex}"
 
   # Cloud Run service names
   main_app_service_name = "${local.resource_prefix}-app"

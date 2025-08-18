@@ -43,26 +43,6 @@ resource "google_compute_router_nat" "main" {
   }
 }
 
-# VPC Connector for Cloud Run to VPC communication
-resource "google_vpc_access_connector" "main" {
-  count   = var.enable_vpc_connector ? 1 : 0
-  name    = local.vpc_connector_name
-  region  = var.region
-  project = var.project_id
-
-  subnet {
-    name       = google_compute_subnetwork.private.name
-    project_id = var.project_id
-  }
-
-  # Minimum instances for the connector
-  min_instances = 2
-  max_instances = 3
-
-  # Machine type for the connector
-  machine_type = "e2-micro"
-}
-
 # Firewall rule to allow health checks for Cloud Run
 resource "google_compute_firewall" "allow_health_checks" {
   name    = "${local.resource_prefix}-allow-health-checks"
