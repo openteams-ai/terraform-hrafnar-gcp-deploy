@@ -216,7 +216,6 @@ No modules.
 | [google_storage_bucket_iam_member.hrafner_app_storage_access](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/storage_bucket_iam_member) | resource |
 | [google_storage_bucket_object.storage_folders](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/storage_bucket_object) | resource |
 | [google_storage_hmac_key.hrafner_storage_hmac](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/storage_hmac_key) | resource |
-| [google_vpc_access_connector.main](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/vpc_access_connector) | resource |
 | [random_id.network_suffix](https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/id) | resource |
 | [random_password.db_password](https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/password) | resource |
 
@@ -252,12 +251,11 @@ No modules.
 | <a name="input_enable_nat_gateway"></a> [enable\_nat\_gateway](#input\_enable\_nat\_gateway) | Enable Cloud NAT for outbound internet access | `bool` | `true` | no |
 | <a name="input_enable_storage"></a> [enable\_storage](#input\_enable\_storage) | Enable Cloud Storage bucket for the application | `bool` | `false` | no |
 | <a name="input_enable_valkey"></a> [enable\_valkey](#input\_enable\_valkey) | Enable Google Cloud Memorystore for Redis (Valkey-compatible) deployment | `bool` | `false` | no |
-| <a name="input_enable_vpc_connector"></a> [enable\_vpc\_connector](#input\_enable\_vpc\_connector) | Enable VPC Connector for Cloud Run to VPC communication | `bool` | `true` | no |
 | <a name="input_labels"></a> [labels](#input\_labels) | Labels to apply to all resources | `map(string)` | `{}` | no |
 | <a name="input_log_level"></a> [log\_level](#input\_log\_level) | Log level for applications | `string` | `"INFO"` | no |
 | <a name="input_mcp_servers"></a> [mcp\_servers](#input\_mcp\_servers) | MCP server configurations | <pre>map(object({<br/>    url         = string<br/>    api_key     = optional(string)<br/>    description = string<br/>  }))</pre> | `{}` | no |
 | <a name="input_name_prefix"></a> [name\_prefix](#input\_name\_prefix) | Prefix for resource naming | `string` | n/a | yes |
-| <a name="input_private_subnet_cidr"></a> [private\_subnet\_cidr](#input\_private\_subnet\_cidr) | CIDR block for the private subnet (must be /28 for VPC connector compatibility) | `string` | `"10.0.1.0/28"` | no |
+| <a name="input_private_subnet_cidr"></a> [private\_subnet\_cidr](#input\_private\_subnet\_cidr) | CIDR block for the private subnet | `string` | `"10.0.0.0/24"` | no |
 | <a name="input_project_id"></a> [project\_id](#input\_project\_id) | The GCP project ID where resources will be created | `string` | n/a | yes |
 | <a name="input_region"></a> [region](#input\_region) | The GCP region for resources | `string` | `"us-central1"` | no |
 | <a name="input_storage_app_role"></a> [storage\_app\_role](#input\_storage\_app\_role) | IAM role for the application to access the storage bucket | `string` | `"roles/storage.objectAdmin"` | no |
@@ -310,7 +308,6 @@ No modules.
 | <a name="output_valkey_memory_size_gb"></a> [valkey\_memory\_size\_gb](#output\_valkey\_memory\_size\_gb) | Memory size of the Valkey/Redis instance in GB |
 | <a name="output_valkey_port"></a> [valkey\_port](#output\_valkey\_port) | Port of the Valkey/Redis instance |
 | <a name="output_valkey_tier"></a> [valkey\_tier](#output\_valkey\_tier) | Service tier of the Valkey/Redis instance |
-| <a name="output_vpc_connector_id"></a> [vpc\_connector\_id](#output\_vpc\_connector\_id) | ID of the VPC connector (if enabled) |
 | <a name="output_vpc_id"></a> [vpc\_id](#output\_vpc\_id) | ID of the VPC network |
 | <a name="output_vpc_name"></a> [vpc\_name](#output\_vpc\_name) | Name of the VPC network |
 <!-- END_TF_DOCS -->

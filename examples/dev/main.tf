@@ -55,6 +55,9 @@ module "hrafnar_deploy" {
   # AI API keys
   ai_api_keys = var.ai_api_keys
 
+  # MCP server configuration
+  mcp_servers = var.mcp_servers
+
   # Application environment variables
   app_env_vars = {
     HRAFNAR_SERVER_HOSTNAME                 = "0.0.0.0"
@@ -67,17 +70,16 @@ module "hrafnar_deploy" {
   }
 
   # Cloudflare DNS integration
-  enable_cloudflare_dns = false
+  enable_cloudflare_dns = var.enable_cloudflare_dns
   cloudflare_zone_id    = var.cloudflare_zone_id
   base_domain           = var.base_domain
   app_subdomain         = var.app_subdomain
 
   # Infrastructure settings
-  enable_database      = false
-  enable_nat_gateway   = true
-  enable_vpc_connector = true
-  enable_monitoring    = true
-  log_level            = "INFO"
+  enable_database    = false
+  enable_nat_gateway = true
+  enable_monitoring  = true
+  log_level          = "INFO"
 
   # Environment and labeling
   labels = {

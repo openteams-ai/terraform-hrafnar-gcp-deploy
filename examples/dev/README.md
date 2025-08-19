@@ -103,7 +103,6 @@ module "hrafnar_gcp_deploy" {
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
 | <a name="input_ai_api_keys"></a> [ai\_api\_keys](#input\_ai\_api\_keys) | Map of AI API keys (e.g., OPENAI\_API\_KEY, ANTHROPIC\_API\_KEY) | `map(string)` | `{}` | no |
-| <a name="input_app_image"></a> [app\_image](#input\_app\_image) | Container image for the hrafnar application | `string` | `"gcr.io/my-project/hrafnar:dev"` | no |
 | <a name="input_app_subdomain"></a> [app\_subdomain](#input\_app\_subdomain) | Subdomain for application access (e.g., 'app' for app.example.com) | `string` | `"app"` | no |
 | <a name="input_base_domain"></a> [base\_domain](#input\_base\_domain) | Base domain name (e.g., 'example.com') | `string` | `""` | no |
 | <a name="input_cloudflare_api_token"></a> [cloudflare\_api\_token](#input\_cloudflare\_api\_token) | Cloudflare API token (required if enable\_cloudflare\_dns is true) | `string` | `""` | no |

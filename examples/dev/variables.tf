@@ -3,12 +3,6 @@ variable "project_id" {
   type        = string
 }
 
-variable "app_image" {
-  description = "Container image for the hrafnar application"
-  type        = string
-  default     = "gcr.io/my-project/hrafnar:dev"
-}
-
 variable "ai_api_keys" {
   description = "Map of AI API keys (e.g., OPENAI_API_KEY, ANTHROPIC_API_KEY)"
   type        = map(string)
