@@ -121,5 +121,6 @@ module "hrafnar_gcp_deploy" {
 | <a name="output_app_domain"></a> [app\_domain](#output\_app\_domain) | Development app domain (if DNS enabled) |
 | <a name="output_database_connection_name"></a> [database\_connection\_name](#output\_database\_connection\_name) | Development database connection name |
 | <a name="output_hrafnar_app_url"></a> [hrafnar\_app\_url](#output\_hrafnar\_app\_url) | URL of the hrafnar application in development |
+| <a name="output_hrafnar_auth_password"></a> [hrafnar\_auth\_password](#output\_hrafnar\_auth\_password) | The authentication password for Hrafnar |
 | <a name="output_vpc_name"></a> [vpc\_name](#output\_vpc\_name) | Development VPC network name |
 <!-- END_TF_DOCS -->

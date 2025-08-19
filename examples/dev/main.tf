@@ -33,8 +33,8 @@ module "hrafnar_deploy" {
   name_prefix = var.name_prefix
   # For quay.io images, use Artifact Registry remote repository
   # See docs/ARTIFACT_REGISTRY_SETUP.md for one-time setup instructions
-  app_image     = "${var.region}-docker.pkg.dev/${var.project_id}/quay-remote/reiemp/hrafnar"
-  app_image_tag = "latest"
+  app_image     = "${var.region}-docker.pkg.dev/${var.project_id}/quay-remote/openteams/hrafnar"
+  app_image_tag = "0.1.0.dev295-gf0b1471"
 
   # Production configuration
   region     = var.region
@@ -65,7 +65,9 @@ module "hrafnar_deploy" {
     HRAFNAR_STORAGE_PERSISTENT_DATABASE_DSN = "sqlite:////var/hrafnar/state.db"
     HRAFNAR_AUTHENTICATION_METHOD = jsonencode({
       cls_or_fn = "hrafnar.serve.DummyBasicAuth"
-      password  = random_password.hrafnar_auth_password.result
+      params = {
+        password = random_password.hrafnar_auth_password.result
+      }
     })
   }
 
@@ -87,4 +89,10 @@ module "hrafnar_deploy" {
     project     = "test-${var.name_prefix}-openteams-ai"
     managed_by  = "terraform"
   }
+}
+
+output "hrafnar_auth_password" {
+  description = "The authentication password for Hrafnar"
+  value       = random_password.hrafnar_auth_password.result
+  sensitive   = true
 }
