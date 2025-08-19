@@ -64,8 +64,8 @@ module "hrafnar_deploy" {
     HRAFNAR_SERVER_PORT                     = "8080"
     HRAFNAR_STORAGE_PERSISTENT_DATABASE_DSN = "sqlite:////var/hrafnar/state.db"
     HRAFNAR_AUTHENTICATION_METHOD = jsonencode({
-      cls      = "hrafnar.serve.DummyBasicAuth"
-      password = random_password.hrafnar_auth_password.result
+      cls_or_fn = "hrafnar.serve.DummyBasicAuth"
+      password  = random_password.hrafnar_auth_password.result
     })
   }
 
