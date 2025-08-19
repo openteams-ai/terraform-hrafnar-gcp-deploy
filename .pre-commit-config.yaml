@@ -21,3 +21,12 @@ repos:
         args: ['--maxkb=100']
       - id: check-merge-conflict
       - id: detect-private-key
+
+  - repo: https://github.com/terraform-docs/terraform-docs
+    rev: "cf462c5da36feb66051cf0a6f1124594ed9adc7c" # v0.20.0
+    hooks:
+      - name: "terraform-docs"
+        id: terraform-docs-go
+        args: ["markdown", "table", "--output-file", "README.md"] #, "./terraform/modules/argocd"]
+        files: .*\.tf$
+        pass_filenames: false
