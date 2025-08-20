@@ -5,6 +5,11 @@ resource "random_password" "db_password" {
   special = true
 }
 
+locals {
+  # necessary until https://github.com/openteams-ai/hrafnar/issues/59 is resolved
+  url_encoded_db_pwd = var.enable_database ? urlencode(random_password.db_password[0].result) : ""
+}
+
 # Cloud SQL PostgreSQL instance
 resource "google_sql_database_instance" "main" {
   count            = var.enable_database ? 1 : 0
