@@ -81,7 +81,7 @@ resource "google_cloud_run_service" "main_app" {
         dynamic "env" {
           for_each = var.enable_database ? [1] : []
           content {
-            name = "DATABASE_URL"
+            name = "HRAFNAR_STORAGE_PERSISTENT_DATABASE_DSN"
             value_from {
               secret_key_ref {
                 name = local.db_connection_secret

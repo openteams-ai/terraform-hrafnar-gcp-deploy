@@ -34,7 +34,7 @@ module "hrafnar_deploy" {
   # For quay.io images, use Artifact Registry remote repository
   # See docs/ARTIFACT_REGISTRY_SETUP.md for one-time setup instructions
   app_image     = "${var.region}-docker.pkg.dev/${var.project_id}/quay-remote/reiemp/hrafnar"
-  app_image_tag = "0.1.0.dev295-gf0b1471"
+  app_image_tag = var.app_image_tag
 
   # Production configuration
   region     = var.region
@@ -60,9 +60,8 @@ module "hrafnar_deploy" {
 
   # Application environment variables
   app_env_vars = {
-    HRAFNAR_SERVER_HOSTNAME                 = "0.0.0.0"
-    HRAFNAR_SERVER_PORT                     = "8080"
-    HRAFNAR_STORAGE_PERSISTENT_DATABASE_DSN = "sqlite:////var/hrafnar/state.db"
+    HRAFNAR_SERVER_HOSTNAME = "0.0.0.0"
+    HRAFNAR_SERVER_PORT     = "8080"
     HRAFNAR_AUTHENTICATION_METHOD = jsonencode({
       cls_or_fn = "hrafnar.serve.DummyBasicAuth"
       params = {
@@ -79,7 +78,7 @@ module "hrafnar_deploy" {
   app_subdomain         = var.app_subdomain
 
   # Infrastructure settings
-  enable_database    = false
+  enable_database    = var.enable_database
   enable_nat_gateway = true
   enable_monitoring  = true
   log_level          = "INFO"

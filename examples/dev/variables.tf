@@ -3,6 +3,18 @@ variable "project_id" {
   type        = string
 }
 
+variable "app_image_tag" {
+  description = "Tag for the Hrafnar application image"
+  type        = string
+  default     = "0.1.0.dev295-gf0b1471"
+}
+
+variable "enable_database" {
+  description = "Enable persistent database (Cloud SQL)"
+  type        = bool
+  default     = false
+}
+
 variable "ai_api_keys" {
   description = "Map of AI API keys (e.g., OPENAI_API_KEY, ANTHROPIC_API_KEY)"
   type        = map(string)
