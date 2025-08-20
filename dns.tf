@@ -1,4 +1,11 @@
 
+check "dns_configuration" {
+  assert {
+    condition     = !(var.base_domain != "" && var.app_subdomain != "" && !var.enable_cloudflare_dns)
+    error_message = "Base domain and app subdomain are configured but enable_cloudflare_dns is false. DNS record will not be created."
+  }
+}
+
 # DNS CNAME record for application subdomain pointing to Google Cloud Run
 resource "cloudflare_record" "app" {
   count   = var.enable_cloudflare_dns && var.base_domain != "" ? 1 : 0
