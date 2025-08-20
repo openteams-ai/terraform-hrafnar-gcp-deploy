@@ -33,7 +33,7 @@ module "hrafnar_deploy" {
   name_prefix = var.name_prefix
   # For quay.io images, use Artifact Registry remote repository
   # See docs/ARTIFACT_REGISTRY_SETUP.md for one-time setup instructions
-  app_image     = "${var.region}-docker.pkg.dev/${var.project_id}/quay-remote/openteams/hrafnar"
+  app_image     = "${var.region}-docker.pkg.dev/${var.project_id}/quay-remote/reiemp/hrafnar"
   app_image_tag = "0.1.0.dev295-gf0b1471"
 
   # Production configuration
@@ -69,6 +69,7 @@ module "hrafnar_deploy" {
         password = random_password.hrafnar_auth_password.result
       }
     })
+    HRAFNAR_MODELS = jsonencode(var.hrafnar_models)
   }
 
   # Cloudflare DNS integration

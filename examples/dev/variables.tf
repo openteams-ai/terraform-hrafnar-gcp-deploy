@@ -75,3 +75,12 @@ variable "app_subdomain" {
   type        = string
   default     = "app"
 }
+
+variable "hrafnar_models" {
+  description = "List of AI models available to Hrafnar"
+  type        = list(string)
+  default = [
+    "openai/gpt-4",
+    "anthropic/claude-3.5-sonnet"
+  ]
+}

@@ -109,6 +109,7 @@ module "hrafnar_gcp_deploy" {
 | <a name="input_cloudflare_zone_id"></a> [cloudflare\_zone\_id](#input\_cloudflare\_zone\_id) | Cloudflare zone ID (required if enable\_cloudflare\_dns is true) | `string` | `""` | no |
 | <a name="input_enable_cloudflare_dns"></a> [enable\_cloudflare\_dns](#input\_enable\_cloudflare\_dns) | Enable Cloudflare DNS management for development | `bool` | `false` | no |
 | <a name="input_environment"></a> [environment](#input\_environment) | Deployment environment (e.g., 'prod') | `string` | `"test"` | no |
+| <a name="input_hrafnar_models"></a> [hrafnar\_models](#input\_hrafnar\_models) | List of AI models available to Hrafnar | `list(string)` | <pre>[<br/>  "openai/gpt-4",<br/>  "anthropic/claude-3.5-sonnet"<br/>]</pre> | no |
 | <a name="input_mcp_servers"></a> [mcp\_servers](#input\_mcp\_servers) | MCP server configurations for development | <pre>map(object({<br/>    url         = string<br/>    api_key     = optional(string)<br/>    description = string<br/>  }))</pre> | <pre>{<br/>  "filesystem": {<br/>    "description": "Local filesystem MCP server for development",<br/>    "url": "http://localhost:3001"<br/>  }<br/>}</pre> | no |
 | <a name="input_name_prefix"></a> [name\_prefix](#input\_name\_prefix) | Prefix for resource names | `string` | `"hrafnar-dev"` | no |
 | <a name="input_project_id"></a> [project\_id](#input\_project\_id) | GCP project ID for development environment | `string` | n/a | yes |
