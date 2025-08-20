@@ -34,7 +34,7 @@ module "hrafnar_deploy" {
   # For quay.io images, use Artifact Registry remote repository
   # See docs/ARTIFACT_REGISTRY_SETUP.md for one-time setup instructions
   app_image     = "${var.region}-docker.pkg.dev/${var.project_id}/quay-remote/reiemp/hrafnar"
-  app_image_tag = "latest"
+  app_image_tag = var.app_image_tag
 
   # Production configuration
   region     = var.region
@@ -55,29 +55,33 @@ module "hrafnar_deploy" {
   # AI API keys
   ai_api_keys = var.ai_api_keys
 
+  # MCP server configuration
+  mcp_servers = var.mcp_servers
+
   # Application environment variables
   app_env_vars = {
-    HRAFNAR_SERVER_HOSTNAME                 = "0.0.0.0"
-    HRAFNAR_SERVER_PORT                     = "8080"
-    HRAFNAR_STORAGE_PERSISTENT_DATABASE_DSN = "sqlite:////var/hrafnar/state.db"
+    HRAFNAR_SERVER_HOSTNAME = "0.0.0.0"
+    HRAFNAR_SERVER_PORT     = "8080"
     HRAFNAR_AUTHENTICATION_METHOD = jsonencode({
-      cls      = "hrafnar.serve.DummyBasicAuth"
-      password = random_password.hrafnar_auth_password.result
+      cls_or_fn = "hrafnar.serve.DummyBasicAuth"
+      params = {
+        password = random_password.hrafnar_auth_password.result
+      }
     })
+    HRAFNAR_MODELS = jsonencode(var.hrafnar_models)
   }
 
   # Cloudflare DNS integration
-  enable_cloudflare_dns = false
+  enable_cloudflare_dns = var.enable_cloudflare_dns
   cloudflare_zone_id    = var.cloudflare_zone_id
   base_domain           = var.base_domain
   app_subdomain         = var.app_subdomain
 
   # Infrastructure settings
-  enable_database      = false
-  enable_nat_gateway   = true
-  enable_vpc_connector = true
-  enable_monitoring    = true
-  log_level            = "INFO"
+  enable_database    = var.enable_database
+  enable_nat_gateway = true
+  enable_monitoring  = true
+  log_level          = "INFO"
 
   # Environment and labeling
   labels = {
@@ -85,4 +89,10 @@ module "hrafnar_deploy" {
     project     = "test-${var.name_prefix}-openteams-ai"
     managed_by  = "terraform"
   }
+}
+
+output "hrafnar_auth_password" {
+  description = "The authentication password for Hrafnar"
+  value       = random_password.hrafnar_auth_password.result
+  sensitive   = true
 }

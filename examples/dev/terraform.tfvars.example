@@ -1,31 +1,25 @@
 # Example terraform.tfvars for development environment
 # Copy this file to terraform.tfvars and fill in your values
 
-# Required variables
-project_id = "my-gcp-project-dev"
-app_image  = "gcr.io/my-project/hrafnar:dev"
+# Replace with your GCP Project ID
+project_id = "your-gcp-project-id"
 
-# AI API keys (keep these secure!)
+# A unique prefix for your resources, e.g., "hrafnar-prod"
+name_prefix = "your-name-prefix"
+
+# App image tag
+app_image_tag = "0.1.0.dev295-gf0b1471"
+
+# Enable persistent database
+enable_database = true
+
+# Optional: Add your AI API keys here. They will be stored securely in Secret Manager.
 ai_api_keys = {
-  OPENAI_API_KEY    = "sk-..."
-  ANTHROPIC_API_KEY = "sk-ant-..."
+  OPENROUTER_API_KEY = "sk-or-v1-..."
+  # Add other keys as needed
 }
 
-# Optional: MCP servers for development
-mcp_servers = {
-  filesystem = {
-    url         = "http://localhost:3001"
-    description = "Local filesystem MCP server"
-  }
-  git = {
-    url         = "http://localhost:3002"
-    api_key     = "dev-key-123"
-    description = "Local git MCP server"
-  }
-}
-
-# Optional: Cloudflare DNS (uncomment to enable)
-# enable_cloudflare_dns = true
-# cloudflare_api_token  = "your-cloudflare-token"
-# cloudflare_zone_id    = "your-zone-id"
-# base_domain          = "dev.example.com"
+cloudflare_api_token = "your-cloudflare-token"
+cloudflare_zone_id   = "your-zone-id"
+base_domain          = "your-domain.com"
+app_subdomain        = "your-subdomain"

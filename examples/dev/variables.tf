@@ -3,10 +3,16 @@ variable "project_id" {
   type        = string
 }
 
-variable "app_image" {
-  description = "Container image for the hrafnar application"
+variable "app_image_tag" {
+  description = "Tag for the Hrafnar application image"
   type        = string
-  default     = "gcr.io/my-project/hrafnar:dev"
+  default     = "0.1.0.dev295-gf0b1471"
+}
+
+variable "enable_database" {
+  description = "Enable persistent database (Cloud SQL)"
+  type        = bool
+  default     = false
 }
 
 variable "ai_api_keys" {
@@ -80,4 +86,13 @@ variable "app_subdomain" {
   description = "Subdomain for application access (e.g., 'app' for app.example.com)"
   type        = string
   default     = "app"
+}
+
+variable "hrafnar_models" {
+  description = "List of AI models available to Hrafnar"
+  type        = list(string)
+  default = [
+    "openai/gpt-4",
+    "anthropic/claude-3.5-sonnet"
+  ]
 }

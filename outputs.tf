@@ -53,11 +53,6 @@ output "private_subnet_name" {
   value       = google_compute_subnetwork.private.name
 }
 
-output "vpc_connector_id" {
-  description = "ID of the VPC connector (if enabled)"
-  value       = var.enable_vpc_connector ? google_vpc_access_connector.main[0].id : null
-}
-
 # Service Account Outputs
 output "hrafnar_app_service_account_email" {
   description = "Email of the hrafnar application service account"

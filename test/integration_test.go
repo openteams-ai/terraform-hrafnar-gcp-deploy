@@ -21,9 +21,15 @@ func TestDevEnvironmentDeployment(t *testing.T) {
 	terraformOptions := &terraform.Options{
 		TerraformDir: "../examples/dev",
 		Vars: map[string]interface{}{
+			// Required root/example variables to avoid "No value for required variable" errors
+			"project_id":    "test-project",
+			"region":        "us-central1",
+			// Test-scoped variables
 			"name_prefix":   namePrefix,
 			"app_subdomain": namePrefix,
 			"environment":   "integration-test",
+			// Keep database disabled for this test to match assertions
+			"enable_database": false,
 		},
 		// Retry configuration for handling transient errors
 		RetryableTerraformErrors: map[string]string{

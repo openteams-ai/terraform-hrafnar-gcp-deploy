@@ -27,9 +27,19 @@ variable "vpc_cidr" {
 }
 
 variable "private_subnet_cidr" {
-  description = "CIDR block for the private subnet (must be /28 for VPC connector compatibility)"
+  description = "CIDR block for the private subnet"
   type        = string
-  default     = "10.0.1.0/28"
+  default     = "10.0.0.0/24"
+  validation {
+    condition     = can(regex("^[0-9]{1,2}.[0-9]{1,2}.[0-9]{1,2}.[0-9]{1,2}/[0-9]{1,2}$", var.private_subnet_cidr))
+    error_message = "Invalid CIDR format."
+  }
+
+  # Ensure CIDR is /26 or larger (See https://cloud.google.com/run/docs/configuring/vpc-direct-vpc#scale_down for more info)
+  validation {
+    condition     = can(regex("^[0-9]{1,2}.[0-9]{1,2}.[0-9]{1,2}.[0-9]{1,2}/[0-9]{1,2}$", var.private_subnet_cidr)) && (tonumber(regex("[0-9]{1,2}$", var.private_subnet_cidr)) <= 26)
+    error_message = "CIDR range must be /26 or larger (required by direct VPC egress)."
+  }
 }
 
 variable "enable_nat_gateway" {
@@ -425,12 +435,6 @@ variable "log_level" {
 }
 
 # Security Configuration
-
-variable "enable_vpc_connector" {
-  description = "Enable VPC Connector for Cloud Run to VPC communication"
-  type        = bool
-  default     = true
-}
 
 # Resource Tags
 variable "labels" {
