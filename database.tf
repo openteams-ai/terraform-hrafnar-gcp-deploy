@@ -100,6 +100,7 @@ resource "google_compute_global_address" "private_ip_address" {
   purpose       = "VPC_PEERING"
   address_type  = "INTERNAL"
   prefix_length = 16
+  address       = "10.1.0.0" # Explicitly assign to non-overlapping range with cloud run subnetwork
   network       = google_compute_network.main.id
   project       = var.project_id
 }
