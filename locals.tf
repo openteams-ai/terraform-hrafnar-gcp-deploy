@@ -65,7 +65,6 @@ locals {
 
   # Valkey/Redis configuration
   valkey_instance_name     = "${local.resource_prefix}-valkey"
-  valkey_reserved_ip_range = "10.1.0.0/29" # Small range for Redis instance
   valkey_connection_secret = "${local.resource_prefix}-valkey-connection"
   valkey_auth_secret       = "${local.resource_prefix}-valkey-auth"
 

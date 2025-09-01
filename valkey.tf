@@ -14,7 +14,6 @@ resource "google_redis_instance" "valkey" {
   authorized_network = google_compute_network.main.id
   redis_version      = var.valkey_redis_version
   display_name       = "${local.resource_prefix} Valkey/Redis Instance"
-  reserved_ip_range  = local.valkey_reserved_ip_range
 
   # Security configuration
   auth_enabled            = var.valkey_auth_enabled
