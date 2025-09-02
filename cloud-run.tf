@@ -232,7 +232,8 @@ resource "google_cloud_run_service" "main_app" {
     google_secret_manager_secret_version.mcp_api_keys,
     google_secret_manager_secret_version.config_files,
     google_secret_manager_secret_version.valkey_connection,
-    google_secret_manager_secret_version.valkey_auth
+    google_secret_manager_secret_version.valkey_auth,
+    google_artifact_registry_repository.quay_remote
   ]
 }
 
