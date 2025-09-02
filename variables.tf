@@ -417,6 +417,13 @@ variable "app_subdomain" {
   default     = "app"
 }
 
+# Artifact Registry Configuration
+variable "enable_artifact_registry" {
+  description = "Enable Artifact Registry remote repository for quay.io"
+  type        = bool
+  default     = false
+}
+
 # Monitoring and Logging
 variable "enable_monitoring" {
   description = "Enable Google Cloud Monitoring and Logging"

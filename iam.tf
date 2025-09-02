@@ -91,7 +91,8 @@ resource "google_project_service" "required_apis" {
     "iam.googleapis.com",                  # Identity and Access Management
     "cloudresourcemanager.googleapis.com", # Cloud Resource Manager
     "redis.googleapis.com",                # Cloud Memorystore for Redis (Valkey-compatible)
-    "storage.googleapis.com"               # Cloud Storage
+    "storage.googleapis.com",              # Cloud Storage
+    "artifactregistry.googleapis.com"      # Artifact Registry
   ])
 
   project = var.project_id
