@@ -142,8 +142,7 @@ module "hrafnar_gcp_deploy" {
 |------|---------|
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.5 |
 | <a name="requirement_cloudflare"></a> [cloudflare](#requirement\_cloudflare) | ~> 5.0 |
-| <a name="requirement_google"></a> [google](#requirement\_google) | ~> 5.0 |
-| <a name="requirement_google-beta"></a> [google-beta](#requirement\_google-beta) | ~> 5.0 |
+| <a name="requirement_google"></a> [google](#requirement\_google) | ~> 7.0 |
 | <a name="requirement_random"></a> [random](#requirement\_random) | ~> 3.0 |
 
 ## Providers
