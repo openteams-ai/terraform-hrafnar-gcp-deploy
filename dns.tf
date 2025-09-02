@@ -7,12 +7,13 @@ check "dns_configuration" {
 }
 
 # DNS CNAME record for application subdomain pointing to Google Cloud Run
-resource "cloudflare_record" "app" {
+resource "cloudflare_dns_record" "app" {
   count   = var.enable_cloudflare_dns && var.base_domain != "" ? 1 : 0
   zone_id = var.cloudflare_zone_id
   name    = var.app_subdomain
   content = "ghs.googlehosted.com"
   type    = "CNAME"
+  ttl     = 1     # Automatic TTL
   proxied = false # Must be DNS-only initially for domain mapping to work
 
   comment = "Managed by Terraform - Application endpoint for ${local.resource_prefix} hrafnar application"
