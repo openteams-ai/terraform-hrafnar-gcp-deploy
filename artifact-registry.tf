@@ -30,6 +30,11 @@ resource "google_artifact_registry_repository_iam_member" "cloud_run_artifact_re
   repository = google_artifact_registry_repository.quay_remote[0].name
   role       = "roles/artifactregistry.reader"
   member     = "serviceAccount:service-${data.google_project.current.number}@serverless-robot-prod.iam.gserviceaccount.com"
+
+  depends_on = [
+    google_artifact_registry_repository.quay_remote,
+    google_project_service.required_apis
+  ]
 }
 
 # Data source to get the current project information
