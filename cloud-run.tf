@@ -234,7 +234,8 @@ resource "google_cloud_run_service" "main_app" {
     google_secret_manager_secret_version.valkey_connection,
     google_secret_manager_secret_version.valkey_auth,
     google_artifact_registry_repository.quay_remote,
-    google_artifact_registry_repository_iam_member.cloud_run_artifact_reader
+    google_artifact_registry_repository_iam_member.cloud_run_quay_reader,
+    google_artifact_registry_repository_iam_member.cloud_run_docker_images_reader
   ]
 }
 

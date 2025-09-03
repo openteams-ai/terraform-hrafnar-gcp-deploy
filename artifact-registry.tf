@@ -1,3 +1,18 @@
+# Artifact Registry standard repository for Docker images
+resource "google_artifact_registry_repository" "docker_images" {
+  count         = var.enable_artifact_registry ? 1 : 0
+  location      = var.region
+  repository_id = "docker-images"
+  description   = "Standard repository for Docker images"
+  format        = "DOCKER"
+  mode          = "STANDARD_REPOSITORY"
+  project       = var.project_id
+
+  labels = local.common_labels
+
+  depends_on = [google_project_service.required_apis]
+}
+
 # Artifact Registry remote repository for quay.io images
 resource "google_artifact_registry_repository" "quay_remote" {
   count         = var.enable_artifact_registry ? 1 : 0
@@ -22,8 +37,23 @@ resource "google_artifact_registry_repository" "quay_remote" {
   depends_on = [google_project_service.required_apis]
 }
 
-# Grant Cloud Run service agent permission to pull images from Artifact Registry
-resource "google_artifact_registry_repository_iam_member" "cloud_run_artifact_reader" {
+# Grant Cloud Run service agent permission to pull images from docker-images repository
+resource "google_artifact_registry_repository_iam_member" "cloud_run_docker_images_reader" {
+  count      = var.enable_artifact_registry ? 1 : 0
+  project    = var.project_id
+  location   = var.region
+  repository = google_artifact_registry_repository.docker_images[0].name
+  role       = "roles/artifactregistry.reader"
+  member     = "serviceAccount:service-${data.google_project.current.number}@serverless-robot-prod.iam.gserviceaccount.com"
+
+  depends_on = [
+    google_artifact_registry_repository.docker_images,
+    google_project_service.required_apis
+  ]
+}
+
+# Grant Cloud Run service agent permission to pull images from quay-remote repository
+resource "google_artifact_registry_repository_iam_member" "cloud_run_quay_reader" {
   count      = var.enable_artifact_registry ? 1 : 0
   project    = var.project_id
   location   = var.region
