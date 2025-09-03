@@ -75,7 +75,7 @@ module "hrafnar_deploy" {
   enable_cloudflare_dns = var.enable_cloudflare_dns
   cloudflare_zone_id    = var.cloudflare_zone_id
   base_domain           = var.base_domain
-  app_subdomain         = var.app_subdomain
+  hrafnar_subdomain     = var.hrafnar_subdomain
 
   # Infrastructure settings
   enable_database    = var.enable_database

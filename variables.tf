@@ -411,10 +411,10 @@ variable "base_domain" {
   default     = ""
 }
 
-variable "app_subdomain" {
-  description = "Subdomain for application access (e.g., 'app' for app.example.com)"
+variable "hrafnar_subdomain" {
+  description = "Subdomain for hrafnar application access (e.g., 'hrafnar' for hrafnar.example.com)"
   type        = string
-  default     = "app"
+  default     = "hrafnar"
 }
 
 # Artifact Registry Configuration

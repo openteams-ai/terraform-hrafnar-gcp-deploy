@@ -1,8 +1,8 @@
 
 check "dns_configuration" {
   assert {
-    condition     = !(var.base_domain != "" && var.app_subdomain != "" && !var.enable_cloudflare_dns)
-    error_message = "Base domain and app subdomain are configured but enable_cloudflare_dns is false. DNS record will not be created."
+    condition     = !(var.base_domain != "" && var.hrafnar_subdomain != "" && !var.enable_cloudflare_dns)
+    error_message = "Base domain and hrafnar subdomain are configured but enable_cloudflare_dns is false. DNS record will not be created."
   }
 }
 
@@ -10,7 +10,7 @@ check "dns_configuration" {
 resource "cloudflare_dns_record" "app" {
   count   = var.enable_cloudflare_dns && var.base_domain != "" ? 1 : 0
   zone_id = var.cloudflare_zone_id
-  name    = var.app_subdomain
+  name    = var.hrafnar_subdomain
   content = "ghs.googlehosted.com"
   type    = "CNAME"
   ttl     = 1     # Automatic TTL

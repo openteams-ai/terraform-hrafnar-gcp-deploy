@@ -26,7 +26,7 @@ func TestDevEnvironmentDeployment(t *testing.T) {
 			"region":        "us-central1",
 			// Test-scoped variables
 			"name_prefix":   namePrefix,
-			"app_subdomain": namePrefix,
+			"hrafnar_subdomain": namePrefix,
 			"environment":   "integration-test",
 			// Keep database disabled for this test to match assertions
 			"enable_database": false,
