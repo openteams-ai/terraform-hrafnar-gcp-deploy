@@ -22,4 +22,4 @@ ai_api_keys = {
 cloudflare_api_token = "your-cloudflare-token"
 cloudflare_zone_id   = "your-zone-id"
 base_domain          = "your-domain.com"
-app_subdomain        = "your-subdomain"
+hrafnar_subdomain    = "hrafnar"

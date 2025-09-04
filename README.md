@@ -141,17 +141,16 @@ module "hrafnar_gcp_deploy" {
 | Name | Version |
 |------|---------|
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.5 |
-| <a name="requirement_cloudflare"></a> [cloudflare](#requirement\_cloudflare) | ~> 4.0 |
-| <a name="requirement_google"></a> [google](#requirement\_google) | ~> 5.0 |
-| <a name="requirement_google-beta"></a> [google-beta](#requirement\_google-beta) | ~> 5.0 |
+| <a name="requirement_cloudflare"></a> [cloudflare](#requirement\_cloudflare) | ~> 5.0 |
+| <a name="requirement_google"></a> [google](#requirement\_google) | ~> 7.0 |
 | <a name="requirement_random"></a> [random](#requirement\_random) | ~> 3.0 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| <a name="provider_cloudflare"></a> [cloudflare](#provider\_cloudflare) | 4.52.1 |
-| <a name="provider_google"></a> [google](#provider\_google) | 5.45.2 |
+| <a name="provider_cloudflare"></a> [cloudflare](#provider\_cloudflare) | 5.9.0 |
+| <a name="provider_google"></a> [google](#provider\_google) | 7.1.0 |
 | <a name="provider_random"></a> [random](#provider\_random) | 3.7.2 |
 
 ## Modules
@@ -162,8 +161,11 @@ No modules.
 
 | Name | Type |
 |------|------|
-| [cloudflare_record.app](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/record) | resource |
+| [cloudflare_dns_record.app](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/dns_record) | resource |
+| [google_artifact_registry_repository.docker_images](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/artifact_registry_repository) | resource |
 | [google_artifact_registry_repository.quay_remote](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/artifact_registry_repository) | resource |
+| [google_artifact_registry_repository_iam_member.cloud_run_docker_images_reader](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/artifact_registry_repository_iam_member) | resource |
+| [google_artifact_registry_repository_iam_member.cloud_run_quay_reader](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/artifact_registry_repository_iam_member) | resource |
 | [google_cloud_run_domain_mapping.main_app](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/cloud_run_domain_mapping) | resource |
 | [google_cloud_run_service.main_app](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/cloud_run_service) | resource |
 | [google_cloud_run_service_iam_member.main_app_public](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/cloud_run_service_iam_member) | resource |
@@ -219,6 +221,7 @@ No modules.
 | [google_storage_hmac_key.hrafner_storage_hmac](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/storage_hmac_key) | resource |
 | [random_id.network_suffix](https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/id) | resource |
 | [random_password.db_password](https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/password) | resource |
+| [google_project.current](https://registry.terraform.io/providers/hashicorp/google/latest/docs/data-sources/project) | data source |
 
 ## Inputs
 
@@ -236,7 +239,6 @@ No modules.
 | <a name="input_app_memory"></a> [app\_memory](#input\_app\_memory) | Memory allocation for the hrafnar application | `string` | `"512Mi"` | no |
 | <a name="input_app_min_instances"></a> [app\_min\_instances](#input\_app\_min\_instances) | Minimum number of instances for the hrafnar application | `number` | `0` | no |
 | <a name="input_app_port"></a> [app\_port](#input\_app\_port) | Port the application listens on | `number` | `8080` | no |
-| <a name="input_app_subdomain"></a> [app\_subdomain](#input\_app\_subdomain) | Subdomain for application access (e.g., 'app' for app.example.com) | `string` | `"app"` | no |
 | <a name="input_base_domain"></a> [base\_domain](#input\_base\_domain) | Base domain name managed by Cloudflare (e.g., 'example.com'). A subdomain will be created under this domain for application access | `string` | `""` | no |
 | <a name="input_cloudflare_zone_id"></a> [cloudflare\_zone\_id](#input\_cloudflare\_zone\_id) | Cloudflare zone ID for DNS records (required if enable\_cloudflare\_dns is true) | `string` | `""` | no |
 | <a name="input_database_backup_enabled"></a> [database\_backup\_enabled](#input\_database\_backup\_enabled) | Enable automated database backups | `bool` | `true` | no |
@@ -253,6 +255,7 @@ No modules.
 | <a name="input_enable_nat_gateway"></a> [enable\_nat\_gateway](#input\_enable\_nat\_gateway) | Enable Cloud NAT for outbound internet access | `bool` | `true` | no |
 | <a name="input_enable_storage"></a> [enable\_storage](#input\_enable\_storage) | Enable Cloud Storage bucket for the application | `bool` | `false` | no |
 | <a name="input_enable_valkey"></a> [enable\_valkey](#input\_enable\_valkey) | Enable Google Cloud Memorystore for Redis (Valkey-compatible) deployment | `bool` | `false` | no |
+| <a name="input_hrafnar_subdomain"></a> [hrafnar\_subdomain](#input\_hrafnar\_subdomain) | Subdomain for hrafnar application access (e.g., 'hrafnar' for hrafnar.example.com) | `string` | `"hrafnar"` | no |
 | <a name="input_labels"></a> [labels](#input\_labels) | Labels to apply to all resources | `map(string)` | `{}` | no |
 | <a name="input_log_level"></a> [log\_level](#input\_log\_level) | Log level for applications | `string` | `"INFO"` | no |
 | <a name="input_mcp_servers"></a> [mcp\_servers](#input\_mcp\_servers) | MCP server configurations | <pre>map(object({<br/>    url         = string<br/>    api_key     = optional(string)<br/>    description = string<br/>  }))</pre> | `{}` | no |

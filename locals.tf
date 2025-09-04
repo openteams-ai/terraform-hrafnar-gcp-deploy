@@ -15,7 +15,7 @@ locals {
   })
 
   # DNS configuration
-  app_fqdn = var.enable_cloudflare_dns && var.base_domain != "" ? "${var.app_subdomain}.${var.base_domain}" : ""
+  app_fqdn = var.enable_cloudflare_dns && var.base_domain != "" ? "${var.hrafnar_subdomain}.${var.base_domain}" : ""
 
 
   # Database configuration
