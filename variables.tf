@@ -208,6 +208,12 @@ variable "app_port" {
   default     = 8080
 }
 
+variable "app_enable_public_access" {
+  description = "Enable public access to the hrafnar application"
+  type        = bool
+  default     = true
+}
+
 variable "app_command" {
   description = "Command to run the container"
   type        = list(string)

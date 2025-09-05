@@ -231,6 +231,7 @@ No modules.
 | <a name="input_app_command"></a> [app\_command](#input\_app\_command) | Command to run the container | `list(string)` | <pre>[<br/>  "hrafnar",<br/>  "serve"<br/>]</pre> | no |
 | <a name="input_app_config_files"></a> [app\_config\_files](#input\_app\_config\_files) | Configuration files to mount as volumes from Secret Manager. Key is the config name, value contains file content and mount path. | <pre>map(object({<br/>    content    = string # File content to store in Secret Manager<br/>    mount_path = string # Path where file will be mounted in container (e.g., "/etc/config/app.yaml")<br/>  }))</pre> | `{}` | no |
 | <a name="input_app_cpu"></a> [app\_cpu](#input\_app\_cpu) | CPU allocation for the hrafnar application | `string` | `"1000m"` | no |
+| <a name="input_app_enable_public_access"></a> [app\_enable\_public\_access](#input\_app\_enable\_public\_access) | Enable public access to the hrafnar application | `bool` | `true` | no |
 | <a name="input_app_env_vars"></a> [app\_env\_vars](#input\_app\_env\_vars) | Environment variables for the hrafnar application | `map(string)` | `{}` | no |
 | <a name="input_app_image"></a> [app\_image](#input\_app\_image) | Container image for the hrafnar application (without tag) | `string` | n/a | yes |
 | <a name="input_app_image_sha"></a> [app\_image\_sha](#input\_app\_image\_sha) | Container image SHA (takes precedence over tag if provided) | `string` | `""` | no |
