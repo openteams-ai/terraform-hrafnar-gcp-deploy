@@ -249,6 +249,21 @@ resource "google_cloud_run_service_iam_member" "main_app_public" {
   member   = "allUsers"
 }
 
+# IAM policy to allow subnet access
+resource "google_cloud_run_service_iam_member" "main_app_subnet" {
+  location = google_cloud_run_service.main_app.location
+  project  = google_cloud_run_service.main_app.project
+  service  = google_cloud_run_service.main_app.name
+  role     = "roles/run.invoker"
+  member   = "allUsers"
+
+  condition {
+    title       = "Subnet access"
+    description = "Allow access from the private subnet"
+    expression  = "inIpRange(origin.ip, \"${var.private_subnet_cidr}\")"
+  }
+}
+
 # Domain mapping for the hrafnar application (if Cloudflare DNS is enabled)
 # Domain mapping for the application
 resource "google_cloud_run_domain_mapping" "main_app" {
