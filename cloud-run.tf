@@ -241,6 +241,7 @@ resource "google_cloud_run_service" "main_app" {
 
 # IAM policy to allow public access to the hrafnar application
 resource "google_cloud_run_service_iam_member" "main_app_public" {
+  count    = var.app_enable_public_access ? 1 : 0
   location = google_cloud_run_service.main_app.location
   project  = google_cloud_run_service.main_app.project
   service  = google_cloud_run_service.main_app.name
