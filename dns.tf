@@ -17,6 +17,4 @@ resource "cloudflare_dns_record" "app" {
   proxied = false # Must be DNS-only initially for domain mapping to work
 
   comment = "Managed by Terraform - Application endpoint for ${local.resource_prefix} hrafnar application"
-
-  depends_on = [google_cloud_run_domain_mapping.main_app]
 }

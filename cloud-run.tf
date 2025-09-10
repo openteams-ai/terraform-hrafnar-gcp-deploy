@@ -13,8 +13,6 @@ resource "google_cloud_run_service" "main_app" {
         "run.googleapis.com/execution-environment" = "gen2"
         # CPU allocation
         "run.googleapis.com/cpu-throttling" = "false",
-        # Ingress control - internal only when public access is disabled
-        "run.googleapis.com/ingress" = var.app_enable_public_access ? "all" : "internal"
         # Direct VPC Egress
         "run.googleapis.com/network-interfaces" = jsonencode([{
           "network"    = google_compute_network.main.id
@@ -243,7 +241,6 @@ resource "google_cloud_run_service" "main_app" {
 
 # IAM policy to allow public access to the hrafnar application
 resource "google_cloud_run_service_iam_member" "main_app_public" {
-  count    = var.app_enable_public_access ? 1 : 0
   location = google_cloud_run_service.main_app.location
   project  = google_cloud_run_service.main_app.project
   service  = google_cloud_run_service.main_app.name
@@ -270,5 +267,5 @@ resource "google_cloud_run_domain_mapping" "main_app" {
     route_name = google_cloud_run_service.main_app.name
   }
 
-  depends_on = [google_cloud_run_service.main_app]
+  depends_on = [google_cloud_run_service.main_app, cloudflare_dns_record.app]
 }
