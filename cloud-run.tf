@@ -217,6 +217,100 @@ resource "google_cloud_run_service" "main_app" {
           }
         }
       }
+
+      # Sidecar containers
+      dynamic "containers" {
+        for_each = var.sidecar_containers
+        content {
+          name  = containers.key
+          image = containers.value.image_sha != "" ? "${containers.value.image}@${containers.value.image_sha}" : "${containers.value.image}:${containers.value.image_tag}"
+
+          command = containers.value.command
+          args    = containers.value.args
+
+          # Port configuration (optional)
+          dynamic "ports" {
+            for_each = containers.value.port != null ? [containers.value.port] : []
+            content {
+              container_port = ports.value
+            }
+          }
+
+          # Volume mounts for sidecar containers
+          dynamic "volume_mounts" {
+            for_each = containers.value.volume_mounts
+            content {
+              name       = volume_mounts.key
+              mount_path = volume_mounts.value.mount_path
+              sub_path   = volume_mounts.value.sub_path
+            }
+          }
+
+          resources {
+            limits = {
+              cpu    = containers.value.cpu
+              memory = containers.value.memory
+            }
+          }
+
+          # Environment variables for sidecar
+          dynamic "env" {
+            for_each = containers.value.env_vars
+            content {
+              name  = env.key
+              value = env.value
+            }
+          }
+
+          # Startup probe for sidecar (if configured)
+          dynamic "startup_probe" {
+            for_each = containers.value.startup_probe != null ? [containers.value.startup_probe] : []
+            content {
+              dynamic "http_get" {
+                for_each = startup_probe.value.http_get != null ? [startup_probe.value.http_get] : []
+                content {
+                  path = http_get.value.path
+                  port = http_get.value.port
+                }
+              }
+              dynamic "tcp_socket" {
+                for_each = startup_probe.value.tcp_socket != null ? [startup_probe.value.tcp_socket] : []
+                content {
+                  port = tcp_socket.value.port
+                }
+              }
+              initial_delay_seconds = startup_probe.value.initial_delay_seconds
+              timeout_seconds       = startup_probe.value.timeout_seconds
+              period_seconds        = startup_probe.value.period_seconds
+              failure_threshold     = startup_probe.value.failure_threshold
+            }
+          }
+
+          # Liveness probe for sidecar (if configured)
+          dynamic "liveness_probe" {
+            for_each = containers.value.liveness_probe != null ? [containers.value.liveness_probe] : []
+            content {
+              dynamic "http_get" {
+                for_each = liveness_probe.value.http_get != null ? [liveness_probe.value.http_get] : []
+                content {
+                  path = http_get.value.path
+                  port = http_get.value.port
+                }
+              }
+              dynamic "tcp_socket" {
+                for_each = liveness_probe.value.tcp_socket != null ? [liveness_probe.value.tcp_socket] : []
+                content {
+                  port = tcp_socket.value.port
+                }
+              }
+              initial_delay_seconds = liveness_probe.value.initial_delay_seconds
+              timeout_seconds       = liveness_probe.value.timeout_seconds
+              period_seconds        = liveness_probe.value.period_seconds
+              failure_threshold     = liveness_probe.value.failure_threshold
+            }
+          }
+        }
+      }
     }
   }
 

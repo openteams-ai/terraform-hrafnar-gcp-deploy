@@ -443,6 +443,53 @@ variable "log_level" {
 
 # Security Configuration
 
+# Sidecar Container Configuration
+variable "sidecar_containers" {
+  description = "Configuration for sidecar containers to deploy alongside the main application"
+  type = map(object({
+    image               = string                # Container image (without tag)
+    image_tag          = optional(string, "latest") # Container image tag
+    image_sha          = optional(string, "")   # Container image SHA (takes precedence over tag)
+    command            = optional(list(string)) # Command to run the container
+    args               = optional(list(string)) # Arguments for the container command
+    port               = optional(number)       # Port the sidecar listens on (if any)
+    cpu                = optional(string, "100m") # CPU allocation
+    memory             = optional(string, "128Mi") # Memory allocation
+    env_vars           = optional(map(string), {}) # Environment variables
+    volume_mounts      = optional(map(object({
+      mount_path = string
+      sub_path   = optional(string)
+    })), {}) # Volume mounts from main app volumes
+    startup_probe      = optional(object({
+      http_get = optional(object({
+        path = string
+        port = number
+      }))
+      tcp_socket = optional(object({
+        port = number
+      }))
+      initial_delay_seconds = optional(number, 0)
+      timeout_seconds      = optional(number, 1)
+      period_seconds       = optional(number, 10)
+      failure_threshold    = optional(number, 3)
+    }))
+    liveness_probe     = optional(object({
+      http_get = optional(object({
+        path = string
+        port = number
+      }))
+      tcp_socket = optional(object({
+        port = number
+      }))
+      initial_delay_seconds = optional(number, 30)
+      timeout_seconds      = optional(number, 1)
+      period_seconds       = optional(number, 10)
+      failure_threshold    = optional(number, 3)
+    }))
+  }))
+  default = {}
+}
+
 # Resource Tags
 variable "labels" {
   description = "Labels to apply to all resources"
