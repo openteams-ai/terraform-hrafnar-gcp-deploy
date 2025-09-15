@@ -458,14 +458,10 @@ variable "sidecar_containers" {
     env_vars           = optional(map(string), {}) # Environment variables
     volume_mounts      = optional(map(object({
       mount_path = string
-      sub_path   = optional(string)
     })), {}) # Volume mounts from main app volumes
     startup_probe      = optional(object({
       http_get = optional(object({
         path = string
-        port = number
-      }))
-      tcp_socket = optional(object({
         port = number
       }))
       initial_delay_seconds = optional(number, 0)
@@ -476,9 +472,6 @@ variable "sidecar_containers" {
     liveness_probe     = optional(object({
       http_get = optional(object({
         path = string
-        port = number
-      }))
-      tcp_socket = optional(object({
         port = number
       }))
       initial_delay_seconds = optional(number, 30)

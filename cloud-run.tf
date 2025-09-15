@@ -242,7 +242,6 @@ resource "google_cloud_run_service" "main_app" {
             content {
               name       = volume_mounts.key
               mount_path = volume_mounts.value.mount_path
-              sub_path   = volume_mounts.value.sub_path
             }
           }
 
@@ -273,12 +272,6 @@ resource "google_cloud_run_service" "main_app" {
                   port = http_get.value.port
                 }
               }
-              dynamic "tcp_socket" {
-                for_each = startup_probe.value.tcp_socket != null ? [startup_probe.value.tcp_socket] : []
-                content {
-                  port = tcp_socket.value.port
-                }
-              }
               initial_delay_seconds = startup_probe.value.initial_delay_seconds
               timeout_seconds       = startup_probe.value.timeout_seconds
               period_seconds        = startup_probe.value.period_seconds
@@ -295,12 +288,6 @@ resource "google_cloud_run_service" "main_app" {
                 content {
                   path = http_get.value.path
                   port = http_get.value.port
-                }
-              }
-              dynamic "tcp_socket" {
-                for_each = liveness_probe.value.tcp_socket != null ? [liveness_probe.value.tcp_socket] : []
-                content {
-                  port = tcp_socket.value.port
                 }
               }
               initial_delay_seconds = liveness_probe.value.initial_delay_seconds
